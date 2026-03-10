@@ -34,458 +34,378 @@ function formatDate(dateStr: string) {
         --white:      #FFFFFF;
       }
 
-      * { box-sizing: border-box; margin: 0; padding: 0; }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body { height: 100%; }
 
       body {
         background: var(--cream);
         color: var(--charcoal);
         font-family: 'Crimson Pro', Georgia, serif;
-        font-size: 20px;
-        line-height: 1.8;
+        /* BASE font size — everything scales from this */
+        font-size: 19px;
+        line-height: 1.85;
         -webkit-font-smoothing: antialiased;
       }
 
-      /* ─── READING PROGRESS BAR ─────────────────────────────── */
+      /* ═══ PROGRESS BAR ══════════════════════════════════════ */
       #progress-bar {
         position: fixed;
-        top: 0;
-        left: 0;
-        height: 3px;
-        width: 0%;
+        top: 0; left: 0;
+        height: 3px; width: 0%;
         background: var(--gold);
         z-index: 9999;
+        pointer-events: none;
         transition: width 0.08s linear;
       }
 
-      /* ─── ARTICLE HERO ─────────────────────────────────────── */
+      /* ═══ HERO ══════════════════════════════════════════════ */
       .article-hero {
         background: var(--navy);
         padding: 5.5rem 2rem 4.5rem;
         position: relative;
         overflow: hidden;
       }
-
       .article-hero::before {
         content: 'نهج';
         font-family: 'Amiri', serif;
         font-size: clamp(10rem, 20vw, 20rem);
         font-weight: 700;
-        color: rgba(255,255,255,0.032);
-        position: absolute;
-        right: -1rem;
-        top: 50%;
+        color: rgba(255,255,255,0.03);
+        position: absolute; right: -1rem; top: 50%;
         transform: translateY(-50%);
-        line-height: 1;
-        pointer-events: none;
-        user-select: none;
+        line-height: 1; pointer-events: none; user-select: none;
       }
-
-      .article-hero-inner {
-        max-width: 1180px;
+      .hero-inner {
+        max-width: 1240px;
         margin: 0 auto;
-        position: relative;
-        z-index: 1;
-        padding: 0 2rem;
+        position: relative; z-index: 1;
       }
-
       .breadcrumb {
-        font-size: 0.78rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.35);
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        flex-wrap: wrap;
+        font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(255,255,255,0.32); margin-bottom: 1.75rem;
+        display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
       }
-
-      .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+      .breadcrumb a { color: rgba(255,255,255,0.32); text-decoration: none; transition: color 0.2s; }
       .breadcrumb a:hover { color: var(--gold); }
-      .breadcrumb span { color: rgba(255,255,255,0.15); }
-
-      .article-category {
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 1rem;
+      .breadcrumb .sep { color: rgba(255,255,255,0.12); }
+      .article-cat {
+        font-size: 0.68rem; font-weight: 600; letter-spacing: 0.24em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.85rem;
       }
-
       .article-hero h1 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2rem, 4.5vw, 3.6rem);
-        font-weight: 600;
-        line-height: 1.1;
-        color: var(--white);
-        margin-bottom: 1.75rem;
-        max-width: 820px;
+        font-size: clamp(2rem, 4.5vw, 3.4rem);
+        font-weight: 600; line-height: 1.1; color: var(--white);
+        margin-bottom: 1.75rem; max-width: 820px;
       }
-
       .article-byline {
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        flex-wrap: wrap;
-        padding-top: 1.5rem;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+        padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,0.1);
       }
-
       .byline-author {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.05rem;
-        font-weight: 500;
-        color: var(--gold-light);
+        font-size: 1.05rem; font-weight: 500; color: var(--gold-light);
       }
-
-      .byline-sep { color: rgba(255,255,255,0.2); font-size: 0.5rem; }
-
-      .byline-date { font-size: 0.88rem; color: rgba(255,255,255,0.38); }
-
+      .byline-dot { color: rgba(255,255,255,0.18); font-size: 0.38rem; }
+      .byline-date { font-size: 0.84rem; color: rgba(255,255,255,0.36); }
       .byline-type {
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        border: 1px solid rgba(255,255,255,0.18);
-        color: rgba(255,255,255,0.5);
-        padding: 0.22rem 0.7rem;
-        margin-left: auto;
+        margin-left: auto; font-size: 0.64rem; font-weight: 600;
+        letter-spacing: 0.16em; text-transform: uppercase;
+        border: 1px solid rgba(255,255,255,0.16); color: rgba(255,255,255,0.48);
+        padding: 0.2rem 0.65rem;
       }
 
-      /* ─── TWO-COLUMN LAYOUT ────────────────────────────────── */
-      .article-outer {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 0 2rem;
+      /* ═══ PAGE SHELL — this is the critical layout ══════════ */
+      /*
+         We use a full-width wrapper with CSS grid.
+         The grid lives OUTSIDE <main> so nothing can collapse it.
+         Left column = article, right column = sidebar.
+      */
+      .page-shell {
         display: grid;
         grid-template-columns: 1fr 280px;
-        gap: 5rem;
+        column-gap: 0;
+        max-width: 1240px;
+        margin: 0 auto;
         align-items: start;
       }
 
-      /* ─── MAIN ARTICLE COLUMN ──────────────────────────────── */
-      .article-main {
-        padding: 3.5rem 0 6rem;
+      /* ═══ ARTICLE COLUMN ════════════════════════════════════ */
+      .article-col {
+        padding: 3rem 4rem 6rem 2rem;
         min-width: 0;
+        border-right: 1px solid var(--cream-dark);
       }
 
       .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--teal);
-        text-decoration: none;
-        transition: color 0.2s;
-        margin-bottom: 3.5rem;
+        display: inline-flex; align-items: center; gap: 0.35rem;
+        font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em;
+        text-transform: uppercase; color: var(--teal); text-decoration: none;
+        transition: color 0.2s; margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem; border-bottom: 1px solid var(--cream-dark);
+        width: 100%; display: block;
       }
-
       .back-link:hover { color: var(--gold); }
 
-      /* ─── PROSE STYLES ─────────────────────────────────────── */
-      .prose h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin: 3.5rem 0 1.25rem;
-        line-height: 1.15;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--cream-dark);
-        scroll-margin-top: 6rem;
-      }
-
-      .prose h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
-
-      .prose h3 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.55rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin: 2.5rem 0 0.9rem;
-        line-height: 1.2;
-        scroll-margin-top: 6rem;
-      }
-
-      .prose h4 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin: 2rem 0 0.7rem;
-        scroll-margin-top: 6rem;
-      }
-
-      .prose p {
-        margin-bottom: 1.6rem;
-        font-size: 1.1rem;
+      /* ═══ PROSE — all article text lives here ═══════════════ */
+      /*
+         SINGLE font-size source of truth: 1.13rem (~21.5px).
+         Tables inherit this and are scaled DOWN with font-size on td/th.
+         Nothing in prose overrides body font-size arbitrarily.
+      */
+      .prose {
+        font-size: 1.13rem;   /* ← THE reading size. Change only this. */
         line-height: 1.9;
         color: var(--charcoal);
       }
 
+      .prose h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.75rem; /* relative to prose, not body */
+        font-weight: 600; color: var(--navy);
+        margin: 3.5rem 0 1.1rem; line-height: 1.18;
+        padding-top: 1.5rem; border-top: 1px solid var(--cream-dark);
+        scroll-margin-top: 5rem;
+      }
+      .prose h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+      .prose h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.42rem; font-weight: 600; color: var(--navy);
+        margin: 2.5rem 0 0.85rem; line-height: 1.2;
+        scroll-margin-top: 5rem;
+      }
+
+      .prose h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.18rem; font-weight: 600; color: var(--navy);
+        margin: 2rem 0 0.6rem; scroll-margin-top: 5rem;
+      }
+
+      .prose p { margin-bottom: 1.5rem; }
+
       .prose blockquote {
         border-left: 3px solid var(--gold);
-        padding: 1.1rem 1.75rem;
-        margin: 2.5rem 0;
+        padding: 1rem 1.65rem; margin: 2.25rem 0;
         background: var(--cream-dark);
       }
+      .prose blockquote p { margin: 0; font-style: italic; color: var(--muted); }
 
-      .prose blockquote p {
-        margin: 0;
-        font-style: italic;
-        color: var(--muted);
-        font-size: 1.08rem;
-      }
-
-      .prose ul, .prose ol {
-        padding-left: 2rem;
-        margin-bottom: 1.75rem;
-      }
-
-      .prose li {
-        margin-bottom: 0.6rem;
-        font-size: 1.08rem;
-        line-height: 1.8;
-      }
+      .prose ul, .prose ol { padding-left: 1.75rem; margin-bottom: 1.65rem; }
+      .prose li { margin-bottom: 0.5rem; }
 
       .prose a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
       .prose a:hover { color: var(--gold); }
-      .prose hr { border: none; border-top: 1px solid var(--cream-dark); margin: 3rem 0; }
+      .prose hr { border: none; border-top: 1px solid var(--cream-dark); margin: 2.75rem 0; }
       .prose strong { font-weight: 600; color: var(--navy); }
       .prose em { font-style: italic; }
 
-      /* ─── TABLE STYLES ─────────────────────────────────────── */
+      /* ═══ TABLES ════════════════════════════════════════════ */
+      /*
+         Tables must NOT inherit prose's larger font-size.
+         We reset them explicitly to 0.82rem (~15.5px).
+         This keeps them compact and readable side-by-side.
+      */
+      .table-outer {
+        overflow-x: auto;
+        margin: 2.25rem 0;
+        border: 1px solid var(--cream-dark);
+        -webkit-overflow-scrolling: touch;
+      }
+
       .prose table {
         width: 100%;
         border-collapse: collapse;
-        margin: 2.5rem 0;
-        font-size: 0.97rem;
-        overflow-x: auto;
-        display: block;
+        font-size: 0.82rem;   /* ← TABLE font-size. Always smaller than prose. */
+        line-height: 1.52;
+        min-width: 480px;
+        font-family: 'Crimson Pro', Georgia, serif;
       }
 
-      .prose thead tr {
-        background: var(--navy);
-      }
-
+      .prose thead tr { background: var(--navy); }
       .prose thead th {
-        padding: 0.9rem 1.25rem;
+        padding: 0.75rem 1rem;
         text-align: left;
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--gold);
-        border: 1px solid rgba(255,255,255,0.08);
-        white-space: nowrap;
+        font-size: 0.62rem; font-weight: 600;
+        letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--gold); white-space: nowrap;
+        border-right: 1px solid rgba(255,255,255,0.06);
       }
+      .prose thead th:last-child { border-right: none; }
 
-      .prose tbody tr {
-        border-bottom: 1px solid var(--cream-dark);
-        transition: background 0.15s;
-      }
-
-      .prose tbody tr:nth-child(even) {
-        background: var(--cream-dark);
-      }
-
-      .prose tbody tr:hover {
-        background: rgba(27,94,111,0.06);
-      }
+      .prose tbody tr { border-bottom: 1px solid var(--cream-dark); transition: background 0.14s; }
+      .prose tbody tr:nth-child(even) { background: rgba(237,230,213,0.45); }
+      .prose tbody tr:hover { background: rgba(27,94,111,0.05); }
 
       .prose tbody td {
-        padding: 0.9rem 1.25rem;
-        font-size: 0.97rem;
+        padding: 0.72rem 1rem;
+        font-size: 0.82rem; /* match table font-size, NOT prose */
         color: var(--charcoal);
-        line-height: 1.65;
-        vertical-align: top;
-        border: 1px solid var(--cream-dark);
+        line-height: 1.55; vertical-align: top;
+        border-right: 1px solid var(--cream-dark);
       }
+      .prose tbody td:last-child { border-right: none; }
 
-      /* ─── AUTHOR BIO ───────────────────────────────────────── */
+      /* ═══ AUTHOR BIO ════════════════════════════════════════ */
       .author-bio {
         border-top: 2px solid var(--gold);
-        padding-top: 1.75rem;
-        margin-top: 2rem;
+        padding-top: 1.75rem; margin-top: 2rem;
       }
-
-      .author-bio-label {
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.6rem;
+      .bio-label {
+        font-size: 0.64rem; font-weight: 600; letter-spacing: 0.22em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.5rem;
       }
-
-      .author-bio-name {
+      .bio-name {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin-bottom: 0.5rem;
+        font-size: 1.2rem; font-weight: 600; color: var(--navy);
+        margin-bottom: 0.45rem;
       }
+      .bio-text { font-size: 0.96rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
 
-      .author-bio-text {
-        font-size: 0.97rem;
-        color: var(--muted);
-        line-height: 1.78;
-        font-weight: 300;
-      }
-
-      /* ─── SIDEBAR ──────────────────────────────────────────── */
-      .article-sidebar {
-        padding: 3.5rem 0 5rem;
+      /* ═══ SIDEBAR ═══════════════════════════════════════════ */
+      /*
+         position:sticky with top offset keeps it visible while scrolling.
+         It must be a direct grid child of .page-shell — no wrapping div.
+      */
+      .sidebar {
         position: sticky;
-        top: 5rem;
+        top: 4rem;
+        padding: 3rem 1.5rem 3rem 2rem;
+        align-self: start;
+        max-height: calc(100vh - 5rem);
+        overflow-y: auto;
+        scrollbar-width: none;
       }
+      .sidebar::-webkit-scrollbar { display: none; }
 
-      .sidebar-section-label {
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.6rem;
+      /* Sidebar section */
+      .sb-section { margin-bottom: 2rem; }
+      .sb-section:last-child { margin-bottom: 0; }
+
+      .sb-label {
+        font-size: 0.6rem; font-weight: 600; letter-spacing: 0.26em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.4rem;
       }
-
-      .sidebar-divider {
-        width: 2.5rem;
-        height: 2px;
-        background: var(--gold);
-        margin-bottom: 1.1rem;
-      }
-
-      /* TOC */
-      .toc-nav {
-        margin-bottom: 2.5rem;
-      }
-
-      .toc-list {
-        list-style: none;
-        padding: 0;
-        border-left: 2px solid var(--cream-dark);
-      }
-
-      .toc-list li { margin: 0; }
-
-      .toc-list a {
-        display: block;
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.93rem;
-        line-height: 1.45;
-        color: var(--muted);
-        text-decoration: none;
-        padding: 0.42rem 0 0.42rem 1rem;
-        border-left: 2px solid transparent;
-        margin-left: -2px;
-        transition: color 0.2s, border-color 0.2s;
-      }
-
-      .toc-list a:hover { color: var(--navy); border-left-color: var(--teal); }
-      .toc-list a.active { color: var(--navy); border-left-color: var(--gold); font-weight: 600; }
-
-      .toc-list .toc-sub a {
-        font-size: 0.84rem;
-        padding-left: 1.75rem;
-        color: rgba(107,107,107,0.7);
+      .sb-divider {
+        width: 1.75rem; height: 2px;
+        background: var(--gold); margin-bottom: 1rem;
       }
 
       /* Meta card */
-      .sidebar-meta {
+      .sb-meta {
         border: 1px solid var(--cream-dark);
         background: var(--white);
-        margin-bottom: 2rem;
       }
-
-      .sidebar-meta-row {
-        padding: 0.8rem 1.1rem;
+      .sb-meta-row {
+        padding: 0.65rem 0.9rem;
         border-bottom: 1px solid var(--cream-dark);
       }
-
-      .sidebar-meta-row:last-child { border-bottom: none; }
-
-      .sidebar-meta-key {
-        font-size: 0.64rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.15rem;
+      .sb-meta-row:last-child { border-bottom: none; }
+      .sb-meta-key {
+        font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.1rem;
       }
+      .sb-meta-val { font-size: 0.86rem; color: var(--charcoal); line-height: 1.38; }
 
-      .sidebar-meta-val {
-        font-size: 0.92rem;
-        color: var(--charcoal);
-        line-height: 1.4;
+      /* TOC */
+      .toc-list { list-style: none; padding: 0; border-left: 2px solid var(--cream-dark); }
+      .toc-list li { margin: 0; }
+      .toc-list a {
+        display: block; font-family: 'Crimson Pro', serif;
+        font-size: 0.86rem; line-height: 1.38; color: var(--muted);
+        text-decoration: none; padding: 0.35rem 0 0.35rem 0.85rem;
+        border-left: 2px solid transparent; margin-left: -2px;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .toc-list a:hover { color: var(--navy); border-left-color: var(--teal); }
+      .toc-list a.active { color: var(--navy); border-left-color: var(--gold); font-weight: 600; }
+      .toc-list .toc-h3 a { font-size: 0.78rem; padding-left: 1.5rem; color: rgba(107,107,107,0.65); }
+
+      /* Related articles */
+      .related-item {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--cream-dark);
+        display: block; text-decoration: none;
+        transition: background 0.15s;
+      }
+      .related-item:first-child { border-top: 1px solid var(--cream-dark); }
+      .related-item:hover { background: rgba(27,94,111,0.04); }
+      .related-cat {
+        font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em;
+        text-transform: uppercase; color: var(--teal); display: block;
+        margin-bottom: 0.2rem;
+      }
+      .related-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.95rem; font-weight: 600; color: var(--navy);
+        line-height: 1.28;
       }
 
       /* Share */
-      .share-buttons {
-        display: flex;
-        gap: 0.5rem;
-      }
-
+      .share-row { display: flex; gap: 0.5rem; }
       .share-btn {
-        flex: 1;
-        text-align: center;
-        padding: 0.6rem 0.4rem;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        text-decoration: none;
-        border: 1px solid var(--cream-dark);
-        color: var(--muted);
-        background: none;
-        cursor: pointer;
-        font-family: 'Crimson Pro', serif;
+        flex: 1; text-align: center;
+        padding: 0.55rem 0.25rem;
+        font-size: 0.66rem; font-weight: 600; letter-spacing: 0.08em;
+        text-transform: uppercase; border: 1px solid var(--cream-dark);
+        color: var(--muted); background: none; cursor: pointer;
+        font-family: 'Crimson Pro', serif; text-decoration: none;
         transition: background 0.2s, color 0.2s, border-color 0.2s;
+        display: flex; align-items: center; justify-content: center;
       }
+      .share-btn:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
 
-      .share-btn:hover {
-        background: var(--navy);
-        color: var(--gold);
-        border-color: var(--navy);
+      /* Ad slot */
+      .sb-ad {
+        border: 1px dashed var(--cream-dark);
+        padding: 1.75rem 0.75rem; text-align: center;
+        background: rgba(237,230,213,0.3);
       }
+      .sb-ad-tag {
+        font-size: 0.55rem; font-weight: 600; letter-spacing: 0.2em;
+        text-transform: uppercase; color: rgba(107,107,107,0.35);
+        display: block; margin-bottom: 0.4rem;
+      }
+      .sb-ad-note { font-size: 0.78rem; color: rgba(107,107,107,0.35); line-height: 1.5; }
 
-      /* ─── RESPONSIVE ───────────────────────────────────────── */
+      /* ═══ RESPONSIVE ════════════════════════════════════════ */
       @media (max-width: 1024px) {
-        .article-outer {
-          grid-template-columns: 1fr 240px;
-          gap: 3rem;
-        }
+        .page-shell { grid-template-columns: 1fr 240px; }
+        .article-col { padding-right: 2.5rem; }
       }
 
-      @media (max-width: 860px) {
-        .article-outer {
+      @media (max-width: 820px) {
+        /* Stack: article on top, sidebar below */
+        .page-shell {
           grid-template-columns: 1fr;
-          gap: 0;
         }
-
-        .article-sidebar {
+        .article-col {
+          border-right: none;
+          padding-right: 2rem;
+        }
+        .sidebar {
           position: static;
-          padding-top: 0;
-          padding-bottom: 3rem;
-          border-top: 1px solid var(--cream-dark);
+          max-height: none;
+          overflow-y: visible;
+          border-top: 2px solid var(--cream-dark);
+          padding: 2rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
         }
+        .sb-section { margin-bottom: 0; }
+        .toc-list { display: none; }  /* TOC hidden on mobile — too long */
       }
 
-      @media (max-width: 640px) {
-        .article-hero { padding: 4rem 1.25rem 3rem; }
-        .article-outer { padding: 0 1.25rem; }
-        .article-hero-inner { padding: 0 1.25rem; }
-        body { font-size: 18px; }
+      @media (max-width: 560px) {
+        .article-hero { padding: 3.5rem 1.25rem 2.75rem; }
+        .hero-inner, .article-col { padding-left: 1.25rem; padding-right: 1.25rem; }
+        .sidebar { grid-template-columns: 1fr; padding: 1.5rem 1.25rem; }
       }
     </style>
   </head>
@@ -494,175 +414,195 @@ function formatDate(dateStr: string) {
     <div id="progress-bar"></div>
     <Header />
 
-    <!-- ══════════════════════════════════════════ ARTICLE HERO -->
+    <!-- ════════════════════════════════════════════════ HERO -->
     <section class="article-hero">
-      <div class="article-hero-inner">
+      <div class="hero-inner">
         <nav class="breadcrumb">
           <a href={`${base}/`}>Home</a>
-          <span>/</span>
+          <span class="sep">/</span>
           <a href={`${base}/research`}>Research</a>
-          <span>/</span>
-          <span style="color:rgba(255,255,255,0.55)">{frontmatter.type || 'Essay'}</span>
+          <span class="sep">/</span>
+          <span>{frontmatter.type || 'Essay'}</span>
         </nav>
-
-        {frontmatter.category && (
-          <span class="article-category">{frontmatter.category}</span>
-        )}
-
+        {frontmatter.category && <span class="article-cat">{frontmatter.category}</span>}
         <h1>{frontmatter.title}</h1>
-
         <div class="article-byline">
           {frontmatter.author && <span class="byline-author">{frontmatter.author}</span>}
-          {frontmatter.author && frontmatter.date && <span class="byline-sep">◆</span>}
+          {frontmatter.author && frontmatter.date && <span class="byline-dot">◆</span>}
           {frontmatter.date && <span class="byline-date">{formatDate(String(frontmatter.date))}</span>}
           {frontmatter.type && <span class="byline-type">{frontmatter.type}</span>}
         </div>
       </div>
     </section>
 
-    <main>
-      <div class="article-outer">
+    <!-- ══════════════════════ TWO-COLUMN SHELL (grid) ════════ -->
+    <div class="page-shell">
 
-        <!-- ══════════════════════════════════════ ARTICLE BODY -->
-        <div class="article-main">
-          <a href={`${base}/research`} class="back-link">← Back to Research</a>
-
-          <article class="prose" id="article-content">
-            <slot />
-          </article>
-
-          {frontmatter.authorBio && (
-            <div class="author-bio">
-              <span class="author-bio-label">About the Author</span>
-              <div class="author-bio-name">{frontmatter.author}</div>
-              <p class="author-bio-text">{frontmatter.authorBio}</p>
-            </div>
-          )}
-        </div>
-
-        <!-- ══════════════════════════════════════════ SIDEBAR -->
-        <aside class="article-sidebar">
-
-          <!-- Table of Contents -->
-          <div class="toc-nav">
-            <span class="sidebar-section-label">Contents</span>
-            <div class="sidebar-divider"></div>
-            <nav aria-label="Table of contents">
-              <ul class="toc-list" id="toc-list">
-                <!-- Populated by JS -->
-              </ul>
-            </nav>
+      <!-- LEFT: Article text -->
+      <div class="article-col">
+        <a href={`${base}/research`} class="back-link">← Back to Research</a>
+        <article class="prose" id="article-content">
+          <slot />
+        </article>
+        {frontmatter.authorBio && (
+          <div class="author-bio">
+            <span class="bio-label">About the Author</span>
+            <div class="bio-name">{frontmatter.author}</div>
+            <p class="bio-text">{frontmatter.authorBio}</p>
           </div>
+        )}
+      </div>
 
-          <!-- Article Meta -->
-          <div class="sidebar-meta">
+      <!-- RIGHT: Sidebar -->
+      <aside class="sidebar" id="article-sidebar">
+
+        <!-- 1. Article details -->
+        <div class="sb-section">
+          <span class="sb-label">Article Details</span>
+          <div class="sb-divider"></div>
+          <div class="sb-meta">
             {frontmatter.author && (
-              <div class="sidebar-meta-row">
-                <span class="sidebar-meta-key">Author</span>
-                <span class="sidebar-meta-val">{frontmatter.author}</span>
+              <div class="sb-meta-row">
+                <span class="sb-meta-key">Author</span>
+                <span class="sb-meta-val">{frontmatter.author}</span>
               </div>
             )}
             {frontmatter.date && (
-              <div class="sidebar-meta-row">
-                <span class="sidebar-meta-key">Published</span>
-                <span class="sidebar-meta-val">{formatDate(String(frontmatter.date))}</span>
+              <div class="sb-meta-row">
+                <span class="sb-meta-key">Published</span>
+                <span class="sb-meta-val">{formatDate(String(frontmatter.date))}</span>
               </div>
             )}
             {frontmatter.type && (
-              <div class="sidebar-meta-row">
-                <span class="sidebar-meta-key">Format</span>
-                <span class="sidebar-meta-val">{frontmatter.type}</span>
+              <div class="sb-meta-row">
+                <span class="sb-meta-key">Format</span>
+                <span class="sb-meta-val">{frontmatter.type}</span>
               </div>
             )}
             {frontmatter.category && (
-              <div class="sidebar-meta-row">
-                <span class="sidebar-meta-key">Topic</span>
-                <span class="sidebar-meta-val">{frontmatter.category}</span>
+              <div class="sb-meta-row">
+                <span class="sb-meta-key">Topic</span>
+                <span class="sb-meta-val">{frontmatter.category}</span>
               </div>
             )}
+            <div class="sb-meta-row">
+              <span class="sb-meta-key">Publisher</span>
+              <span class="sb-meta-val">Nahj Institute</span>
+            </div>
+            <div class="sb-meta-row">
+              <span class="sb-meta-key">Licence</span>
+              <span class="sb-meta-val">CC BY 4.0</span>
+            </div>
           </div>
+        </div>
 
-          <!-- Share -->
-          <span class="sidebar-section-label">Share</span>
-          <div class="sidebar-divider"></div>
-          <div class="share-buttons">
+        <!-- 2. Table of Contents (auto-built by JS) -->
+        <div class="sb-section">
+          <span class="sb-label">Contents</span>
+          <div class="sb-divider"></div>
+          <nav aria-label="Article contents">
+            <ul class="toc-list" id="toc-list"></ul>
+          </nav>
+        </div>
+
+        <!-- 3. Read More / Related -->
+        <div class="sb-section">
+          <span class="sb-label">Read More</span>
+          <div class="sb-divider"></div>
+          <div id="related-links">
+            <!-- Populated by JS from other articles on the page or static fallback -->
+            <a href={`${base}/research`} class="related-item">
+              <span class="related-cat">Theology & Politics</span>
+              <span class="related-title">Beyond the Headlines: Islamic Governance and Mysticism</span>
+            </a>
+            <a href={`${base}/research`} class="related-item">
+              <span class="related-cat">All Publications</span>
+              <span class="related-title">Browse all research and essays →</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4. Share -->
+        <div class="sb-section">
+          <span class="sb-label">Share</span>
+          <div class="sb-divider"></div>
+          <div class="share-row">
             <button class="share-btn" id="share-copy">Copy Link</button>
-            <a class="share-btn" id="share-twitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
+            <a class="share-btn" id="share-tw" href="#" target="_blank" rel="noopener">Twitter / X</a>
           </div>
+        </div>
 
-        </aside>
-      </div>
-    </main>
+        <!-- 5. Ad slot -->
+        <div class="sb-section">
+          <div class="sb-ad">
+            <span class="sb-ad-tag">Advertisement</span>
+            <p class="sb-ad-note">Ad space available.<br />Contact us to enquire.</p>
+          </div>
+        </div>
+
+      </aside>
+    </div><!-- /page-shell -->
 
     <Footer />
 
     <script>
-      // Reading progress bar
+      // ── Progress bar
       const bar = document.getElementById('progress-bar');
-      window.addEventListener('scroll', () => {
-        const el = document.documentElement;
-        const scrolled = el.scrollTop || document.body.scrollTop;
-        const total = el.scrollHeight - el.clientHeight;
-        if (bar) bar.style.width = `${Math.min((scrolled / total) * 100, 100)}%`;
-      }, { passive: true });
+      if (bar) {
+        window.addEventListener('scroll', () => {
+          const d = document.documentElement;
+          bar.style.width = `${Math.min((d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100, 100)}%`;
+        }, { passive: true });
+      }
 
-      // Build TOC from h2 headings
+      // ── Wrap tables in scroll container
+      document.querySelectorAll('.prose table').forEach(t => {
+        const w = document.createElement('div');
+        w.className = 'table-outer';
+        t.parentNode?.insertBefore(w, t);
+        w.appendChild(t);
+      });
+
+      // ── Build TOC from h2 / h3 in article
       const article = document.getElementById('article-content');
       const tocList = document.getElementById('toc-list');
-
       if (article && tocList) {
-        const headings = article.querySelectorAll('h2, h3');
-        let hasHeadings = false;
-
-        headings.forEach((h, i) => {
-          if (!h.id) h.id = `section-${i}`;
-          hasHeadings = true;
-
+        const heads = Array.from(article.querySelectorAll('h2, h3'));
+        heads.forEach((h, i) => {
+          if (!h.id) h.id = `sec-${i}`;
           const li = document.createElement('li');
-          if (h.tagName === 'H3') li.className = 'toc-sub';
-
+          if (h.tagName === 'H3') li.className = 'toc-h3';
           const a = document.createElement('a');
           a.href = `#${h.id}`;
-          a.textContent = h.textContent || '';
+          a.textContent = h.textContent ?? '';
           li.appendChild(a);
           tocList.appendChild(li);
         });
 
-        // Active highlighting on scroll
-        if (hasHeadings) {
-          const tocLinks = tocList.querySelectorAll('a');
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                tocLinks.forEach(l => l.classList.remove('active'));
-                const match = tocList.querySelector(`a[href="#${entry.target.id}"]`);
-                if (match) match.classList.add('active');
-              }
-            });
-          }, { rootMargin: '-10% 0px -75% 0px' });
-
-          headings.forEach(h => observer.observe(h));
-        }
-      }
-
-      // Share: copy link
-      const copyBtn = document.getElementById('share-copy');
-      if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-          navigator.clipboard.writeText(window.location.href).then(() => {
-            copyBtn.textContent = 'Copied!';
-            setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 2000);
+        // Highlight active section on scroll
+        const links = tocList.querySelectorAll('a');
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              links.forEach(l => l.classList.remove('active'));
+              tocList.querySelector(`a[href="#${e.target.id}"]`)?.classList.add('active');
+            }
           });
-        });
+        }, { rootMargin: '-8% 0px -80% 0px', threshold: 0 });
+        heads.forEach(h => obs.observe(h));
       }
 
-      // Share: Twitter
-      const twitterBtn = document.getElementById('share-twitter');
-      if (twitterBtn) {
-        const title = encodeURIComponent(document.title);
-        const url = encodeURIComponent(window.location.href);
-        twitterBtn.setAttribute('href', `https://twitter.com/intent/tweet?text=${title}&url=${url}`);
-      }
+      // ── Share buttons
+      document.getElementById('share-copy')?.addEventListener('click', function() {
+        navigator.clipboard.writeText(location.href).then(() => {
+          this.textContent = 'Copied!';
+          setTimeout(() => { this.textContent = 'Copy Link'; }, 2000);
+        });
+      });
+      const tw = document.getElementById('share-tw');
+      if (tw) tw.setAttribute('href',
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(document.title)}&url=${encodeURIComponent(location.href)}`
+      );
     </script>
   </body>
 </html>
