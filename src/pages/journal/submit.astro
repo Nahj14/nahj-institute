@@ -1,0 +1,613 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Submit — NAHJ: Journal of Transdisciplinary Theory</title>
+    <meta name="description" content="Submit a manuscript, apply as a reviewer, apply for editorial board membership, or propose a special issue for NAHJ: The Journal of Transdisciplinary Theory." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root{--navy:#0C1B2E;--teal:#1B5E6F;--gold:#C8A252;--gold-light:#E2BC75;--cream:#F7F2E8;--cream-dark:#EDE6D5;--charcoal:#2B2B2B;--muted:#6B6B6B;--white:#FFFFFF;}
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{background:var(--cream);color:var(--charcoal);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+      .container{max-width:1120px;margin:0 auto;padding:0 2rem;}
+      .sl{font-size:0.74rem;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);display:block;font-family:'Crimson Pro',serif;}
+      .dg{width:3.5rem;height:2px;background:var(--gold);margin:0.8rem 0 1.4rem;}
+
+      /* HERO */
+      .hero{background:var(--navy);padding:5.5rem 2rem 4.5rem;position:relative;overflow:hidden;}
+      .hero::before{content:'نهج';font-family:'Amiri',serif;font-size:clamp(10rem,20vw,18rem);font-weight:700;color:rgba(255,255,255,0.028);position:absolute;right:-1rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;user-select:none;}
+      .hero-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1;}
+      .bc{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-bottom:2rem;display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;}
+      .bc a{color:rgba(255,255,255,0.32);text-decoration:none;transition:color 0.2s;}
+      .bc a:hover{color:var(--gold);}
+      .bc span{color:rgba(255,255,255,0.14);}
+      .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,5.5vw,4.4rem);font-weight:600;line-height:1.07;color:var(--white);max-width:780px;margin-bottom:1.25rem;}
+      .hero h1 em{font-style:italic;color:var(--gold-light);}
+      .hero-sub{font-size:1.08rem;color:rgba(255,255,255,0.55);max-width:580px;font-weight:300;line-height:1.88;}
+
+      /* TAB NAV */
+      .tab-nav{background:var(--cream-dark);border-bottom:1px solid rgba(0,0,0,0.07);position:sticky;top:68px;z-index:80;}
+      .tab-nav-inner{max-width:1120px;margin:0 auto;padding:0 2rem;display:flex;overflow-x:auto;scrollbar-width:none;}
+      .tab-nav-inner::-webkit-scrollbar{display:none;}
+      .tab-btn{font-family:'Crimson Pro',serif;font-size:0.78rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:1.05rem 1.4rem;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s;text-decoration:none;display:block;}
+      .tab-btn:hover{color:var(--navy);}
+      .tab-btn.active{color:var(--navy);border-bottom-color:var(--gold);}
+
+      /* SECTIONS */
+      .submit-section{padding:5.5rem 2rem;scroll-margin-top:120px;}
+      .submit-section:nth-child(even){background:var(--cream-dark);}
+      .submit-section:nth-child(odd){background:var(--cream);}
+      .sec-layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
+      .sec-info{position:sticky;top:8rem;}
+      .sec-info h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--navy);line-height:1.08;margin-top:0.4rem;}
+      .sec-info p{font-size:0.96rem;color:var(--muted);line-height:1.82;font-weight:300;margin-top:1rem;}
+      .info-note{padding:1rem 1.25rem;border-left:3px solid var(--teal);background:rgba(27,94,111,0.06);font-size:0.88rem;color:var(--muted);line-height:1.65;margin-top:1.5rem;}
+      .info-note a{color:var(--teal);text-decoration:underline;text-underline-offset:2px;}
+      .spec-mini{border:1px solid var(--cream-dark);margin-top:1.5rem;}
+      .sm-row{display:flex;padding:0.7rem 1rem;border-bottom:1px solid var(--cream-dark);gap:1rem;align-items:baseline;}
+      .sm-row:last-child{border-bottom:none;}
+      .sm-k{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);flex-shrink:0;min-width:100px;}
+      .sm-v{font-size:0.9rem;color:var(--charcoal);}
+
+      /* FORM */
+      .form-wrap{}
+      .form-group{margin-bottom:1.7rem;}
+      .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.7rem;}
+      .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.7rem;}
+      label{display:block;font-size:0.74rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);margin-bottom:0.48rem;}
+      label .req{color:var(--gold);}
+      input,select,textarea{width:100%;padding:0.85rem 1.1rem;border:1px solid rgba(0,0,0,0.12);background:var(--white);font-family:'Crimson Pro',serif;font-size:1rem;color:var(--charcoal);outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;border-radius:0;}
+      input:focus,select:focus,textarea:focus{border-color:var(--teal);}
+      input::placeholder,textarea::placeholder{color:#bbb;}
+      select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6B6B'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer;}
+      textarea{min-height:130px;resize:vertical;line-height:1.65;}
+      .file-input-wrap{padding:0.7rem 0;font-size:0.95rem;color:var(--muted);}
+      .form-divider{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--navy);border-bottom:1px solid var(--cream-dark);padding-bottom:0.5rem;margin:2.5rem 0 1.75rem;}
+      .form-footer{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-top:2.25rem;padding-top:1.75rem;border-top:1px solid var(--cream-dark);}
+      .btn-submit{background:var(--navy);color:var(--gold);font-family:'Crimson Pro',serif;font-size:0.88rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.95rem 2.5rem;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;display:inline-block;}
+      .btn-submit:hover{background:var(--teal);}
+      .privacy-note{font-size:0.82rem;color:var(--muted);line-height:1.6;flex:1;}
+      .privacy-note a{color:var(--teal);}
+      .checkbox-group{display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:1rem;}
+      .checkbox-group input[type="checkbox"]{width:auto;margin-top:0.3rem;flex-shrink:0;accent-color:var(--teal);}
+      .checkbox-group label{font-size:0.93rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--charcoal);margin-bottom:0;}
+
+      /* CHECKLIST BOX */
+      .checklist-box{background:var(--cream-dark);padding:1.5rem 1.75rem;margin-bottom:1.75rem;border-left:3px solid var(--gold);}
+      .checklist-box h4{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.9rem;}
+      .checklist-box ul{list-style:none;padding:0;}
+      .checklist-box ul li{font-size:0.9rem;color:var(--charcoal);padding:0.22rem 0 0.22rem 1.2rem;position:relative;line-height:1.55;}
+      .checklist-box ul li::before{content:'◆';font-size:0.28rem;color:var(--gold);position:absolute;left:0;top:0.6rem;}
+
+      @media(max-width:900px){
+        .sec-layout{grid-template-columns:1fr;gap:2.5rem;}
+        .sec-info{position:static;}
+        .form-row,.form-row-3{grid-template-columns:1fr;}
+      }
+      @media(max-width:768px){.hero{padding:4rem 1.5rem 3rem;}}
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <section class="hero">
+      <div class="hero-inner">
+        <nav class="bc">
+          <a href={`${base}/`}>Home</a>
+          <span>/</span>
+          <a href={`${base}/journal`}>Nahj Journal</a>
+          <span>/</span>
+          <span style="color:rgba(255,255,255,0.58)">Submit</span>
+        </nav>
+        <h1>Submission &amp;<br /><em>Opportunities</em></h1>
+        <p class="hero-sub">NAHJ welcomes manuscript submissions, reviewer applications, editorial board enquiries, and special issue proposals. All submissions are handled through the forms below.</p>
+      </div>
+    </section>
+
+    <!-- TAB NAV -->
+    <nav class="tab-nav">
+      <div class="tab-nav-inner">
+        <a href="#manuscript" class="tab-btn active">Submit Manuscript</a>
+        <a href="#reviewer" class="tab-btn">Apply as Reviewer</a>
+        <a href="#board" class="tab-btn">Editorial Board</a>
+        <a href="#special-issue" class="tab-btn">Propose Special Issue</a>
+        <a href="#guest-editor" class="tab-btn">Apply as Guest Editor</a>
+      </div>
+    </nav>
+
+    <main>
+
+      <!-- ══ MANUSCRIPT SUBMISSION ══ -->
+      <section class="submit-section" id="manuscript">
+        <div class="sec-layout">
+          <div class="sec-info">
+            <span class="sl">01</span>
+            <div class="dg"></div>
+            <h2>Submit a Manuscript</h2>
+            <p>NAHJ accepts original research articles and review essays for double-blind peer review. Submission is free of charge. There are no article processing charges.</p>
+            <div class="spec-mini">
+              <div class="sm-row"><span class="sm-k">Articles</span><span class="sm-v">6,000–10,000 words</span></div>
+              <div class="sm-row"><span class="sm-k">Review Essays</span><span class="sm-v">3,000–6,000 words</span></div>
+              <div class="sm-row"><span class="sm-k">Abstract</span><span class="sm-v">150–200 words</span></div>
+              <div class="sm-row"><span class="sm-k">Referencing</span><span class="sm-v">Chicago author-date</span></div>
+              <div class="sm-row"><span class="sm-k">Format</span><span class="sm-v">Word (.docx), anonymised</span></div>
+              <div class="sm-row"><span class="sm-k">Decision</span><span class="sm-v">10–14 weeks</span></div>
+            </div>
+            <div class="info-note">Read the full <a href={`${base}/journal#guidelines`}>Author Guidelines</a> before submitting. Manuscripts that do not conform to the guidelines will be returned without review.</div>
+          </div>
+
+          <div class="form-wrap">
+            <div class="checklist-box">
+              <h4>Pre-Submission Checklist</h4>
+              <ul>
+                <li>Manuscript is within the specified word count</li>
+                <li>All author names and affiliations have been removed from the manuscript file and file metadata</li>
+                <li>Abstract is 150 to 200 words with no citations</li>
+                <li>Chicago author-date referencing throughout</li>
+                <li>File submitted as .docx with line and page numbers activated</li>
+                <li>This manuscript is not under consideration elsewhere</li>
+              </ul>
+            </div>
+
+            <form action="https://formspree.io/f/YOUR_JOURNAL_FORM_ID" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="_subject" value="NAHJ Manuscript Submission" />
+              <input type="hidden" name="_next" value="https://nahj14.github.io/Nahj-Institute/journal?submitted=true" />
+
+              <div class="form-divider">Author Information</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name <span class="req">*</span></label>
+                  <input type="text" name="fname" placeholder="First name" required />
+                </div>
+                <div class="form-group">
+                  <label>Last Name <span class="req">*</span></label>
+                  <input type="text" name="lname" placeholder="Last name" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email Address <span class="req">*</span></label>
+                  <input type="email" name="email" placeholder="your@email.com" required />
+                </div>
+                <div class="form-group">
+                  <label>Institutional Affiliation</label>
+                  <input type="text" name="affiliation" placeholder="University or institution" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Country</label>
+                  <input type="text" name="country" placeholder="Country of residence" />
+                </div>
+                <div class="form-group">
+                  <label>ORCID iD</label>
+                  <input type="text" name="orcid" placeholder="0000-0000-0000-0000" />
+                </div>
+              </div>
+
+              <div class="form-divider">Manuscript Details</div>
+              <div class="form-group">
+                <label>Title of Manuscript <span class="req">*</span></label>
+                <input type="text" name="ms_title" placeholder="Full title of your submission" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Submission Type <span class="req">*</span></label>
+                  <select name="ms_type" required>
+                    <option value="" disabled selected>Select type</option>
+                    <option>Research Article</option>
+                    <option>Review Essay</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Primary Thematic Pillar <span class="req">*</span></label>
+                  <select name="ms_pillar" required>
+                    <option value="" disabled selected>Select pillar</option>
+                    <option>Cultural & Historical Studies</option>
+                    <option>Neuro-Humanities & Cognitive Theory</option>
+                    <option>Critical Modernity & Social Dynamics</option>
+                    <option>Cross-pillar</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Abstract <span class="req">*</span></label>
+                <textarea name="abstract" placeholder="150 to 200 words. No citations. Written for an interdisciplinary audience." required></textarea>
+              </div>
+              <div class="form-group">
+                <label>Keywords <span class="req">*</span></label>
+                <input type="text" name="keywords" placeholder="5 to 8 terms, comma-separated" required />
+              </div>
+              <div class="form-group">
+                <label>Word Count <span class="req">*</span></label>
+                <input type="number" name="wordcount" placeholder="Inclusive of notes and bibliography" required />
+              </div>
+              <div class="form-group">
+                <label>Covering Letter</label>
+                <textarea name="cover_letter" placeholder="Optional. Contextual information for the editor: funding sources, conflicts of interest, prior circulation as working paper, etc. This letter is withheld from reviewers." style="min-height:100px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Author Biography <span class="req">*</span></label>
+                <textarea name="bio" placeholder="50 to 80 words. Name, institutional affiliation, and relevant research interests. This is withheld from reviewers." style="min-height:90px;" required></textarea>
+              </div>
+
+              <div class="form-divider">File Upload</div>
+              <div class="form-group">
+                <label>Anonymised Manuscript File <span class="req">*</span></label>
+                <div class="file-input-wrap">
+                  <input type="file" name="manuscript" accept=".doc,.docx" required />
+                </div>
+                <p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;">Word (.docx) only. All author names must be removed from the file and file metadata.</p>
+              </div>
+
+              <div class="form-divider">Declaration</div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="declare1" name="declaration_original" value="yes" required />
+                <label for="declare1">I confirm that this manuscript is original work, has not been published previously, and is not under consideration for publication elsewhere.</label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="declare2" name="declaration_guidelines" value="yes" required />
+                <label for="declare2">I confirm that this manuscript has been prepared in accordance with the NAHJ Author Guidelines and that all identifying information has been removed from the manuscript file.</label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="declare3" name="declaration_ethics" value="yes" required />
+                <label for="declare3">I confirm that all authors listed have made a substantive intellectual contribution to this work and that I have their consent to submit on their behalf.</label>
+              </div>
+
+              <div class="form-footer">
+                <button type="submit" class="btn-submit">Submit Manuscript</button>
+                <p class="privacy-note">Submission data is processed securely. Your information is used solely to manage the peer review process and is not shared with third parties.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ REVIEWER APPLICATION ══ -->
+      <section class="submit-section" id="reviewer">
+        <div class="sec-layout">
+          <div class="sec-info">
+            <span class="sl">02</span>
+            <div class="dg"></div>
+            <h2>Apply as a Reviewer</h2>
+            <p>NAHJ is building its reviewer database ahead of the inaugural issue. Reviewers are invited on a per-submission basis and are not expected to commit to a fixed volume of reviews per year.</p>
+            <p style="margin-top:1rem;">Reviewers receive an acknowledgement of their contribution in each issue in which their review work is completed.</p>
+            <div class="spec-mini">
+              <div class="sm-row"><span class="sm-k">Commitment</span><span class="sm-v">Per-submission invitation</span></div>
+              <div class="sm-row"><span class="sm-k">Review window</span><span class="sm-v">Four weeks per submission</span></div>
+              <div class="sm-row"><span class="sm-k">Process</span><span class="sm-v">Double-blind</span></div>
+            </div>
+          </div>
+
+          <div class="form-wrap">
+            <form action="https://formspree.io/f/YOUR_REVIEWER_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="NAHJ Reviewer Application" />
+
+              <div class="form-divider">Personal Details</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name <span class="req">*</span></label>
+                  <input type="text" name="fname" placeholder="First name" required />
+                </div>
+                <div class="form-group">
+                  <label>Last Name <span class="req">*</span></label>
+                  <input type="text" name="lname" placeholder="Last name" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email Address <span class="req">*</span></label>
+                  <input type="email" name="email" placeholder="your@email.com" required />
+                </div>
+                <div class="form-group">
+                  <label>ORCID iD</label>
+                  <input type="text" name="orcid" placeholder="0000-0000-0000-0000" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Current Position <span class="req">*</span></label>
+                  <select name="position" required>
+                    <option value="" disabled selected>Select</option>
+                    <option>Professor</option>
+                    <option>Associate Professor</option>
+                    <option>Assistant Professor / Lecturer</option>
+                    <option>Postdoctoral Researcher</option>
+                    <option>Independent Researcher</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Institutional Affiliation <span class="req">*</span></label>
+                  <input type="text" name="affiliation" placeholder="University or institution" required />
+                </div>
+              </div>
+
+              <div class="form-divider">Areas of Expertise</div>
+              <div class="form-group">
+                <label>Primary Thematic Pillar <span class="req">*</span></label>
+                <select name="primary_pillar" required>
+                  <option value="" disabled selected>Select your primary area</option>
+                  <option>Cultural & Historical Studies</option>
+                  <option>Neuro-Humanities & Cognitive Theory</option>
+                  <option>Critical Modernity & Social Dynamics</option>
+                  <option>Multiple pillars</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Specific Research Specialisms <span class="req">*</span></label>
+                <textarea name="specialisms" placeholder="Describe your specific research specialisms and the methodological approaches you are most qualified to evaluate. Please be specific." required style="min-height:110px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Representative Publications</label>
+                <textarea name="publications" placeholder="List two or three recent publications relevant to the journal's scope. Include title, journal, and year." style="min-height:100px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Reviews completed per year (approximate)</label>
+                <select name="review_capacity">
+                  <option value="" disabled selected>Select</option>
+                  <option>1–2</option>
+                  <option>3–5</option>
+                  <option>6–10</option>
+                  <option>More than 10</option>
+                </select>
+              </div>
+
+              <div class="form-footer">
+                <button type="submit" class="btn-submit">Submit Application</button>
+                <p class="privacy-note">Reviewer details are held confidentially and used only to match submissions to appropriate expertise.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ EDITORIAL BOARD ══ -->
+      <section class="submit-section" id="board">
+        <div class="sec-layout">
+          <div class="sec-info">
+            <span class="sl">03</span>
+            <div class="dg"></div>
+            <h2>Apply for Editorial Board Membership</h2>
+            <p>The editorial board of NAHJ provides strategic scholarly guidance, assists with reviewer identification, and contributes to the long-term intellectual direction of the journal. The board is international in composition.</p>
+            <p style="margin-top:1rem;">Board members are expected to review two to four manuscripts per year and to advise the editor on matters of scope and editorial policy as required.</p>
+          </div>
+
+          <div class="form-wrap">
+            <form action="https://formspree.io/f/YOUR_BOARD_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="NAHJ Editorial Board Application" />
+
+              <div class="form-divider">Personal Details</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name <span class="req">*</span></label>
+                  <input type="text" name="fname" required placeholder="First name" />
+                </div>
+                <div class="form-group">
+                  <label>Last Name <span class="req">*</span></label>
+                  <input type="text" name="lname" required placeholder="Last name" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" name="email" required placeholder="your@email.com" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Title and Position <span class="req">*</span></label>
+                  <input type="text" name="position" required placeholder="e.g. Professor of Islamic Philosophy" />
+                </div>
+                <div class="form-group">
+                  <label>Institutional Affiliation <span class="req">*</span></label>
+                  <input type="text" name="affiliation" required placeholder="University or institution" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Country <span class="req">*</span></label>
+                <input type="text" name="country" required placeholder="Country" />
+              </div>
+
+              <div class="form-divider">Scholarly Profile</div>
+              <div class="form-group">
+                <label>Research Interests and Disciplinary Area <span class="req">*</span></label>
+                <textarea name="research_interests" required placeholder="Describe your research interests and the specific areas of NAHJ's scope where your expertise would be most valuable to the editorial process." style="min-height:120px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Selected Publications <span class="req">*</span></label>
+                <textarea name="publications" required placeholder="List three to five publications that represent the range and quality of your scholarly work. Include full bibliographic details." style="min-height:130px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Editorial or Review Experience</label>
+                <textarea name="editorial_experience" placeholder="Describe relevant editorial or peer review experience, including journals for which you have served as an editor or reviewer." style="min-height:100px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Statement of Interest <span class="req">*</span></label>
+                <textarea name="statement" required placeholder="In 100 to 200 words, explain why you wish to join the editorial board of NAHJ and what you would contribute to its scholarly programme." style="min-height:130px;"></textarea>
+              </div>
+
+              <div class="form-footer">
+                <button type="submit" class="btn-submit">Submit Application</button>
+                <p class="privacy-note">Applications are reviewed by the editor-in-chief. Candidates will be contacted individually.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SPECIAL ISSUE PROPOSAL ══ -->
+      <section class="submit-section" id="special-issue">
+        <div class="sec-layout">
+          <div class="sec-info">
+            <span class="sl">04</span>
+            <div class="dg"></div>
+            <h2>Propose a Special Issue</h2>
+            <p>NAHJ publishes one thematically focused special issue per volume. Special issues are guest-edited by specialists in the relevant area and managed through the journal's standard peer review process.</p>
+            <div class="spec-mini">
+              <div class="sm-row"><span class="sm-k">Frequency</span><span class="sm-v">One per volume</span></div>
+              <div class="sm-row"><span class="sm-k">Articles</span><span class="sm-v">6–10 articles</span></div>
+              <div class="sm-row"><span class="sm-k">Timeline</span><span class="sm-v">12–18 months</span></div>
+              <div class="sm-row"><span class="sm-k">Process</span><span class="sm-v">Standard double-blind review</span></div>
+            </div>
+          </div>
+
+          <div class="form-wrap">
+            <form action="https://formspree.io/f/YOUR_SPECIAL_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="NAHJ Special Issue Proposal" />
+
+              <div class="form-divider">Proposer Details</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name <span class="req">*</span></label>
+                  <input type="text" name="fname" required placeholder="First name" />
+                </div>
+                <div class="form-group">
+                  <label>Last Name <span class="req">*</span></label>
+                  <input type="text" name="lname" required placeholder="Last name" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email Address <span class="req">*</span></label>
+                  <input type="email" name="email" required placeholder="your@email.com" />
+                </div>
+                <div class="form-group">
+                  <label>Institutional Affiliation</label>
+                  <input type="text" name="affiliation" placeholder="University or institution" />
+                </div>
+              </div>
+
+              <div class="form-divider">Special Issue Details</div>
+              <div class="form-group">
+                <label>Proposed Title <span class="req">*</span></label>
+                <input type="text" name="si_title" required placeholder="Working title of the proposed special issue" />
+              </div>
+              <div class="form-group">
+                <label>Thematic Overview <span class="req">*</span></label>
+                <textarea name="si_overview" required placeholder="In 300 to 500 words, describe the intellectual rationale for the special issue. Explain the significance of the theme, its relationship to the journal's thematic pillars, and the scholarly conversation it advances or opens." style="min-height:150px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Relation to NAHJ Scope <span class="req">*</span></label>
+                <select name="si_pillar" required>
+                  <option value="" disabled selected>Primary thematic pillar</option>
+                  <option>Cultural & Historical Studies</option>
+                  <option>Neuro-Humanities & Cognitive Theory</option>
+                  <option>Critical Modernity & Social Dynamics</option>
+                  <option>Cross-pillar</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Proposed Contributors</label>
+                <textarea name="si_contributors" placeholder="List any scholars who have provisionally agreed to contribute. Note that all submissions must pass standard peer review regardless of prior agreement." style="min-height:110px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Proposed Timeline</label>
+                <input type="text" name="si_timeline" placeholder="e.g. Call for papers: September 2026 / Submission deadline: March 2027" />
+              </div>
+              <div class="form-group">
+                <label>Guest Editor's Qualifications <span class="req">*</span></label>
+                <textarea name="si_qualifications" required placeholder="Describe your scholarly qualifications to edit this issue and your experience of managing peer review processes." style="min-height:110px;"></textarea>
+              </div>
+
+              <div class="form-footer">
+                <button type="submit" class="btn-submit">Submit Proposal</button>
+                <p class="privacy-note">Proposals are reviewed by the editorial board. A response is provided within six weeks of receipt.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ GUEST EDITOR ══ -->
+      <section class="submit-section" id="guest-editor">
+        <div class="sec-layout">
+          <div class="sec-info">
+            <span class="sl">05</span>
+            <div class="dg"></div>
+            <h2>Apply as Guest Editor</h2>
+            <p>Guest editors are responsible for developing a call for papers, managing the peer review process for their issue, and writing an editorial introduction. The role is entirely voluntary and carries formal acknowledgement in the published issue.</p>
+            <div class="info-note">To propose a specific issue theme, please also complete the <a href="#special-issue">Special Issue Proposal form</a> above alongside this application.</div>
+          </div>
+
+          <div class="form-wrap">
+            <form action="https://formspree.io/f/YOUR_GUEST_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="NAHJ Guest Editor Application" />
+
+              <div class="form-divider">Personal Details</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name <span class="req">*</span></label>
+                  <input type="text" name="fname" required placeholder="First name" />
+                </div>
+                <div class="form-group">
+                  <label>Last Name <span class="req">*</span></label>
+                  <input type="text" name="lname" required placeholder="Last name" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email Address <span class="req">*</span></label>
+                  <input type="email" name="email" required placeholder="your@email.com" />
+                </div>
+                <div class="form-group">
+                  <label>Current Position <span class="req">*</span></label>
+                  <input type="text" name="position" required placeholder="e.g. Reader in Cultural History" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Institutional Affiliation <span class="req">*</span></label>
+                <input type="text" name="affiliation" required placeholder="University or institution" />
+              </div>
+
+              <div class="form-divider">Editorial Experience and Proposal</div>
+              <div class="form-group">
+                <label>Proposed Issue Theme <span class="req">*</span></label>
+                <textarea name="ge_theme" required placeholder="Briefly describe the theme you would propose to guest edit." style="min-height:100px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Relevant Experience <span class="req">*</span></label>
+                <textarea name="ge_experience" required placeholder="Describe any prior experience of guest editing, journal editing, or managing peer review processes." style="min-height:110px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Scholarly Qualifications <span class="req">*</span></label>
+                <textarea name="ge_qualifications" required placeholder="In 150 to 200 words, describe your scholarly qualifications and your network of relevant researchers who could contribute to or review submissions for the proposed issue." style="min-height:120px;"></textarea>
+              </div>
+
+              <div class="form-footer">
+                <button type="submit" class="btn-submit">Submit Application</button>
+                <p class="privacy-note">All applications are treated in confidence and reviewed by the editorial team.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <Footer />
+
+    <script>
+      // Highlight active tab on scroll
+      const sections = document.querySelectorAll('.submit-section');
+      const tabs = document.querySelectorAll('.tab-btn');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tabs.forEach(t => t.classList.remove('active'));
+            const id = entry.target.id;
+            const active = document.querySelector(`.tab-btn[href="#${id}"]`);
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { threshold: 0.3 });
+      sections.forEach(s => observer.observe(s));
+    </script>
+  </body>
+</html>

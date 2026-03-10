@@ -1,869 +1,559 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nahj Journal — Nahj Institute</title>
-    <meta name="description" content="The Nahj Journal is a peer-reviewed, open-access academic publication of Nahj Institute, appearing twice yearly across Islamic studies, political theory, philosophy, and the social sciences." />
+    <title>NAHJ: The Journal of Transdisciplinary Theory — Nahj Institute</title>
+    <meta name="description" content="NAHJ is an international, peer-reviewed, Diamond Open Access journal dedicated to rigorous investigation of the human condition through transdisciplinary theory." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
     <style>
-      :root {
-        --navy:       #0C1B2E;
-        --teal:       #1B5E6F;
-        --gold:       #C8A252;
-        --gold-light: #E2BC75;
-        --cream:      #F7F2E8;
-        --cream-dark: #EDE6D5;
-        --charcoal:   #2B2B2B;
-        --muted:      #6B6B6B;
-        --white:      #FFFFFF;
+      :root{--navy:#0C1B2E;--teal:#1B5E6F;--teal-light:#246E82;--gold:#C8A252;--gold-light:#E2BC75;--cream:#F7F2E8;--cream-dark:#EDE6D5;--charcoal:#2B2B2B;--muted:#6B6B6B;--white:#FFFFFF;}
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{background:var(--cream);color:var(--charcoal);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+      .container{max-width:1120px;margin:0 auto;padding:0 2rem;}
+      .sl{font-size:0.74rem;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);display:block;font-family:'Crimson Pro',serif;}
+      .dg{width:3.5rem;height:2px;background:var(--gold);margin:0.8rem 0 1.4rem;}
+      .dg.c{margin:0.8rem auto 1.4rem;}
+      .btn-gold{display:inline-block;background:var(--gold);color:var(--navy);font-family:'Crimson Pro',serif;font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.82rem 1.9rem;text-decoration:none;transition:background 0.2s,transform 0.15s;border:none;cursor:pointer;}
+      .btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);}
+      .btn-navy{display:inline-block;background:var(--navy);color:var(--gold);font-family:'Crimson Pro',serif;font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.82rem 1.9rem;text-decoration:none;transition:background 0.2s;border:none;cursor:pointer;}
+      .btn-navy:hover{background:var(--teal);}
+      .btn-ol{display:inline-block;border:1px solid var(--navy);color:var(--navy);font-family:'Crimson Pro',serif;font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.82rem 1.9rem;text-decoration:none;transition:background 0.2s,color 0.2s;}
+      .btn-ol:hover{background:var(--navy);color:var(--gold);}
+      .btn-ol-lt{display:inline-block;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);font-family:'Crimson Pro',serif;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.82rem 1.9rem;text-decoration:none;transition:border-color 0.2s,color 0.2s;}
+      .btn-ol-lt:hover{border-color:var(--gold);color:var(--gold-light);}
+
+      /* ── COMING SOON BANNER ── */
+      .cs-banner{background:var(--gold);padding:0.8rem 2rem;text-align:center;position:sticky;top:68px;z-index:90;}
+      .cs-banner p{font-family:'Crimson Pro',serif;font-size:0.78rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:0.8rem;}
+      .cs-banner p::before,.cs-banner p::after{content:'◆';font-size:0.4rem;}
+
+      /* ── HERO ── */
+      .hero{background:var(--navy);padding:6rem 2rem 5rem;position:relative;overflow:hidden;}
+      .hero::before{content:'نهج';font-family:'Amiri',serif;font-size:clamp(10rem,22vw,20rem);font-weight:700;color:rgba(255,255,255,0.03);position:absolute;right:-1rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;user-select:none;}
+      .hero-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 0.9fr;gap:5rem;align-items:end;}
+      .bc{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-bottom:2.5rem;display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;}
+      .bc a{color:rgba(255,255,255,0.32);text-decoration:none;transition:color 0.2s;}
+      .bc a:hover{color:var(--gold);}
+      .bc span{color:rgba(255,255,255,0.14);}
+      .journal-mark .jm-pre{font-size:0.7rem;font-weight:600;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.4rem;}
+      .journal-mark h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.2rem);font-weight:600;color:var(--white);line-height:1.0;letter-spacing:-0.01em;}
+      .journal-mark h1 em{font-style:italic;color:var(--gold-light);}
+      .journal-mark .jm-full{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;font-style:italic;color:rgba(255,255,255,0.42);margin-top:0.6rem;display:block;}
+      .journal-mark .jm-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.25rem;}
+      .jtag{font-size:0.68rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(200,162,82,0.35);color:rgba(200,162,82,0.75);padding:0.3rem 0.7rem;}
+      .hero-right{}
+      .hero-desc{font-size:1.05rem;color:rgba(255,255,255,0.58);line-height:1.9;font-weight:300;margin-bottom:2rem;}
+      .spec-list{border-top:1px solid rgba(255,255,255,0.07);}
+      .spec-item{display:flex;justify-content:space-between;align-items:baseline;padding:0.7rem 0;border-bottom:1px solid rgba(255,255,255,0.06);gap:1rem;}
+      .sk{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.28);flex-shrink:0;}
+      .sv{font-family:'Cormorant Garamond',serif;font-size:0.98rem;font-weight:500;color:var(--gold-light);text-align:right;line-height:1.4;}
+      .hero-btns{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:2rem;}
+
+      /* ── SECTION NAV BAR ── */
+      .snav{background:var(--navy);border-top:1px solid rgba(255,255,255,0.06);}
+      .snav-inner{max-width:1120px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;}
+      .snav-inner::-webkit-scrollbar{display:none;}
+      .snav-a{font-family:'Crimson Pro',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);padding:1.1rem 1.4rem;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s;}
+      .snav-a:hover{color:rgba(255,255,255,0.8);border-bottom-color:rgba(200,162,82,0.4);}
+
+      /* ── AIMS & SCOPE ── */
+      .s-aims{padding:5.5rem 2rem;background:var(--cream);}
+      .aims-layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
+      .aims-sticky{position:sticky;top:5rem;}
+      .aims-sticky h2{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:600;color:var(--navy);line-height:1.08;margin-top:0.4rem;}
+      .scope-body p{font-size:1.03rem;color:var(--charcoal);line-height:1.92;font-weight:300;margin-bottom:1.4rem;}
+      .scope-body p:last-child{margin-bottom:0;}
+      .pull-quote{border-left:3px solid var(--gold);padding:1.25rem 1.75rem;margin:2rem 0;background:var(--cream-dark);}
+      .pull-quote p{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;font-style:italic;color:var(--navy);line-height:1.5;margin:0;}
+
+      /* ── PILLARS ── */
+      .s-pillars{padding:5.5rem 2rem;background:var(--cream-dark);}
+      .pillars-hdr{max-width:1120px;margin:0 auto 3.5rem;}
+      .pillars-hdr h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:600;color:var(--navy);margin-top:0.4rem;max-width:640px;line-height:1.1;}
+      .pillars-hdr p{font-size:1.02rem;color:var(--muted);font-weight:300;line-height:1.82;max-width:620px;margin-top:0.75rem;}
+      .pillars-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(0,0,0,0.07);}
+      .pc{background:var(--cream);padding:2.5rem 2rem;border:1px solid rgba(0,0,0,0.06);transition:background 0.2s;}
+      .pc:hover{background:var(--white);}
+      .pc-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;-webkit-text-stroke:1.5px var(--gold);color:transparent;line-height:1;margin-bottom:1.25rem;display:block;}
+      .pc-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--navy);margin-bottom:0.75rem;line-height:1.2;}
+      .pc-desc{font-size:0.93rem;color:var(--muted);line-height:1.72;margin-bottom:1.5rem;font-weight:300;}
+      .pc-ul{list-style:none;padding:0;border-top:1px solid var(--cream-dark);padding-top:1.1rem;}
+      .pc-ul li{font-size:0.88rem;color:var(--charcoal);padding:0.28rem 0 0.28rem 1.2rem;position:relative;line-height:1.5;border-bottom:1px solid rgba(0,0,0,0.04);}
+      .pc-ul li:last-child{border-bottom:none;}
+      .pc-ul li::before{content:'◆';font-size:0.3rem;color:var(--gold);position:absolute;left:0;top:0.62rem;}
+
+      /* ── GOVERNANCE ── */
+      .s-gov{background:var(--navy);padding:5.5rem 2rem;position:relative;overflow:hidden;}
+      .s-gov::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 80% at 80% 40%,rgba(27,94,111,0.28) 0%,transparent 65%);pointer-events:none;}
+      .gov-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1;}
+      .gov-hdr{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-bottom:4rem;}
+      .gov-hdr-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:600;color:var(--white);margin-top:0.4rem;line-height:1.1;}
+      .gov-hdr-text p{font-size:1.02rem;color:rgba(255,255,255,0.52);font-weight:300;line-height:1.88;margin-top:1rem;}
+      .gov-roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0;}
+      .gr{padding:1.75rem;border:1px solid rgba(255,255,255,0.06);transition:background 0.2s;}
+      .gr:hover{background:rgba(255,255,255,0.03);}
+      .gr-label{font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.6rem;}
+      .gr-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--white);margin-bottom:0.2rem;}
+      .gr-affil{font-size:0.85rem;color:rgba(255,255,255,0.34);line-height:1.4;}
+      .gov-note{margin-top:2.5rem;font-size:0.9rem;color:rgba(255,255,255,0.26);font-style:italic;font-weight:300;}
+
+      /* ── GUIDELINES ── */
+      .s-guidelines{padding:5.5rem 2rem;background:var(--cream);}
+      .gl-layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
+      .gl-sticky{position:sticky;top:5rem;}
+      .gl-sticky h2{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:600;color:var(--navy);line-height:1.08;margin-top:0.4rem;}
+      .gl-sticky p{font-size:0.95rem;color:var(--muted);line-height:1.8;font-weight:300;margin-top:1rem;}
+      details{border-bottom:1px solid var(--cream-dark);}
+      details:first-of-type{border-top:1px solid var(--cream-dark);}
+      summary{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--navy);padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;transition:color 0.2s;}
+      summary::-webkit-details-marker{display:none;}
+      summary:hover{color:var(--teal);}
+      summary::after{content:'+';font-size:1.4rem;font-weight:300;color:var(--gold);flex-shrink:0;transition:transform 0.2s;}
+      details[open] summary::after{transform:rotate(45deg);}
+      .details-body{padding-bottom:1.4rem;}
+      .details-body p{font-size:0.97rem;color:var(--muted);line-height:1.78;font-weight:300;margin-bottom:0.9rem;}
+      .details-body p:last-child{margin-bottom:0;}
+      .details-body ul{list-style:none;padding:0;}
+      .details-body ul li{font-size:0.97rem;color:var(--muted);padding:0.25rem 0 0.25rem 1.3rem;position:relative;line-height:1.6;}
+      .details-body ul li::before{content:'◆';font-size:0.3rem;color:var(--gold);position:absolute;left:0;top:0.62rem;}
+
+      /* ── ETHICS ── */
+      .s-ethics{background:var(--cream-dark);padding:5.5rem 2rem;}
+      .ethics-layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
+      .ethics-sticky{position:sticky;top:5rem;}
+      .ethics-sticky h2{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:600;color:var(--navy);line-height:1.08;margin-top:0.4rem;}
+      .ethics-sticky p{font-size:0.95rem;color:var(--muted);line-height:1.8;font-weight:300;margin-top:1rem;}
+      .ethics-principles{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(0,0,0,0.07);}
+      .ep{padding:1.5rem 0;border-bottom:1px solid rgba(0,0,0,0.07);display:grid;grid-template-columns:2.5rem 1fr;gap:1rem;align-items:start;}
+      .ep-num{font-family:'Cormorant Garamond',serif;font-size:0.85rem;font-weight:700;color:var(--gold);padding-top:0.15rem;}
+      .ep-title{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--navy);margin-bottom:0.35rem;}
+      .ep-body{font-size:0.93rem;color:var(--muted);line-height:1.68;font-weight:300;}
+
+      /* ── ROLES / OPPORTUNITIES ── */
+      .s-roles{background:var(--navy);padding:5.5rem 2rem;position:relative;overflow:hidden;}
+      .s-roles::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 15% 60%,rgba(27,94,111,0.25) 0%,transparent 65%);pointer-events:none;}
+      .roles-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1;}
+      .roles-hdr{text-align:center;margin-bottom:3.5rem;}
+      .roles-hdr h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:600;color:var(--white);margin-top:0.4rem;line-height:1.08;}
+      .roles-hdr p{font-size:1.05rem;color:rgba(255,255,255,0.5);font-weight:300;max-width:620px;margin:1rem auto 0;line-height:1.85;}
+      .roles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(255,255,255,0.04);}
+      .role-card{background:var(--navy);padding:2.75rem 2.25rem;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.055);transition:background 0.2s,border-color 0.2s;}
+      .role-card:hover{background:rgba(255,255,255,0.03);border-color:rgba(200,162,82,0.2);}
+      .role-icon{font-size:1.6rem;margin-bottom:1.25rem;opacity:0.6;}
+      .role-label{font-size:0.68rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.6rem;}
+      .role-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--white);margin-bottom:0.9rem;line-height:1.15;}
+      .role-desc{font-size:0.97rem;color:rgba(255,255,255,0.5);line-height:1.78;font-weight:300;flex:1;margin-bottom:1.75rem;}
+      .role-reqs{list-style:none;padding:0;margin-bottom:1.75rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:1.1rem;}
+      .role-reqs li{font-size:0.88rem;color:rgba(255,255,255,0.38);padding:0.25rem 0 0.25rem 1.1rem;position:relative;line-height:1.5;}
+      .role-reqs li::before{content:'◆';font-size:0.28rem;color:rgba(200,162,82,0.5);position:absolute;left:0;top:0.62rem;}
+      .role-cta{margin-top:auto;}
+
+      /* ── SUBMIT CTA ── */
+      .s-submit{padding:6rem 2rem;background:var(--cream);text-align:center;border-top:1px solid var(--cream-dark);}
+      .s-submit h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,3rem);font-weight:600;color:var(--navy);margin-top:0.4rem;margin-bottom:1rem;line-height:1.1;}
+      .s-submit p{font-size:1.05rem;color:var(--muted);max-width:540px;margin:0 auto 2.25rem;font-weight:300;line-height:1.85;}
+      .submit-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+
+      @media(max-width:960px){
+        .hero-inner,.aims-layout,.gov-hdr,.gl-layout,.ethics-layout{grid-template-columns:1fr;gap:2.5rem;}
+        .pillars-grid{grid-template-columns:1fr;}
+        .roles-grid{grid-template-columns:1fr;}
+        .aims-sticky,.gl-sticky,.ethics-sticky{position:static;}
+        .snav-inner{padding:0 1.5rem;}
       }
-
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-
-      body {
-        background-color: var(--cream);
-        color: var(--charcoal);
-        font-family: 'Crimson Pro', Georgia, serif;
-        font-size: 18px;
-        line-height: 1.75;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-      .container--narrow { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
-
-      .section-label {
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-      }
-
-      .divider-gold { width: 3.5rem; height: 2px; background: var(--gold); margin: 0.9rem 0 1.5rem; }
-      .divider-gold.center { margin: 0.9rem auto 1.5rem; }
-
-      /* ─── JOURNAL HERO ────────────────────────────────────── */
-      .journal-hero {
-        background: var(--navy);
-        padding: 6rem 2rem 5rem;
-        position: relative;
-        overflow: hidden;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-      }
-
-      .journal-hero::before {
-        content: 'نهج';
-        font-family: 'Amiri', serif;
-        font-size: clamp(12rem, 24vw, 22rem);
-        font-weight: 700;
-        color: rgba(255,255,255,0.032);
-        position: absolute;
-        right: -1.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        line-height: 1;
-        pointer-events: none;
-        user-select: none;
-      }
-
-      .journal-hero-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6rem;
-        align-items: end;
-      }
-
-      .breadcrumb {
-        font-size: 0.82rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.35);
-        margin-bottom: 2.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-      }
-
-      .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
-      .breadcrumb a:hover { color: var(--gold); }
-      .breadcrumb span { color: rgba(255,255,255,0.15); }
-
-      .journal-wordmark {
-        margin-bottom: 1.25rem;
-      }
-
-      .journal-wordmark .jw-label {
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-
-      .journal-wordmark h1 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2.8rem, 5vw, 4.4rem);
-        font-weight: 600;
-        color: var(--white);
-        line-height: 1.05;
-        letter-spacing: -0.01em;
-      }
-
-      .journal-wordmark h1 em {
-        font-style: italic;
-        color: var(--gold-light);
-      }
-
-      .journal-wordmark .jw-sub {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1rem;
-        font-weight: 300;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.35);
-        margin-top: 0.75rem;
-        display: block;
-      }
-
-      .journal-hero-desc {
-        font-size: 1.08rem;
-        color: rgba(255,255,255,0.62);
-        line-height: 1.85;
-        font-weight: 300;
-        margin-bottom: 1.5rem;
-      }
-
-      .journal-spec-table {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        border-top: 1px solid rgba(255,255,255,0.08);
-        margin-top: 1.5rem;
-      }
-
-      .jspec-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-        gap: 1rem;
-      }
-
-      .jspec-key {
-        font-size: 0.75rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.3);
-        flex-shrink: 0;
-      }
-
-      .jspec-val {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--gold-light);
-        text-align: right;
-      }
-
-      /* ─── CURRENT ISSUE BANNER ────────────────────────────── */
-      .section-current {
-        background: var(--cream-dark);
-        padding: 5rem 2rem;
-        border-bottom: 1px solid var(--cream-dark);
-      }
-
-      .current-layout {
-        max-width: 1120px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 5rem;
-        align-items: start;
-      }
-
-      .current-label-col {
-        position: sticky;
-        top: 4rem;
-        padding-top: 0.2rem;
-      }
-
-      .current-label-col h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.4rem;
-        font-weight: 600;
-        color: var(--navy);
-        line-height: 1.1;
-        margin-top: 0.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .issue-vol-badge {
-        display: inline-block;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--navy);
-        border: 1px solid var(--gold);
-        padding: 0.4rem 0.9rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .btn-primary {
-        display: inline-block;
-        background: var(--gold);
-        color: var(--navy);
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.88rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.85rem 2rem;
-        text-decoration: none;
-        transition: background 0.2s, transform 0.15s;
-      }
-
-      .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-      .btn-outline-dark {
-        display: inline-block;
-        border: 1px solid var(--navy);
-        color: var(--navy);
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.88rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.85rem 2rem;
-        text-decoration: none;
-        transition: background 0.2s, color 0.2s, transform 0.15s;
-      }
-
-      .btn-outline-dark:hover { background: var(--navy); color: var(--gold); transform: translateY(-1px); }
-
-      .current-articles {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        border-top: 1px solid var(--cream-dark);
-      }
-
-      .article-row {
-        padding: 1.75rem 0;
-        border-bottom: 1px solid var(--cream-dark);
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 1.5rem;
-        align-items: start;
-        text-decoration: none;
-        color: inherit;
-        transition: background 0.2s;
-      }
-
-      .article-row:hover { background: rgba(255,255,255,0.5); margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; }
-
-      .article-row-num {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: var(--gold);
-        padding-top: 0.2rem;
-        min-width: 1.5rem;
-      }
-
-      .article-row-tag {
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--teal);
-        margin-bottom: 0.4rem;
-        display: block;
-      }
-
-      .article-row-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--navy);
-        line-height: 1.22;
-        margin-bottom: 0.35rem;
-      }
-
-      .article-row-author {
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
-
-      /* ─── ABOUT THE JOURNAL ───────────────────────────────── */
-      .section-about-journal {
-        padding: 5.5rem 2rem;
-        background: var(--cream);
-      }
-
-      .about-journal-layout {
-        max-width: 1120px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6rem;
-        align-items: start;
-      }
-
-      .about-journal-text h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-        font-weight: 600;
-        color: var(--navy);
-        line-height: 1.1;
-        margin-top: 0.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .about-journal-text p {
-        font-size: 1.05rem;
-        color: var(--charcoal);
-        line-height: 1.88;
-        font-weight: 300;
-        margin-bottom: 1.25rem;
-      }
-
-      .about-journal-text p:last-child { margin-bottom: 0; }
-
-      .scope-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        border-top: 1px solid var(--cream-dark);
-      }
-
-      .scope-list li {
-        padding: 0.9rem 0;
-        border-bottom: 1px solid var(--cream-dark);
-        font-size: 1rem;
-        color: var(--charcoal);
-        display: flex;
-        align-items: baseline;
-        gap: 0.75rem;
-      }
-
-      .scope-list li::before {
-        content: '◆';
-        font-size: 0.38rem;
-        color: var(--gold);
-        flex-shrink: 0;
-      }
-
-      /* ─── EDITORIAL BOARD ─────────────────────────────────── */
-      .section-board {
-        background: var(--navy);
-        padding: 5.5rem 2rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .section-board::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse 50% 70% at 85% 40%, rgba(27,94,111,0.3) 0%, transparent 65%);
-        pointer-events: none;
-      }
-
-      .board-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .board-header { margin-bottom: 3.5rem; }
-
-      .board-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-        font-weight: 600;
-        color: var(--white);
-        margin-top: 0.5rem;
-        max-width: 560px;
-        line-height: 1.1;
-      }
-
-      .board-header p {
-        font-size: 1rem;
-        color: rgba(255,255,255,0.52);
-        font-weight: 300;
-        line-height: 1.8;
-        max-width: 560px;
-        margin-top: 0.75rem;
-      }
-
-      .board-roles {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 0;
-      }
-
-      .board-role {
-        padding: 2rem 1.75rem;
-        border: 1px solid rgba(255,255,255,0.07);
-        transition: background 0.2s;
-      }
-
-      .board-role:hover { background: rgba(255,255,255,0.03); }
-
-      .board-role-label {
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 1rem;
-      }
-
-      .board-role-name {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--white);
-        margin-bottom: 0.25rem;
-      }
-
-      .board-role-affil {
-        font-size: 0.88rem;
-        color: rgba(255,255,255,0.42);
-        line-height: 1.5;
-      }
-
-      .board-note {
-        margin-top: 2.5rem;
-        font-size: 0.92rem;
-        color: rgba(255,255,255,0.32);
-        font-style: italic;
-        font-weight: 300;
-      }
-
-      /* ─── ARCHIVE ─────────────────────────────────────────── */
-      .section-archive {
-        padding: 5.5rem 2rem;
-        background: var(--cream-dark);
-      }
-
-      .archive-header { margin-bottom: 3rem; }
-
-      .archive-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-      }
-
-      .archive-list {
-        max-width: 1120px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        border-top: 1px solid var(--cream-dark);
-      }
-
-      .archive-row {
-        display: grid;
-        grid-template-columns: 200px 1fr auto;
-        gap: 3rem;
-        align-items: center;
-        padding: 1.75rem 0;
-        border-bottom: 1px solid var(--cream-dark);
-        text-decoration: none;
-        color: inherit;
-        transition: background 0.2s;
-      }
-
-      .archive-row:hover { background: var(--white); margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem; }
-
-      .archive-vol {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--navy);
-      }
-
-      .archive-theme {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.2rem;
-        font-weight: 400;
-        font-style: italic;
-        color: var(--charcoal);
-      }
-
-      .archive-count {
-        font-size: 0.82rem;
-        color: var(--muted);
-        text-align: right;
-        white-space: nowrap;
-      }
-
-      .archive-badge {
-        display: inline-block;
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        padding: 0.25rem 0.6rem;
-        border: 1px solid var(--gold);
-        color: var(--gold);
-        margin-left: 0.75rem;
-      }
-
-      .archive-row.forthcoming { opacity: 0.5; cursor: default; }
-
-      /* ─── SUBMIT CTA ──────────────────────────────────────── */
-      .section-submit-cta {
-        background: var(--cream);
-        padding: 5rem 2rem;
-        text-align: center;
-        border-top: 1px solid var(--cream-dark);
-      }
-
-      .section-submit-cta h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-        margin-bottom: 1rem;
-        line-height: 1.15;
-      }
-
-      .section-submit-cta p {
-        font-size: 1.05rem;
-        color: var(--muted);
-        max-width: 520px;
-        margin: 0 auto 2.25rem;
-        font-weight: 300;
-        line-height: 1.8;
-      }
-
-      .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-
-      /* ─── RESPONSIVE ──────────────────────────────────────── */
-      @media (max-width: 900px) {
-        .journal-hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-        .current-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-        .current-label-col { position: static; }
-        .about-journal-layout { grid-template-columns: 1fr; gap: 3rem; }
-        .archive-row { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .archive-theme { grid-column: span 2; }
-      }
-
-      @media (max-width: 768px) {
-        .journal-hero { padding: 4rem 1.5rem 3rem; }
-        .journal-hero::before { font-size: 8rem; }
-        .archive-row { grid-template-columns: 1fr; gap: 0.5rem; }
-        .archive-row:hover { margin: 0; padding: 1.75rem 0; }
+      @media(max-width:768px){
+        .hero{padding:4.5rem 1.5rem 3.5rem;}
+        .hero::before{font-size:7rem;right:-0.5rem;}
+        .ep{grid-template-columns:2rem 1fr;}
       }
     </style>
   </head>
-
   <body>
     <Header />
 
-    <!-- ═══════════════════════════════════════════ JOURNAL HERO -->
-    <section class="journal-hero">
-      <div class="journal-hero-inner">
-        <div>
-          <nav class="breadcrumb">
-            <a href="/Nahj-Institute/">Home</a>
-            <span>/</span>
-            <span style="color: rgba(255,255,255,0.6);">Nahj Journal</span>
-          </nav>
+    <!-- COMING SOON BANNER -->
+    <div class="cs-banner">
+      <p>Inaugural Issue Open for Submissions — Volume I, Spring 2026</p>
+    </div>
 
-          <div class="journal-wordmark">
-            <span class="jw-label">A Publication of Nahj Institute</span>
-            <h1>The <em>Nahj</em><br />Journal</h1>
-            <span class="jw-sub">Peer-Reviewed · Open Access · Twice Yearly</span>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <nav class="bc">
+            <a href={`${base}/`}>Home</a>
+            <span>/</span>
+            <span style="color:rgba(255,255,255,0.58)">Nahj Journal</span>
+          </nav>
+          <div class="journal-mark">
+            <span class="jm-pre">A Publication of Nahj Institute</span>
+            <h1><em>NAHJ</em></h1>
+            <span class="jm-full">The Journal of Transdisciplinary Theory</span>
+            <div class="jm-tags">
+              <span class="jtag">Peer-Reviewed</span>
+              <span class="jtag">Diamond Open Access</span>
+              <span class="jtag">Twice Yearly</span>
+              <span class="jtag">Double-Blind Review</span>
+            </div>
           </div>
         </div>
 
-        <div>
-          <p class="journal-hero-desc">
-            The Nahj Journal publishes original research in Islamic studies, political theory, philosophy, and the social sciences. It is addressed to academic readers and holds all submissions to double-blind peer review. All content is freely available online.
-          </p>
-
-          <div class="journal-spec-table">
-            <div class="jspec-row">
-              <span class="jspec-key">ISSN</span>
-              <span class="jspec-val">Forthcoming</span>
-            </div>
-            <div class="jspec-row">
-              <span class="jspec-key">Frequency</span>
-              <span class="jspec-val">Spring and Autumn</span>
-            </div>
-            <div class="jspec-row">
-              <span class="jspec-key">Review Process</span>
-              <span class="jspec-val">Double-blind peer review</span>
-            </div>
-            <div class="jspec-row">
-              <span class="jspec-key">Access</span>
-              <span class="jspec-val">Open access, no fees</span>
-            </div>
-            <div class="jspec-row">
-              <span class="jspec-key">Publisher</span>
-              <span class="jspec-val">Nahj Institute</span>
-            </div>
-            <div class="jspec-row">
-              <span class="jspec-key">Launched</span>
-              <span class="jspec-val">Spring 2025</span>
-            </div>
+        <div class="hero-right">
+          <p class="hero-desc">NAHJ is an international, peer-reviewed journal providing a global platform where traditional wisdom, critical social theory, and modern scientific inquiry intersect. All content is freely and permanently available online at no cost to authors or readers.</p>
+          <div class="spec-list">
+            <div class="spec-item"><span class="sk">Full Title</span><span class="sv">NAHJ: Journal of Transdisciplinary Theory</span></div>
+            <div class="spec-item"><span class="sk">ISSN</span><span class="sv">Forthcoming on registration</span></div>
+            <div class="spec-item"><span class="sk">Frequency</span><span class="sv">Spring and Autumn annually</span></div>
+            <div class="spec-item"><span class="sk">Access Model</span><span class="sv">Diamond Open Access — no APCs</span></div>
+            <div class="spec-item"><span class="sk">Review Process</span><span class="sv">Double-blind peer review</span></div>
+            <div class="spec-item"><span class="sk">Licence</span><span class="sv">CC BY 4.0 International</span></div>
+            <div class="spec-item"><span class="sk">Inaugural Issue</span><span class="sv">Spring 2026</span></div>
+          </div>
+          <div class="hero-btns">
+            <a href={`${base}/journal/submit`} class="btn-gold">Submit a Manuscript</a>
+            <a href="#aims" class="btn-ol-lt">Aims & Scope</a>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- SECTION NAV -->
+    <nav class="snav">
+      <div class="snav-inner">
+        <a href="#aims" class="snav-a">Aims &amp; Scope</a>
+        <a href="#pillars" class="snav-a">Thematic Pillars</a>
+        <a href="#board" class="snav-a">Editorial Board</a>
+        <a href="#guidelines" class="snav-a">Author Guidelines</a>
+        <a href="#ethics" class="snav-a">Publication Ethics</a>
+        <a href="#roles" class="snav-a">Open Roles</a>
+        <a href={`${base}/journal/submit`} class="snav-a" style="color:var(--gold);border-bottom-color:var(--gold)">Submit →</a>
+      </div>
+    </nav>
+
     <main>
 
-      <!-- ══════════════════════════════════════ CURRENT ISSUE -->
-      <section class="section-current">
-        <div class="current-layout">
-          <div class="current-label-col">
-            <span class="section-label">Now Available</span>
-            <div class="divider-gold"></div>
-            <h2>Volume 1, Issue 1</h2>
-            <div class="issue-vol-badge">Spring 2025</div>
-            <p style="font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1.5rem;">
-              The inaugural issue takes up the theme of authority and legitimacy in the contemporary Muslim world, gathering seven original articles and a review essay.
-            </p>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              <a href="#" class="btn-primary">Read This Issue</a>
-              <a href="/contact#submissions" class="btn-outline-dark">Submit to Vol. 1, No. 2</a>
-            </div>
+      <!-- AIMS & SCOPE -->
+      <section class="s-aims" id="aims">
+        <div class="aims-layout">
+          <div class="aims-sticky">
+            <span class="sl">01</span>
+            <div class="dg"></div>
+            <h2>Aims &amp; Scope</h2>
           </div>
+          <div class="scope-body">
+            <p>NAHJ is an international, peer-reviewed, Diamond Open Access journal dedicated to the rigorous investigation of the human condition through transdisciplinary theory. We provide a global platform where traditional wisdom, critical social theory, and modern scientific inquiry intersect. The journal is defined not by a single discipline or methodology, but by a set of shared questions: about the human person, about the character of knowledge and its limits, about the relationship between classical intellectual traditions and modernity, and about the obligations of scholarship to the societies it addresses.</p>
 
-          <div>
-            <div class="current-articles">
-              <a href="#" class="article-row">
-                <span class="article-row-num">01</span>
-                <div>
-                  <span class="article-row-tag">Theology & Politics</span>
-                  <div class="article-row-title">The Imamate and the Modern State: Authority, Legitimacy, and the Crisis of Governance in Contemporary Shia Political Thought</div>
-                  <div class="article-row-author">Dr. Ali Haider Naqvi</div>
-                </div>
-              </a>
-
-              <a href="#" class="article-row">
-                <span class="article-row-num">02</span>
-                <div>
-                  <span class="article-row-tag">Religious Harmony</span>
-                  <div class="article-row-title">Dialogue as Method: Toward a Theology of Encounter in Pluralist Societies</div>
-                  <div class="article-row-author">Sara Kazemi</div>
-                </div>
-              </a>
-
-              <a href="#" class="article-row">
-                <span class="article-row-num">03</span>
-                <div>
-                  <span class="article-row-tag">Science & Ethics</span>
-                  <div class="article-row-title">Artificial Intelligence and the Question of Moral Agency: Notes Toward an Islamic Bioethics</div>
-                  <div class="article-row-author">Dr. Hina Raza</div>
-                </div>
-              </a>
-
-              <a href="#" class="article-row">
-                <span class="article-row-num">04</span>
-                <div>
-                  <span class="article-row-tag">Philosophy</span>
-                  <div class="article-row-title">Reason and Revelation in the Mutazilite Tradition: A Reconsideration</div>
-                  <div class="article-row-author">Prof. Hassan al-Amin</div>
-                </div>
-              </a>
-
-              <a href="#" class="article-row">
-                <span class="article-row-num">05</span>
-                <div>
-                  <span class="article-row-tag">Political Theory</span>
-                  <div class="article-row-title">Sovereignty, Shura, and the Constitutional State: Three Models of Islamic Governance</div>
-                  <div class="article-row-author">Maryam Hosseini</div>
-                </div>
-              </a>
-
-              <a href="#" class="article-row">
-                <span class="article-row-num">06</span>
-                <div>
-                  <span class="article-row-tag">Social Science</span>
-                  <div class="article-row-title">Sectarianism as a Sociological Category: Limits and Possibilities</div>
-                  <div class="article-row-author">Dr. Zainab Mirza</div>
-                </div>
-              </a>
-
-              <a href="#" class="article-row">
-                <span class="article-row-num">07</span>
-                <div>
-                  <span class="article-row-tag">Review Essay</span>
-                  <div class="article-row-title">On Recent Scholarship in Islamic Political Thought: A Critical Survey, 2020 to 2025</div>
-                  <div class="article-row-author">Editorial Team, Nahj Institute</div>
-                </div>
-              </a>
+            <div class="pull-quote">
+              <p>NAHJ welcomes original research that is distinguished by analytical rigour, depth of engagement with primary sources, and the capacity to speak across disciplinary boundaries.</p>
             </div>
+
+            <p>The journal publishes original research articles, review essays, and critical responses. It does not publish polemical writing, institutional advocacy, or work whose primary purpose is the promotion of a particular ideological position. The standard applied to all submissions is that of a serious international peer-reviewed journal in the humanities and social sciences. Authors are expected to engage with the relevant secondary literature, to ground their arguments in evidence, and to write for an audience beyond their own specialism.</p>
+
+            <p>NAHJ is committed to the principle that knowledge does not respect disciplinary boundaries. The most significant questions about human life — questions of consciousness, authority, justice, meaning, and social organisation — require the resources of multiple traditions of inquiry. The journal therefore solicits work that crosses the boundaries between the humanities, the social sciences, the natural sciences, and classical scholarship, subject always to the requirement that the scholarship is rigorous and the argument is clear.</p>
+
+            <p>The journal operates on a Diamond Open Access model. No article processing charges are levied at any stage. All published content is freely available in perpetuity under a Creative Commons Attribution 4.0 International licence. Authors retain full copyright. NAHJ regards open access not as a concession but as an ethical obligation of scholarly publication.</p>
           </div>
         </div>
       </section>
 
-      <!-- ═══════════════════════════════════ ABOUT THE JOURNAL -->
-      <section class="section-about-journal">
-        <div class="about-journal-layout">
-          <div class="about-journal-text">
-            <span class="section-label">Aims and Scope</span>
-            <div class="divider-gold"></div>
-            <h2>What the Journal Publishes</h2>
-            <p>
-              The Nahj Journal publishes original research articles, review essays, and critical responses. It does not have a fixed disciplinary home. The journal is defined instead by a set of questions: about Islamic thought and its intellectual heritage, about the place of Muslim communities and states in the contemporary world, and about the relationship between religious tradition and modern life in its political, social, scientific, and ethical dimensions.
-            </p>
-            <p>
-              The journal welcomes work that is methodologically rigorous and engages seriously with existing scholarship. It does not publish polemical writing, and it is not a forum for advocacy. The standard applied to all submissions is that of a serious peer-reviewed humanities and social sciences journal.
-            </p>
+      <!-- THEMATIC PILLARS -->
+      <section class="s-pillars" id="pillars">
+        <div class="pillars-hdr">
+          <span class="sl">02</span>
+          <div class="dg"></div>
+          <h2>Thematic Pillars</h2>
+          <p>NAHJ is organised around three broad thematic areas. Submissions may fall within one pillar or engage productively across two or more. The pillars are defined by the questions they address, not by method or discipline.</p>
+        </div>
+        <div class="pillars-grid">
+          <div class="pc">
+            <span class="pc-num">01</span>
+            <h3 class="pc-title">Cultural &amp; Historical Studies</h3>
+            <p class="pc-desc">Research examining the artefacts, intellectual movements, and historical formations that have constituted global civilisations. The pillar gives equal standing to historians, literary scholars, art historians, and philologists as it does to political theorists and social scientists.</p>
+            <ul class="pc-ul">
+              <li>Intellectual history: genealogy of ideas across traditions and borders</li>
+              <li>Material culture: manuscripts, architecture, and art as intellectual sources</li>
+              <li>Literature and narrative theory: classical texts and the formation of identity</li>
+              <li>Comparative civilisational studies and cross-cultural transmission</li>
+              <li>Historiography, memory, and the ethics of historical interpretation</li>
+            </ul>
           </div>
-
-          <div>
-            <span class="section-label">Areas of Interest</span>
-            <div class="divider-gold"></div>
-            <ul class="scope-list">
-              <li>Islamic theology, jurisprudence, and intellectual history</li>
-              <li>Islamic philosophy and ethics, classical and contemporary</li>
-              <li>Political theory and governance in Muslim-majority contexts</li>
-              <li>Sectarianism, religious identity, and interreligious relations</li>
-              <li>Geopolitics and international relations of the Muslim world</li>
-              <li>Islamic approaches to science, bioethics, and technology</li>
-              <li>Muslim communities in Western and minority contexts</li>
-              <li>Comparative religion and theology of encounter</li>
-              <li>Gender, family, and social ethics in Islamic frameworks</li>
+          <div class="pc">
+            <span class="pc-num">02</span>
+            <h3 class="pc-title">Neuro-Humanities &amp; Cognitive Theory</h3>
+            <p class="pc-desc">Scholarship that bridges biological inquiry and philosophical reflection on the nature of mind, selfhood, and moral agency. The pillar resists the reduction of the human person to either purely biological or purely cultural terms.</p>
+            <ul class="pc-ul">
+              <li>Philosophy of mind and consciousness: classical and contemporary accounts</li>
+              <li>Neuroscience and the humanities: methodological and interpretive questions</li>
+              <li>The ethics of cognitive and neurological enhancement</li>
+              <li>Mental health, social environment, and the phenomenology of wellbeing</li>
+              <li>Embodied cognition and its implications for social and moral theory</li>
+            </ul>
+          </div>
+          <div class="pc">
+            <span class="pc-num">03</span>
+            <h3 class="pc-title">Critical Modernity &amp; Social Dynamics</h3>
+            <p class="pc-desc">Critical investigation of contemporary global structures using theoretical resources drawn from both Western and non-Western intellectual traditions. The pillar foregrounds decolonial and non-secular epistemologies as primary analytical frameworks rather than objects of study.</p>
+            <ul class="pc-ul">
+              <li>Ethical governance and the resources of classical political theory</li>
+              <li>Technology, artificial intelligence, and post-humanist critique</li>
+              <li>Decolonial epistemology and the recovery of non-Western intellectual heritage</li>
+              <li>Religion, secularism, and the contested boundaries of the public sphere</li>
+              <li>Global justice, migration, and the political philosophy of belonging</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- ══════════════════════════════════════ EDITORIAL BOARD -->
-      <section class="section-board">
-        <div class="board-inner">
-          <div class="board-header">
-            <span class="section-label">Editorial Team</span>
-            <div class="divider-gold"></div>
-            <h2>Editorial Board</h2>
-            <p>
-              The journal is governed by an editorial board drawn from academic institutions and research centres. Board members oversee the peer review process and advise on the journal's direction and scope.
-            </p>
-          </div>
-
-          <div class="board-roles">
-            <div class="board-role">
-              <span class="board-role-label">Editor-in-Chief</span>
-              <div class="board-role-name">Position to be announced</div>
-              <div class="board-role-affil">Nahj Institute</div>
+      <!-- EDITORIAL BOARD -->
+      <section class="s-gov" id="board">
+        <div class="gov-inner">
+          <div class="gov-hdr">
+            <div class="gov-hdr-text">
+              <span class="sl">03</span>
+              <div class="dg"></div>
+              <h2>Editorial Board</h2>
+              <p>The journal is governed by an international editorial board drawn from academic institutions across disciplines and regions. Board appointments are in progress ahead of the inaugural issue. Scholars interested in joining the editorial or international advisory board are welcome to apply through the Open Roles section below.</p>
             </div>
-
-            <div class="board-role">
-              <span class="board-role-label">Managing Editor</span>
-              <div class="board-role-name">Position to be announced</div>
-              <div class="board-role-affil">Nahj Institute</div>
-            </div>
-
-            <div class="board-role">
-              <span class="board-role-label">Associate Editor, Theology</span>
-              <div class="board-role-name">Position to be announced</div>
-              <div class="board-role-affil">Nahj Institute</div>
-            </div>
-
-            <div class="board-role">
-              <span class="board-role-label">Associate Editor, Political Science</span>
-              <div class="board-role-name">Position to be announced</div>
-              <div class="board-role-affil">Nahj Institute</div>
-            </div>
-
-            <div class="board-role">
-              <span class="board-role-label">Book Reviews Editor</span>
-              <div class="board-role-name">Position to be announced</div>
-              <div class="board-role-affil">Nahj Institute</div>
-            </div>
-
-            <div class="board-role">
-              <span class="board-role-label">Advisory Board</span>
-              <div class="board-role-name">Appointments in progress</div>
-              <div class="board-role-affil">External academic advisors</div>
-            </div>
-          </div>
-
-          <p class="board-note">
-            Scholars interested in joining the advisory board are welcome to write to the editorial team via the contact page.
-          </p>
-        </div>
-      </section>
-
-      <!-- ═══════════════════════════════════════════ ARCHIVE -->
-      <section class="section-archive">
-        <div class="container">
-          <div class="archive-header">
-            <span class="section-label">All Issues</span>
-            <div class="divider-gold"></div>
-            <h2>Issue Archive</h2>
-          </div>
-
-          <div class="archive-list">
-            <a href="#" class="archive-row">
-              <div class="archive-vol">
-                Volume 1, Issue 1
-                <span class="archive-badge">Current</span>
+            <div>
+              <div class="spec-list">
+                <div class="spec-item"><span class="sk">Review Model</span><span class="sv">Double-blind</span></div>
+                <div class="spec-item"><span class="sk">Decision Timeline</span><span class="sv">10–14 weeks from submission</span></div>
+                <div class="spec-item"><span class="sk">Ethics Framework</span><span class="sv">COPE compliant</span></div>
+                <div class="spec-item"><span class="sk">Indexing Target</span><span class="sv">DOAJ, Scopus, Google Scholar</span></div>
               </div>
-              <div class="archive-theme">Authority, Legitimacy, and the Contemporary Muslim World</div>
-              <div class="archive-count">7 articles · Spring 2025</div>
-            </a>
-
-            <div class="archive-row forthcoming">
-              <div class="archive-vol">Volume 1, Issue 2</div>
-              <div class="archive-theme">Religion, Science, and the Ethics of Knowledge</div>
-              <div class="archive-count">Call for papers · Autumn 2025</div>
             </div>
+          </div>
+          <div class="gov-roles">
+            <div class="gr"><span class="gr-label">Editor-in-Chief</span><div class="gr-name">Appointment in progress</div><div class="gr-affil">Nahj Institute</div></div>
+            <div class="gr"><span class="gr-label">Managing Editor</span><div class="gr-name">Appointment in progress</div><div class="gr-affil">Nahj Institute</div></div>
+            <div class="gr"><span class="gr-label">Associate Editor — Cultural Studies</span><div class="gr-name">Appointment in progress</div><div class="gr-affil">Nahj Institute</div></div>
+            <div class="gr"><span class="gr-label">Associate Editor — Cognitive Theory</span><div class="gr-name">Appointment in progress</div><div class="gr-affil">Nahj Institute</div></div>
+            <div class="gr"><span class="gr-label">Associate Editor — Critical Modernity</span><div class="gr-name">Appointment in progress</div><div class="gr-affil">Nahj Institute</div></div>
+            <div class="gr"><span class="gr-label">International Advisory Board</span><div class="gr-name">Multiple appointments in progress</div><div class="gr-affil">Global institutions</div></div>
+          </div>
+          <p class="gov-note">NAHJ is committed to a geographically and institutionally diverse editorial board that reflects the international scope of the journal's intellectual programme.</p>
+        </div>
+      </section>
 
-            <div class="archive-row forthcoming">
-              <div class="archive-vol">Volume 2, Issue 1</div>
-              <div class="archive-theme">Open theme</div>
-              <div class="archive-count">Submissions open · Spring 2026</div>
+      <!-- AUTHOR GUIDELINES -->
+      <section class="s-guidelines" id="guidelines">
+        <div class="gl-layout">
+          <div class="gl-sticky">
+            <span class="sl">04</span>
+            <div class="dg"></div>
+            <h2>Author Guidelines</h2>
+            <p>Authors are advised to read the full guidelines before preparing a submission. Papers that do not conform to these requirements will be returned without review.</p>
+            <div style="margin-top:2rem;">
+              <a href={`${base}/journal/submit`} class="btn-navy">Submit a Manuscript</a>
+            </div>
+          </div>
+          <div>
+            <details open>
+              <summary>Manuscript Specifications</summary>
+              <div class="details-body">
+                <ul>
+                  <li>Research articles: 6,000 to 10,000 words inclusive of notes and bibliography</li>
+                  <li>Review essays: 3,000 to 6,000 words</li>
+                  <li>Abstract: 150 to 200 words; no citations; no discipline-specific abbreviations</li>
+                  <li>Keywords: 5 to 8 terms selected for indexing purposes</li>
+                  <li>File format: Microsoft Word (.docx); do not submit PDF</li>
+                  <li>Typography: 12pt Times New Roman, double-spaced, 2.5cm margins throughout</li>
+                  <li>Line and page numbering must be activated for reviewer reference</li>
+                </ul>
+              </div>
+            </details>
+            <details>
+              <summary>Anonymisation for Peer Review</summary>
+              <div class="details-body">
+                <p>The journal operates a strictly double-blind peer review process. Authors must remove all identifying information from the manuscript file before submission. This includes: name, affiliation, and acknowledgements in the document text and file metadata; self-citations that would identify the author; grant references that name the author or institution. The author's biographical note and affiliation are submitted separately through the submission form and are withheld from reviewers.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Referencing and Style</summary>
+              <div class="details-body">
+                <ul>
+                  <li>Chicago author-date throughout; footnotes for discursive notes only, not citations</li>
+                  <li>Arabic transliteration following IJMES conventions; diacritical marks required</li>
+                  <li>Persian, Urdu, and other scripts: authors should consult the relevant transliteration conventions and note their choice in a covering letter</li>
+                  <li>Foreign-language terms in italics on first use; not subsequently</li>
+                  <li>Qur'anic references: surah and verse number, with translation acknowledged</li>
+                  <li>Full bibliography in Chicago format at end of manuscript</li>
+                </ul>
+              </div>
+            </details>
+            <details>
+              <summary>Peer Review Process and Timeline</summary>
+              <div class="details-body">
+                <p>All submissions undergo an initial editorial assessment for scope, methodological rigour, and basic compliance with the guidelines. Manuscripts that pass initial assessment are sent to two independent expert referees. The review is double-blind. Authors receive one of four decisions: accept, minor revisions, major revisions, or reject. Authors typically receive a decision within ten to fourteen weeks of submission acknowledgement. Revise-and-resubmit decisions include detailed editorial guidance and referee reports.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Copyright, Licensing, and Proofs</summary>
+              <div class="details-body">
+                <p>Authors retain copyright of their work. NAHJ publishes all content under a Creative Commons Attribution 4.0 International licence (CC BY 4.0), which permits reproduction, distribution, and adaptation provided the original source is credited. No article processing charges are levied at any stage, from submission to publication. Accepted articles are assigned a DOI through Crossref. Authors receive a PDF proof for approval before publication. Substantial changes to the text at proof stage are not permitted.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Indexing and Discoverability</summary>
+              <div class="details-body">
+                <p>NAHJ is preparing applications to DOAJ, Google Scholar, Scopus, and EBSCO from the inaugural issue. All published articles are assigned DOIs and prepared in JATS XML format by the editorial team to support metadata harvesting and indexing. Authors who have ORCID identifiers are invited to include them in their submission.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- PUBLICATION ETHICS -->
+      <section class="s-ethics" id="ethics">
+        <div class="ethics-layout">
+          <div class="ethics-sticky">
+            <span class="sl">05</span>
+            <div class="dg"></div>
+            <h2>Publication Ethics</h2>
+            <p>NAHJ adheres fully to the guidelines established by the Committee on Publication Ethics (COPE). The principles below govern the obligations of authors, reviewers, and editors at every stage of the publication process.</p>
+          </div>
+          <div class="ethics-principles">
+            <div class="ep">
+              <span class="ep-num">01</span>
+              <div>
+                <div class="ep-title">Originality and Prior Publication</div>
+                <p class="ep-body">Submitted manuscripts must be original work not previously published in any form, including as a working paper, thesis chapter, or conference proceedings, and must not be under consideration elsewhere. All submissions are screened using similarity-detection software. Redundant or duplicate publication is grounds for immediate rejection and, where applicable, notification of the author's institution.</p>
+              </div>
+            </div>
+            <div class="ep">
+              <span class="ep-num">02</span>
+              <div>
+                <div class="ep-title">Authorship and Contributorship</div>
+                <p class="ep-body">All named authors must have made a substantive and verifiable intellectual contribution to the conception, execution, or critical revision of the work. The corresponding author is responsible for ensuring the accuracy of the authorship list and for obtaining the agreement of all listed authors to the submission. Honorary authorship and the omission of contributing authors are equally contrary to these guidelines. Requests to add or remove authors after submission require a written explanation and the agreement of all parties.</p>
+              </div>
+            </div>
+            <div class="ep">
+              <span class="ep-num">03</span>
+              <div>
+                <div class="ep-title">Disclosure of Funding and Conflicts of Interest</div>
+                <p class="ep-body">Authors must disclose, in a covering letter withheld from reviewers, all sources of funding for the research presented and any financial or personal relationship that could reasonably be understood to influence the objectivity of the analysis. Reviewers and editors must declare conflicts of interest before accepting review or editorial responsibilities. Where a declared conflict cannot be adequately managed, the individual concerned will be excluded from the review of that submission.</p>
+              </div>
+            </div>
+            <div class="ep">
+              <span class="ep-num">04</span>
+              <div>
+                <div class="ep-title">Accuracy of Data and Sources</div>
+                <p class="ep-body">Authors bear sole responsibility for the accuracy of all empirical data, citations, and attributions in their manuscripts. The fabrication, falsification, or selective reporting of evidence constitutes research misconduct and will be reported to the author's institution where the editor concludes, on the balance of evidence, that misconduct has occurred. Errors identified after publication will be corrected by way of a published erratum.</p>
+              </div>
+            </div>
+            <div class="ep">
+              <span class="ep-num">05</span>
+              <div>
+                <div class="ep-title">Reviewer Responsibilities</div>
+                <p class="ep-body">Reviewers are expected to deliver expert, objective, and constructive assessments within the agreed timeline. Reviewers must maintain the strict confidentiality of all manuscripts under review and must not use unpublished material for their own purposes without the explicit written consent of the author. Failure to return a review without adequate notice obliges the reviewer to inform the editorial office promptly so that alternative arrangements may be made.</p>
+              </div>
+            </div>
+            <div class="ep">
+              <span class="ep-num">06</span>
+              <div>
+                <div class="ep-title">Corrections, Retractions, and Appeals</div>
+                <p class="ep-body">Errors identified after publication are corrected promptly and with full transparency. In cases of serious ethical breach, the editorial board will issue a formal retraction in accordance with COPE's retraction guidelines, with a clear statement of the reasons. Authors who believe an editorial decision has been reached without adequate consideration of their arguments may submit a formal written appeal to the editor-in-chief, which will be reviewed by a board member not previously involved in the submission.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ═══════════════════════════════════════ SUBMIT CTA -->
-      <section class="section-submit-cta">
+      <!-- OPEN ROLES -->
+      <section class="s-roles" id="roles">
+        <div class="roles-inner">
+          <div class="roles-hdr">
+            <span class="sl" style="color:var(--gold);text-align:center;display:block;">06</span>
+            <div class="dg c"></div>
+            <h2>Open Roles &amp; Opportunities</h2>
+            <p>NAHJ is building its editorial infrastructure ahead of the inaugural issue. We invite applications from qualified scholars for the following positions and opportunities.</p>
+          </div>
+
+          <div class="roles-grid">
+            <div class="role-card">
+              <div class="role-icon">⊕</div>
+              <span class="role-label">Volunteer Role</span>
+              <h3 class="role-title">Peer Reviewer</h3>
+              <p class="role-desc">Peer reviewers are the foundation of scholarly quality assurance. NAHJ seeks reviewers with active research profiles across all three thematic pillars. Reviewers are invited on a per-submission basis and are not expected to commit to a fixed volume of reviews.</p>
+              <ul class="role-reqs">
+                <li>Doctoral qualification in a relevant field</li>
+                <li>Active publication record at peer-reviewed level</li>
+                <li>Capacity to deliver a substantive review within four weeks</li>
+                <li>Familiarity with double-blind review conventions</li>
+              </ul>
+              <div class="role-cta">
+                <a href={`${base}/journal/submit#reviewer`} class="btn-ol-lt">Apply as Reviewer</a>
+              </div>
+            </div>
+
+            <div class="role-card">
+              <div class="role-icon">◈</div>
+              <span class="role-label">Board Position</span>
+              <h3 class="role-title">Editorial Board Member</h3>
+              <p class="role-desc">Editorial board members provide strategic scholarly guidance, assist with reviewer identification, and contribute to the intellectual direction of the journal. The board is international in composition and reflects the full disciplinary scope of the journal's three pillars.</p>
+              <ul class="role-reqs">
+                <li>Established academic at post-doctoral level</li>
+                <li>Recognised publication record in a relevant field</li>
+                <li>Commitment to the journal's open access mission</li>
+                <li>Availability to review two to four submissions annually</li>
+              </ul>
+              <div class="role-cta">
+                <a href={`${base}/journal/submit#board`} class="btn-ol-lt">Apply for Board Membership</a>
+              </div>
+            </div>
+
+            <div class="role-card">
+              <div class="role-icon">◉</div>
+              <span class="role-label">Editorial Opportunity</span>
+              <h3 class="role-title">Guest Editor — Special Issue</h3>
+              <p class="role-desc">NAHJ publishes one special issue per volume, thematically focused and guest-edited by specialists in the relevant area. Guest editors are responsible for developing the call for papers, managing the review process, and writing an editorial introduction to the issue.</p>
+              <ul class="role-reqs">
+                <li>A clearly defined and academically significant theme within the journal's scope</li>
+                <li>An established network of potential contributors</li>
+                <li>Capacity to manage a complete review cycle over 12 months</li>
+                <li>Prior experience of peer review as author or reviewer</li>
+              </ul>
+              <div class="role-cta">
+                <a href={`${base}/journal/submit#special-issue`} class="btn-ol-lt">Propose a Special Issue</a>
+              </div>
+            </div>
+
+            <div class="role-card">
+              <div class="role-icon">◇</div>
+              <span class="role-label">Collaboration</span>
+              <h3 class="role-title">Institutional Partnership</h3>
+              <p class="role-desc">NAHJ welcomes enquiries from research centres, university departments, and learned societies interested in formal scholarly partnership, co-sponsorship of special issues, or the joint organisation of academic events connected to the journal's thematic programme.</p>
+              <ul class="role-reqs">
+                <li>Established academic or research institution</li>
+                <li>Clear scholarly alignment with the journal's thematic pillars</li>
+                <li>Commitment to the journal's Diamond Open Access model</li>
+              </ul>
+              <div class="role-cta">
+                <a href={`${base}/contact`} class="btn-ol-lt">Enquire About Partnership</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUBMIT CTA -->
+      <section class="s-submit">
         <div class="container">
-          <span class="section-label">Contribute</span>
-          <div class="divider-gold center"></div>
-          <h2>Submit to the Nahj Journal</h2>
-          <p>
-            The journal welcomes article submissions, review essay proposals, and expressions of interest from prospective reviewers. Submission details and author guidelines are on the contact page.
-          </p>
-          <div class="cta-buttons">
-            <a href="/contact#submissions" class="btn-primary">Submission Guidelines</a>
-            <a href="/Nahj-Institute/contact" class="btn-outline-dark">Contact the Editorial Team</a>
+          <span class="sl" style="display:block;text-align:center;">Submit Your Work</span>
+          <div class="dg c"></div>
+          <h2>Manuscript Submission Now Open</h2>
+          <p>NAHJ is accepting submissions for Volume I. We welcome original research articles and review essays across all three thematic pillars. There are no submission or publication fees.</p>
+          <div class="submit-btns">
+            <a href={`${base}/journal/submit`} class="btn-navy">Submit a Manuscript</a>
+            <a href={`${base}/journal/submit#reviewer`} class="btn-ol">Apply as Reviewer</a>
           </div>
         </div>
       </section>

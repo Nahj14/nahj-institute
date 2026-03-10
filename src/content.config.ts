@@ -1,19 +1,54 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
 
-const blog = defineCollection({
-	// Load Markdown and MDX files in the `src/content/blog/` directory.
-	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-	// Type-check frontmatter using a schema
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			// Transform string to Date object
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
-			heroImage: image().optional(),
-		}),
+// Website essays, commentary and policy briefs
+const articles = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    authorBio: z.string().optional(),
+    date: z.coerce.date(),
+    category: z.enum([
+      'Theology & Politics',
+      'Geopolitics',
+      'Society',
+      'Science & Ethics',
+      'Religious Harmony',
+      'Philosophy',
+      'Cultural History',
+    ]),
+    type: z.enum(['Essay', 'Commentary', 'Policy Brief']),
+    excerpt: z.string(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+  }),
 });
 
-export const collections = { blog };
+// Nahj Journal peer-reviewed articles
+const journal = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    authorAffiliation: z.string().optional(),
+    authorBio: z.string().optional(),
+    volume: z.number(),
+    issue: z.number(),
+    year: z.number(),
+    season: z.enum(['Spring', 'Autumn']),
+    category: z.enum([
+      'Cultural & Historical Studies',
+      'Neuro-Humanities & Cognitive Theory',
+      'Critical Modernity & Social Dynamics',
+      'Review Essay',
+      'Research Article',
+    ]),
+    abstract: z.string(),
+    keywords: z.array(z.string()).optional(),
+    doi: z.string().optional(),
+    pages: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { articles, journal };

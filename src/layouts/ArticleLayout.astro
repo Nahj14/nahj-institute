@@ -1,0 +1,666 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { frontmatter } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{frontmatter.title} — Nahj Institute</title>
+    <meta name="description" content={frontmatter.excerpt} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+    <style>
+      :root {
+        --navy:       #0C1B2E;
+        --teal:       #1B5E6F;
+        --teal-light: #246E82;
+        --gold:       #C8A252;
+        --gold-light: #E2BC75;
+        --cream:      #F7F2E8;
+        --cream-dark: #EDE6D5;
+        --charcoal:   #2B2B2B;
+        --muted:      #6B6B6B;
+        --white:      #FFFFFF;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: var(--cream);
+        color: var(--charcoal);
+        font-family: 'Crimson Pro', Georgia, serif;
+        font-size: 18px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ─── READING PROGRESS BAR ─────────────────────────────── */
+      #progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--gold);
+        z-index: 9999;
+        transition: width 0.1s linear;
+      }
+
+      /* ─── ARTICLE HERO ─────────────────────────────────────── */
+      .article-hero {
+        background: var(--navy);
+        padding: 5.5rem 2rem 4.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .article-hero::before {
+        content: 'نهج';
+        font-family: 'Amiri', serif;
+        font-size: clamp(10rem, 20vw, 20rem);
+        font-weight: 700;
+        color: rgba(255,255,255,0.032);
+        position: absolute;
+        right: -1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 1;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .article-hero-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .breadcrumb {
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.35);
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .breadcrumb a {
+        color: rgba(255,255,255,0.35);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .breadcrumb a:hover { color: var(--gold); }
+      .breadcrumb span { color: rgba(255,255,255,0.15); }
+
+      .article-category {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      .article-hero h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2rem, 4.5vw, 3.8rem);
+        font-weight: 600;
+        line-height: 1.1;
+        color: var(--white);
+        margin-bottom: 1.75rem;
+        max-width: 800px;
+      }
+
+      .article-byline {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .byline-author {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--gold-light);
+      }
+
+      .byline-sep {
+        color: rgba(255,255,255,0.2);
+        font-size: 0.7rem;
+      }
+
+      .byline-date {
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.38);
+      }
+
+      .byline-type {
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        border: 1px solid rgba(255,255,255,0.18);
+        color: rgba(255,255,255,0.5);
+        padding: 0.22rem 0.7rem;
+        margin-left: auto;
+      }
+
+      /* ─── MAIN CONTENT LAYOUT ──────────────────────────────── */
+      .article-layout {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1fr 260px;
+        gap: 5rem;
+        align-items: start;
+      }
+
+      /* ─── ARTICLE BODY ─────────────────────────────────────── */
+      .article-main {
+        padding: 3.5rem 0 5rem;
+        min-width: 0;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--teal);
+        text-decoration: none;
+        transition: color 0.2s;
+        margin-bottom: 3rem;
+      }
+
+      .back-link:hover { color: var(--gold); }
+
+      /* Markdown content styles */
+      .prose h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.95rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin: 3rem 0 1rem;
+        line-height: 1.15;
+        padding-top: 1rem;
+        border-top: 1px solid var(--cream-dark);
+        scroll-margin-top: 6rem;
+      }
+
+      .prose h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin: 2.5rem 0 0.8rem;
+        line-height: 1.2;
+        scroll-margin-top: 6rem;
+      }
+
+      .prose h4 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin: 2rem 0 0.6rem;
+        scroll-margin-top: 6rem;
+      }
+
+      .prose p {
+        margin-bottom: 1.5rem;
+        font-size: 1.08rem;
+        line-height: 1.9;
+        color: var(--charcoal);
+      }
+
+      .prose blockquote {
+        border-left: 3px solid var(--gold);
+        padding: 1rem 1.75rem;
+        margin: 2.5rem 0;
+        background: var(--cream-dark);
+      }
+
+      .prose blockquote p {
+        margin: 0;
+        font-style: italic;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      .prose ul, .prose ol {
+        padding-left: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .prose li {
+        margin-bottom: 0.5rem;
+        font-size: 1.05rem;
+        line-height: 1.78;
+      }
+
+      .prose a {
+        color: var(--teal);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.2s;
+      }
+
+      .prose a:hover { color: var(--gold); }
+
+      .prose hr {
+        border: none;
+        border-top: 1px solid var(--cream-dark);
+        margin: 3rem 0;
+      }
+
+      .prose strong {
+        font-weight: 600;
+        color: var(--navy);
+      }
+
+      .prose em { font-style: italic; }
+
+      .prose code {
+        font-family: monospace;
+        font-size: 0.88rem;
+        background: var(--cream-dark);
+        padding: 0.15em 0.4em;
+        border-radius: 2px;
+      }
+
+      /* ─── AUTHOR BIO ───────────────────────────────────────── */
+      .author-bio {
+        border-top: 2px solid var(--gold);
+        padding-top: 1.75rem;
+        margin-top: 1rem;
+      }
+
+      .author-bio-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 0.6rem;
+      }
+
+      .author-bio-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+      }
+
+      .author-bio-text {
+        font-size: 0.96rem;
+        color: var(--muted);
+        line-height: 1.78;
+        font-weight: 300;
+      }
+
+      /* ─── SIDEBAR ──────────────────────────────────────────── */
+      .article-sidebar {
+        padding: 3.5rem 0 5rem;
+        position: sticky;
+        top: 5rem;
+      }
+
+      .toc-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 0.75rem;
+      }
+
+      .toc-divider {
+        width: 2.5rem;
+        height: 2px;
+        background: var(--gold);
+        margin-bottom: 1.25rem;
+      }
+
+      .toc-list {
+        list-style: none;
+        padding: 0;
+        border-left: 2px solid var(--cream-dark);
+      }
+
+      .toc-list li {
+        margin: 0;
+      }
+
+      .toc-list a {
+        display: block;
+        font-family: 'Crimson Pro', serif;
+        font-size: 0.92rem;
+        line-height: 1.45;
+        color: var(--muted);
+        text-decoration: none;
+        padding: 0.45rem 0 0.45rem 1rem;
+        border-left: 2px solid transparent;
+        margin-left: -2px;
+        transition: color 0.2s, border-color 0.2s;
+      }
+
+      .toc-list a:hover {
+        color: var(--navy);
+        border-left-color: var(--teal);
+      }
+
+      .toc-list a.active {
+        color: var(--navy);
+        border-left-color: var(--gold);
+        font-weight: 600;
+      }
+
+      .toc-list .toc-h3 a {
+        font-size: 0.84rem;
+        padding-left: 1.75rem;
+        color: rgba(107,107,107,0.75);
+      }
+
+      /* Sidebar meta card */
+      .sidebar-meta {
+        margin-top: 2.5rem;
+        border: 1px solid var(--cream-dark);
+        background: var(--white);
+      }
+
+      .sidebar-meta-row {
+        padding: 0.85rem 1.1rem;
+        border-bottom: 1px solid var(--cream-dark);
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+
+      .sidebar-meta-row:last-child { border-bottom: none; }
+
+      .sidebar-meta-key {
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .sidebar-meta-val {
+        font-size: 0.9rem;
+        color: var(--charcoal);
+        line-height: 1.4;
+      }
+
+      /* Share strip */
+      .sidebar-share {
+        margin-top: 1.75rem;
+      }
+
+      .sidebar-share-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 0.75rem;
+      }
+
+      .share-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .share-btn {
+        flex: 1;
+        text-align: center;
+        padding: 0.55rem 0.5rem;
+        font-size: 0.74rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 1px solid var(--cream-dark);
+        color: var(--muted);
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+        cursor: pointer;
+        background: none;
+        font-family: 'Crimson Pro', serif;
+      }
+
+      .share-btn:hover {
+        background: var(--navy);
+        color: var(--gold);
+        border-color: var(--navy);
+      }
+
+      /* ─── RESPONSIVE ───────────────────────────────────────── */
+      @media (max-width: 900px) {
+        .article-layout {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+
+        .article-sidebar {
+          position: static;
+          padding-top: 0;
+          border-top: 1px solid var(--cream-dark);
+          padding-bottom: 3rem;
+        }
+
+        .toc-list { display: none; }
+      }
+
+      @media (max-width: 768px) {
+        .article-hero { padding: 4rem 1.5rem 3.5rem; }
+        .article-hero::before { font-size: 8rem; }
+        .article-layout { padding: 0 1.25rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="progress-bar"></div>
+    <Header />
+
+    <!-- ══════════════════════════════════════════ ARTICLE HERO -->
+    <section class="article-hero">
+      <div class="article-hero-inner">
+        <nav class="breadcrumb">
+          <a href={`${base}/`}>Home</a>
+          <span>/</span>
+          <a href={`${base}/research`}>Research</a>
+          <span>/</span>
+          <span style="color:rgba(255,255,255,0.55)">{frontmatter.type || 'Essay'}</span>
+        </nav>
+
+        {frontmatter.category && (
+          <span class="article-category">{frontmatter.category}</span>
+        )}
+
+        <h1>{frontmatter.title}</h1>
+
+        <div class="article-byline">
+          {frontmatter.author && (
+            <span class="byline-author">{frontmatter.author}</span>
+          )}
+          {frontmatter.author && frontmatter.date && (
+            <span class="byline-sep">◆</span>
+          )}
+          {frontmatter.date && (
+            <span class="byline-date">{formatDate(frontmatter.date)}</span>
+          )}
+          {frontmatter.type && (
+            <span class="byline-type">{frontmatter.type}</span>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <div class="article-layout">
+
+        <!-- ══════════════════════════════════════ ARTICLE BODY -->
+        <div class="article-main">
+          <a href={`${base}/research`} class="back-link">
+            ← Back to Research
+          </a>
+
+          <article class="prose" id="article-content">
+            <slot />
+          </article>
+
+          {frontmatter.authorBio && (
+            <div class="author-bio">
+              <span class="author-bio-label">About the Author</span>
+              <div class="author-bio-name">{frontmatter.author}</div>
+              <p class="author-bio-text">{frontmatter.authorBio}</p>
+            </div>
+          )}
+        </div>
+
+        <!-- ══════════════════════════════════════════ SIDEBAR -->
+        <aside class="article-sidebar">
+          <span class="toc-label">Contents</span>
+          <div class="toc-divider"></div>
+          <nav>
+            <ul class="toc-list" id="toc-list">
+              <!-- Populated by JS -->
+            </ul>
+          </nav>
+
+          <div class="sidebar-meta">
+            {frontmatter.author && (
+              <div class="sidebar-meta-row">
+                <span class="sidebar-meta-key">Author</span>
+                <span class="sidebar-meta-val">{frontmatter.author}</span>
+              </div>
+            )}
+            {frontmatter.date && (
+              <div class="sidebar-meta-row">
+                <span class="sidebar-meta-key">Published</span>
+                <span class="sidebar-meta-val">{formatDate(frontmatter.date)}</span>
+              </div>
+            )}
+            {frontmatter.type && (
+              <div class="sidebar-meta-row">
+                <span class="sidebar-meta-key">Format</span>
+                <span class="sidebar-meta-val">{frontmatter.type}</span>
+              </div>
+            )}
+            {frontmatter.category && (
+              <div class="sidebar-meta-row">
+                <span class="sidebar-meta-key">Topic</span>
+                <span class="sidebar-meta-val">{frontmatter.category}</span>
+              </div>
+            )}
+          </div>
+
+          <div class="sidebar-share">
+            <span class="sidebar-share-label">Share</span>
+            <div class="share-buttons">
+              <button class="share-btn" id="share-copy" title="Copy link">Copy Link</button>
+              <a class="share-btn" id="share-twitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <Footer />
+
+    <script>
+      // ── Reading progress bar
+      const bar = document.getElementById('progress-bar');
+      function updateProgress() {
+        const el = document.documentElement;
+        const scrolled = el.scrollTop || document.body.scrollTop;
+        const total = el.scrollHeight - el.clientHeight;
+        if (bar) bar.style.width = `${(scrolled / total) * 100}%`;
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+      // ── Build TOC from headings
+      const article = document.getElementById('article-content');
+      const tocList = document.getElementById('toc-list');
+      if (article && tocList) {
+        const headings = article.querySelectorAll('h2, h3, h4');
+        headings.forEach((h, i) => {
+          // Assign IDs if not present
+          if (!h.id) {
+            h.id = 'heading-' + i;
+          }
+          const li = document.createElement('li');
+          li.className = h.tagName === 'H3' ? 'toc-h3' : h.tagName === 'H4' ? 'toc-h3' : '';
+          const a = document.createElement('a');
+          a.href = '#' + h.id;
+          a.textContent = h.textContent || '';
+          li.appendChild(a);
+          tocList.appendChild(li);
+        });
+
+        // Highlight active section on scroll
+        const tocLinks = tocList.querySelectorAll('a');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(l => l.classList.remove('active'));
+              const active = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+              if (active) active.classList.add('active');
+            }
+          });
+        }, { rootMargin: '-15% 0px -70% 0px' });
+        headings.forEach(h => observer.observe(h));
+      }
+
+      // ── Share buttons
+      const copyBtn = document.getElementById('share-copy');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 2000);
+          });
+        });
+      }
+
+      const twitterBtn = document.getElementById('share-twitter');
+      if (twitterBtn) {
+        const title = encodeURIComponent(document.title);
+        const url = encodeURIComponent(window.location.href);
+        twitterBtn.setAttribute('href', `https://twitter.com/intent/tweet?text=${title}&url=${url}`);
+      }
+    </script>
+  </body>
+</html>
