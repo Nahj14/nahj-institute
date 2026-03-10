@@ -41,13 +41,13 @@ function formatDate(date: Date) {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-    <style>
+    <style is:global>
       :root {
         --navy:#0C1B2E;--teal:#1B5E6F;--gold:#C8A252;--gold-light:#E2BC75;
         --cream:#F7F2E8;--cream-dark:#EDE6D5;--charcoal:#2B2B2B;--muted:#6B6B6B;--white:#FFFFFF;
       }
       *{box-sizing:border-box;margin:0;padding:0;}
-      body{background:var(--cream);color:var(--charcoal);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+      body{background:var(--cream);color:var(--charcoal);font-family:'Crimson Pro',Georgia,serif;font-size: 22px;line-height:1.88;-webkit-font-smoothing:antialiased;}
       .container{max-width:1120px;margin:0 auto;padding:0 2rem;}
       .section-label{font-size:0.78rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:block;font-family:'Crimson Pro',serif;}
       .divider-gold{width:3.5rem;height:2px;background:var(--gold);margin:0.9rem 0 1.5rem;}
@@ -62,7 +62,7 @@ function formatDate(date: Date) {
       .breadcrumb span{color:rgba(255,255,255,0.15);}
       .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,5.5vw,4.6rem);font-weight:600;line-height:1.07;color:var(--white);margin-bottom:1.25rem;}
       .page-hero h1 em{font-style:italic;color:var(--gold-light);}
-      .page-hero-sub{font-size:1.1rem;color:rgba(255,255,255,0.6);max-width:580px;font-weight:300;line-height:1.85;}
+      .page-hero-sub{font-size:1.20rem;color:rgba(255,255,255,0.6);max-width:580px;font-weight:300;line-height:1.85;}
       .hero-cta{flex-shrink:0;display:flex;flex-direction:column;gap:0.75rem;align-items:flex-end;}
       .btn-gold{display:inline-block;background:var(--gold);color:var(--navy);font-family:'Crimson Pro',serif;font-size:0.82rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 1.75rem;text-decoration:none;transition:background 0.2s;white-space:nowrap;}
       .btn-gold:hover{background:var(--gold-light);}
@@ -98,7 +98,7 @@ function formatDate(date: Date) {
       .article-card-body{padding:1.75rem 1.5rem;flex:1;display:flex;flex-direction:column;}
       .article-tag{font-size:0.7rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;display:block;}
       .article-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--navy);line-height:1.22;margin-bottom:0.6rem;flex:1;}
-      .article-excerpt{font-size:0.93rem;color:var(--muted);line-height:1.65;margin-bottom:1.25rem;font-weight:300;}
+      .article-excerpt{font-size:1.26rem;color:var(--muted);line-height:1.65;margin-bottom:1.25rem;font-weight:300;}
       .article-meta{font-size:0.8rem;color:var(--muted);padding-top:0.9rem;border-top:1px solid var(--cream-dark);display:flex;justify-content:space-between;align-items:center;}
       .article-type{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);}
 
@@ -107,12 +107,12 @@ function formatDate(date: Date) {
       .section-invite::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(27,94,111,0.3) 0%,transparent 70%);pointer-events:none;}
       .invite-inner{max-width:640px;margin:0 auto;position:relative;z-index:1;}
       .section-invite h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--white);line-height:1.1;margin-top:0.5rem;margin-bottom:1rem;}
-      .section-invite p{font-size:1.05rem;color:rgba(255,255,255,0.58);font-weight:300;line-height:1.85;margin-bottom:2rem;}
+      .section-invite p{font-size:1.16rem;color:rgba(255,255,255,0.58);font-weight:300;line-height:1.85;margin-bottom:2rem;}
       .invite-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
 
       /* EMPTY STATE */
       .empty-state{padding:6rem 2rem;text-align:center;}
-      .empty-state p{font-size:1.05rem;color:var(--muted);font-weight:300;margin-top:1rem;}
+      .empty-state p{font-size:1.16rem;color:var(--muted);font-weight:300;margin-top:1rem;}
 
       @media(max-width:768px){
         .featured-card{grid-template-columns:1fr;}

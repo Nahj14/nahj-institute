@@ -1,252 +1,532 @@
 ---
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Submit Writing — Nahj Institute</title>
-    <meta name="description" content="Submission guidelines for essays, commentary, and policy briefs submitted to the Nahj Institute website." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-    <style>
-      :root{--navy:#0C1B2E;--teal:#1B5E6F;--gold:#C8A252;--gold-light:#E2BC75;--cream:#F7F2E8;--cream-dark:#EDE6D5;--charcoal:#2B2B2B;--muted:#6B6B6B;--white:#FFFFFF;}
-      *{box-sizing:border-box;margin:0;padding:0;}
-      body{background:var(--cream);color:var(--charcoal);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;}
-      .container{max-width:1120px;margin:0 auto;padding:0 2rem;}
-      .section-label{font-size:0.78rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:block;font-family:'Crimson Pro',serif;}
-      .divider-gold{width:3.5rem;height:2px;background:var(--gold);margin:0.9rem 0 1.5rem;}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submit Writing — Nahj Institute</title>
+  <meta name="description" content="Submit essays, commentary, book reviews, poetry, and policy briefs to Nahj Institute. We publish serious writing at the intersection of Islamic thought, politics, society, and culture." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-      .page-hero{background:var(--navy);padding:5.5rem 2rem 4.5rem;position:relative;overflow:hidden;}
-      .page-hero::before{content:'نهج';font-family:'Amiri',serif;font-size:clamp(12rem,24vw,22rem);font-weight:700;color:rgba(255,255,255,0.032);position:absolute;right:-1.5rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;user-select:none;}
-      .page-hero-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1;}
-      .breadcrumb{font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:2rem;display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;}
-      .breadcrumb a{color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;}
-      .breadcrumb a:hover{color:var(--gold);}
-      .breadcrumb span{color:rgba(255,255,255,0.15);}
-      .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,5.5vw,4.4rem);font-weight:600;line-height:1.07;color:var(--white);max-width:780px;margin-bottom:1.25rem;}
-      .page-hero h1 em{font-style:italic;color:var(--gold-light);}
-      .page-hero-sub{font-size:1.1rem;color:rgba(255,255,255,0.6);max-width:580px;font-weight:300;line-height:1.85;}
+  <!--
+    Using is:global to guarantee styles apply regardless of Astro's scoping.
+    This is the reliable fix for the "full-width overflow" bug where scoped
+    styles fail to constrain page content.
+  -->
+  <style is:global>
+    /* ══════════════════════════════════ TOKENS */
+    :root {
+      --navy:       #0C1B2E;
+      --teal:       #1B5E6F;
+      --gold:       #C8A252;
+      --gold-light: #E2BC75;
+      --cream:      #F7F2E8;
+      --cream-dark: #EDE6D5;
+      --charcoal:   #2B2B2B;
+      --muted:      #6B6B6B;
+      --white:      #FFFFFF;
+    }
 
-      .section-main{padding:5.5rem 2rem;background:var(--cream);}
-      .main-layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
-      .sticky-label{position:sticky;top:5rem;}
-      .sticky-label h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--navy);line-height:1.1;margin-top:0.5rem;margin-bottom:1.5rem;}
-      .sticky-label p{font-size:0.97rem;color:var(--muted);line-height:1.8;font-weight:300;}
+    html { scroll-behavior: smooth; }
 
-      .content-body h3{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;color:var(--navy);margin:3rem 0 1rem;padding-top:3rem;border-top:1px solid var(--cream-dark);}
-      .content-body h3:first-child{margin-top:0;padding-top:0;border-top:none;}
-      .content-body p{font-size:1.03rem;color:var(--charcoal);line-height:1.88;font-weight:300;margin-bottom:1.25rem;}
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 22px;
+      line-height: 1.88;
+      -webkit-font-smoothing: antialiased;
+    }
 
-      .spec-table{border:1px solid var(--cream-dark);margin:1.5rem 0;}
-      .spec-row{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid var(--cream-dark);}
-      .spec-row:last-child{border-bottom:none;}
-      .spec-key{font-size:0.76rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);padding:1rem 1.25rem;background:var(--cream-dark);}
-      .spec-val{font-size:0.97rem;color:var(--charcoal);padding:1rem 1.25rem;line-height:1.6;}
+    /* ══════════════════════════════════ HERO */
+    .sub-hero {
+      background: var(--navy);
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .sub-hero::before {
+      content: 'نهج';
+      font-family: 'Amiri', serif;
+      font-size: clamp(10rem, 20vw, 20rem);
+      font-weight: 700;
+      color: rgba(255,255,255,0.03);
+      position: absolute; right: -1rem; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none; user-select: none; line-height: 1;
+    }
+    .sub-hero-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .sub-breadcrumb {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .sub-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .sub-breadcrumb a:hover { color: var(--gold); }
+    .sub-breadcrumb span { color: rgba(255,255,255,0.14); }
+    .sub-hero-tag {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 0.85rem;
+    }
+    .sub-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 600; line-height: 1.08; color: var(--white);
+      margin-bottom: 1.25rem; max-width: 700px;
+    }
+    .sub-hero-sub {
+      font-size: 1.12rem; color: rgba(255,255,255,0.5);
+      max-width: 620px; font-weight: 300; line-height: 1.8;
+    }
 
-      .format-list{list-style:none;padding:0;margin:1rem 0 1.5rem;border-top:1px solid var(--cream-dark);}
-      .format-list li{padding:0.7rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.97rem;color:var(--charcoal);display:flex;align-items:baseline;gap:0.75rem;line-height:1.55;}
-      .format-list li::before{content:'◆';font-size:0.35rem;color:var(--gold);flex-shrink:0;}
+    /* ══════════════════════════════════ PAGE BODY — THE KEY FIX
+       Explicit padding + max-width, guaranteed by is:global.
+       This prevents the full-width text overflow shown in the screenshot.
+    */
+    .sub-body {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 4.5rem 2rem 6rem;
+    }
 
-      .section-form{background:var(--cream-dark);padding:5.5rem 2rem;}
-      .form-layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:6rem;align-items:start;}
-      .form-info h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--navy);line-height:1.1;margin-top:0.5rem;margin-bottom:1rem;}
-      .form-info p{font-size:0.97rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1rem;}
-      .response-note{padding:1rem 1.25rem;border-left:3px solid var(--teal);background:rgba(27,94,111,0.06);font-size:0.88rem;color:var(--muted);line-height:1.65;margin-top:1.5rem;}
+    /* ══════════════════════════════════ SECTION */
+    .sub-section { margin-bottom: 4.5rem; }
 
-      .form-group{margin-bottom:1.75rem;}
-      .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.75rem;}
-      label{display:block;font-size:0.76rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);margin-bottom:0.5rem;}
-      label span{color:var(--gold);}
-      input,select,textarea{width:100%;padding:0.88rem 1.1rem;border:1px solid var(--cream-dark);background:var(--white);font-family:'Crimson Pro',serif;font-size:1rem;color:var(--charcoal);outline:none;transition:border-color 0.2s;appearance:none;}
-      input:focus,select:focus,textarea:focus{border-color:var(--teal);}
-      input::placeholder,textarea::placeholder{color:#bbb;}
-      select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6B6B'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;cursor:pointer;}
-      textarea{min-height:140px;resize:vertical;line-height:1.65;}
-      .form-submit{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-top:2rem;}
-      .btn-primary{display:inline-block;background:var(--navy);color:var(--gold);font-family:'Crimson Pro',serif;font-size:0.88rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.9rem 2.25rem;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;}
-      .btn-primary:hover{background:var(--teal);}
-      .form-privacy{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+    .sub-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600; color: var(--navy);
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--cream-dark);
+      line-height: 1.12;
+    }
 
-      @media(max-width:900px){
-        .main-layout,.form-layout{grid-template-columns:1fr;gap:2.5rem;}
-        .sticky-label{position:static;}
-        .form-row{grid-template-columns:1fr;}
-      }
-      @media(max-width:768px){.page-hero{padding:4rem 1.5rem 3rem;}.spec-row{grid-template-columns:1fr;}.spec-key{border-bottom:1px solid var(--cream-dark);}}
-    </style>
-  </head>
-  <body>
-    <Header />
+    .sub-section-intro {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      max-width: 700px;
+    }
 
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="breadcrumb">
-          <a href={`${base}/`}>Home</a>
-          <span>/</span>
-          <a href={`${base}/research`}>Research</a>
-          <span>/</span>
-          <span style="color:rgba(255,255,255,0.65)">Submit Writing</span>
-        </nav>
-        <h1>Submit an Essay<br />or <em>Commentary</em></h1>
-        <p class="page-hero-sub">Nahj Institute publishes original essays, commentary, and policy briefs from researchers and informed writers at all career stages. Submissions are reviewed on a rolling basis.</p>
+    /* ══════════════════════════════════ PUBLICATION TYPE CARDS */
+    .pub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--cream-dark);
+    }
+    .pub-card {
+      background: var(--white);
+      padding: 1.75rem 1.85rem 2rem;
+      border-right: 1px solid var(--cream-dark);
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .pub-card:nth-child(even) { border-right: none; }
+    .pub-card:nth-last-child(-n+2) { border-bottom: none; }
+    .pub-badge {
+      font-size: 0.64rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      display: inline-block; margin-bottom: 0.45rem;
+      border-bottom: 1px solid rgba(200,162,82,0.3); padding-bottom: 0.2rem;
+    }
+    .pub-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 600; color: var(--navy);
+      margin-bottom: 0.35rem; line-height: 1.15;
+    }
+    .pub-wordcount {
+      font-size: 0.76rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--teal);
+      display: block; margin-bottom: 0.7rem;
+    }
+    .pub-card p {
+      font-size: 1.02rem; color: var(--muted);
+      line-height: 1.75; font-weight: 300; margin: 0;
+    }
+
+    /* ══════════════════════════════════ POETRY CALLOUT */
+    .poetry-box {
+      background: var(--cream-dark);
+      padding: 1.75rem 2rem;
+      border-top: 2px solid var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .poetry-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600; color: var(--navy); margin-bottom: 0.45rem;
+    }
+    .poetry-box p { font-size: 1.02rem; color: var(--muted); line-height: 1.78; font-weight: 300; margin: 0; }
+
+    .ethics-box {
+      background: rgba(27,94,111,0.06);
+      border-left: 3px solid var(--teal);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .ethics-box p { font-size: 1.02rem; color: var(--charcoal); line-height: 1.8; margin: 0; }
+    .ethics-box strong { color: var(--teal); font-weight: 600; }
+
+    /* ══════════════════════════════════ PROSE BODY TEXT */
+    .sub-prose {
+      font-size: 1.08rem;
+      line-height: 1.88;
+      color: var(--charcoal);
+    }
+    .sub-prose p { margin-bottom: 1.3rem; }
+    .sub-prose p:last-child { margin-bottom: 0; }
+    .sub-prose ul  { padding-left: 1.6rem; margin-bottom: 1.3rem; }
+    .sub-prose li  { margin-bottom: 0.6rem; color: var(--charcoal); font-size: 1.05rem; line-height: 1.78; }
+    .sub-prose li::marker { color: var(--gold); }
+    .sub-prose strong { font-weight: 600; color: var(--navy); }
+
+    /* ══════════════════════════════════ INFO GRID (formatting requirements) */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .info-label {
+      font-size: 0.66rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 0.45rem;
+      padding-bottom: 0.35rem; border-bottom: 1px solid var(--cream-dark);
+    }
+    .info-text { font-size: 1.02rem; color: var(--charcoal); line-height: 1.78; }
+
+    /* ══════════════════════════════════ REVIEW TIMELINE */
+    .timeline {
+      display: flex;
+      border: 1px solid var(--cream-dark);
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+    .tl-step {
+      flex: 1; padding: 1.1rem 1.2rem;
+      border-right: 1px solid var(--cream-dark);
+      background: var(--white);
+      position: relative;
+    }
+    .tl-step:last-child { border-right: none; }
+    .tl-step::after {
+      content: '→'; position: absolute; right: -0.7rem; top: 50%;
+      transform: translateY(-50%); color: var(--gold); font-size: 0.8rem; z-index: 1;
+    }
+    .tl-step:last-child::after { display: none; }
+    .tl-num   { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.2rem; }
+    .tl-label { font-size: 0.96rem; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .tl-note  { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.5; }
+
+    /* ══════════════════════════════════ ETHICS NOTICE */
+    .copyright-box {
+      background: rgba(27,94,111,0.05);
+      border-left: 3px solid var(--teal);
+      padding: 1.25rem 1.5rem; margin-top: 1.5rem;
+    }
+    .copyright-box p { font-size: 1.02rem; color: var(--charcoal); line-height: 1.8; margin: 0; }
+    .copyright-box strong { color: var(--teal); }
+
+    /* ══════════════════════════════════ SUBMIT CTA */
+    .sub-cta {
+      background: var(--navy);
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .sub-cta-label {
+      font-size: 0.66rem; font-weight: 600; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 0.6rem;
+    }
+    .sub-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 600; color: var(--white);
+      margin-bottom: 0.75rem; line-height: 1.12;
+    }
+    .sub-cta p { font-size: 1.06rem; color: rgba(255,255,255,0.48); margin-bottom: 2rem; font-weight: 300; line-height: 1.75; }
+    .sub-btn {
+      display: inline-block;
+      background: var(--gold); color: var(--navy);
+      font-family: 'Crimson Pro', serif; font-size: 0.88rem;
+      font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.9rem 2.75rem; text-decoration: none;
+      transition: background 0.2s; border: none; cursor: pointer;
+    }
+    .sub-btn:hover { background: var(--gold-light); }
+
+    .sub-btn-outline {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65);
+      font-family: 'Crimson Pro', serif; font-size: 0.88rem;
+      font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.9rem 2rem; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s; margin-left: 1rem;
+    }
+    .sub-btn-outline:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+
+    /* ══════════════════════════════════ RESPONSIVE */
+    @media (max-width: 760px) {
+      .pub-grid   { grid-template-columns: 1fr; }
+      .pub-card   { border-right: none; }
+      .info-grid  { grid-template-columns: 1fr; gap: 1.25rem; }
+      .timeline   { flex-direction: column; }
+      .tl-step    { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+      .tl-step::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -0.7rem; transform: translateX(-50%); }
+      .tl-step:last-child { border-bottom: none; }
+      .sub-btn-outline { margin-left: 0; margin-top: 0.75rem; display: block; text-align: center; }
+    }
+    @media (max-width: 560px) {
+      .sub-hero   { padding: 3.5rem 1.25rem 3rem; }
+      .sub-body   { padding: 2.5rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <Header />
+
+  <section class="sub-hero">
+    <div class="sub-hero-inner">
+      <nav class="sub-breadcrumb">
+        <a href={`${base}/`}>Home</a><span>/</span>
+        <a href={`${base}/research`}>Research</a><span>/</span>
+        <span>Submit Writing</span>
+      </nav>
+      <span class="sub-hero-tag">Submissions</span>
+      <h1>Submit an Essay, Commentary, or Other Work</h1>
+      <p class="sub-hero-sub">
+        Nahj Institute publishes serious, evidence-based writing at the intersection of Islamic thought, politics, society, and the contemporary world. We consider work from researchers, writers, and practitioners at all career stages. Formal affiliation is not required. Intellectual seriousness is.
+      </p>
+    </div>
+  </section>
+
+  <div class="sub-body">
+
+    <!-- WHAT WE PUBLISH -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">What We Publish</h2>
+      <p class="sub-section-intro">
+        We publish six categories of writing, each with its own scope, audience, and conventions. Read the descriptions carefully before submitting — mismatched submissions slow down review.
+      </p>
+
+      <div class="pub-grid">
+        <div class="pub-card">
+          <span class="pub-badge">Essay</span>
+          <h3>Essay</h3>
+          <span class="pub-wordcount">3,000 – 8,000 words</span>
+          <p>Original analysis on a clearly defined question within one of our focus areas. The standard is that of a well-argued long-read in a serious publication — think <em>Foreign Affairs</em>, <em>Aeon</em>, or <em>Critical Muslim</em>. An essay advances a specific argument; it does not merely survey a topic.</p>
+        </div>
+
+        <div class="pub-card">
+          <span class="pub-badge">Commentary</span>
+          <h3>Commentary</h3>
+          <span class="pub-wordcount">1,200 – 2,500 words</span>
+          <p>A focused, timely response to a current event, policy development, legal ruling, or recent publication. Commentary should be pointed — one or two arguments made with precision and urgency. We aim to publish accepted commentaries within two weeks of submission.</p>
+        </div>
+
+        <div class="pub-card">
+          <span class="pub-badge">Book Review</span>
+          <h3>Book Review</h3>
+          <span class="pub-wordcount">1,500 – 3,000 words</span>
+          <p>A critical assessment of a recently published book relevant to our focus areas. A good review locates the book within its field, assesses its contribution honestly, and engages substantively with its arguments — written for an informed general reader. Modelled on the standard of the <em>TLS</em> and <em>LRB</em>.</p>
+        </div>
+
+        <div class="pub-card">
+          <span class="pub-badge">Policy Brief</span>
+          <h3>Policy Brief</h3>
+          <span class="pub-wordcount">1,500 – 3,000 words</span>
+          <p>Evidence-based analysis directed at a specific policy question, with clear, actionable recommendations. Audience: informed non-specialists — practitioners, civil society, engaged citizens. Avoid dense theoretical framing. The model: Chatham House or Carnegie Endowment — concise, structured, and consequential.</p>
+        </div>
+
+        <div class="pub-card">
+          <span class="pub-badge">Personal Essay</span>
+          <h3>Personal Essay &amp; Memoir</h3>
+          <span class="pub-wordcount">1,500 – 4,000 words</span>
+          <p>First-person writing that uses personal experience as a lens for wider questions of faith, identity, community, or culture. Inspired by the tradition at <em>Aeon</em>. This is not the place for polemic. The best personal essays hold uncertainty, let complexity breathe, and register Muslim experience with literary ambition.</p>
+        </div>
+
+        <div class="pub-card">
+          <span class="pub-badge">Response</span>
+          <h3>Response &amp; Exchange</h3>
+          <span class="pub-wordcount">800 – 1,500 words</span>
+          <p>A direct intellectual response to a piece published on Nahj Institute. Authors of the original piece will be offered a right of reply. Responses must engage with the argument, not merely reassert a contrary position. Inspired by the exchange culture of <em>Boston Review</em> and <em>New Left Review</em>.</p>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <main>
-      <section class="section-main">
-        <div class="main-layout">
-          <div class="sticky-label">
-            <span class="section-label">What We Publish</span>
-            <div class="divider-gold"></div>
-            <h2>Publication Types</h2>
-            <p>We publish three types of writing on the Nahj Institute website. Each has its own scope and word count. For peer-reviewed academic articles, see the Nahj Journal submission page.</p>
-          </div>
+    <!-- POETRY -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">Poetry &amp; Literary Writing</h2>
+      <p class="sub-section-intro">
+        Nahj Institute considers a limited number of poems and short literary pieces for publication alongside our analytical work. Intellectual and artistic expression are not separate traditions in the Islamic humanities — they never were.
+      </p>
 
-          <div class="content-body">
-            <div class="spec-table">
-              <div class="spec-row">
-                <span class="spec-key">Essay</span>
-                <span class="spec-val">3,000 to 8,000 words. Original analysis on a defined question within one of our focus areas. The standard is that of a well-argued long-read in a serious publication.</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-key">Commentary</span>
-                <span class="spec-val">1,500 to 3,000 words. A focused response to a current event, policy development, or recent publication. Timely and pointed.</span>
-              </div>
-              <div class="spec-row">
-                <span class="spec-key">Policy Brief</span>
-                <span class="spec-val">1,500 to 3,000 words. Evidence-based analysis directed at a policy question, with clear recommendations. Accessible to non-specialist readers.</span>
-              </div>
-            </div>
+      <div class="poetry-box">
+        <h3>Poetry</h3>
+        <p>We accept up to six poems per submission, in English, Urdu, Farsi, Kashmiri, Hindi, or Arabic. Translations alongside originals are strongly encouraged. We look for formal command — whether in traditional metres or contemporary free verse — and work that speaks to questions of meaning, faith, loss, beauty, and political reality. Think Faiz Ahmad Faiz, Agha Shahid Ali, Mahmoud Darwish. Not greeting-card verse. Submit with a brief contextual note if relevant.</p>
+      </div>
 
-            <h3>What We Look For</h3>
-            <p>All submissions should be written in clear, accessible English. Arguments must be grounded in evidence, claims referenced accurately, and the writing addressed to an audience beyond the author's own specialism. We do not publish writing that is primarily polemical in character, nor work that serves as institutional or political advocacy without analytical substance.</p>
-            <p>We publish work from postgraduate students, early-career researchers, academics, policy practitioners, and journalists with relevant expertise. A formal academic affiliation is not required. What is required is that the argument is serious and the evidence is sound.</p>
+      <div class="ethics-box">
+        <p><strong>Creative Non-Fiction:</strong> Short personal essays, narrative reportage, and literary memoir up to 3,000 words that blur the line between analysis and art are welcome under the Personal Essay category above. We are particularly interested in writing that registers Muslim experience — in South Asia, the Middle East, Central Asia, and diaspora communities — with literary ambition and intellectual substance.</p>
+      </div>
+    </div>
 
-            <h3>Focus Areas</h3>
-            <p>We give particular attention to submissions in these areas, though we consider strong work from adjacent fields on a case-by-case basis.</p>
-            <ul class="format-list">
-              <li>Islamic theology, jurisprudence, and intellectual history</li>
-              <li>Politics, governance, and political theory in Muslim-majority contexts</li>
-              <li>Geopolitics and international relations of the Muslim world</li>
-              <li>Society, identity, and Muslim communities in global contexts</li>
-              <li>Science, technology, and ethics from an Islamic perspective</li>
-              <li>Religious harmony, interfaith relations, and comparative theology</li>
-              <li>Philosophy, both classical Islamic and contemporary</li>
-              <li>Cultural history, material culture, and literary analysis</li>
-            </ul>
+    <!-- EDITORIAL STANDARDS -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">What We Look For</h2>
+      <p class="sub-section-intro">
+        We do not publish writing that is primarily polemical, or that serves as institutional advocacy without analytical substance. These standards apply to all submissions regardless of type or language.
+      </p>
 
-            <h3>Formatting Requirements</h3>
-            <ul class="format-list">
-              <li>Microsoft Word (.docx) format</li>
-              <li>Chicago author-date referencing for all citations</li>
-              <li>Arabic transliteration following IJMES conventions</li>
-              <li>An abstract of 100 to 150 words submitted with the manuscript</li>
-              <li>Author biography of 50 to 80 words in a separate field on the form below</li>
-            </ul>
+      <div class="sub-prose">
+        <p><strong>Argument over assertion.</strong> A submission should advance a clearly identifiable argument — a claim about the world that could be disputed and that your piece defends. Thematic tours of a subject, however well-written, are not essays.</p>
 
-            <h3>Review Process</h3>
-            <p>Website submissions are reviewed editorially, not through peer review. The editorial team assesses all submissions for quality, accuracy, and fit. Authors receive a response within four weeks. The team may request revisions before accepting a submission for publication.</p>
-            <p>Accepted work is copy-edited and may be lightly revised for style and clarity. Authors are consulted before publication. Nahj Institute publishes all website content under a Creative Commons Attribution licence. Authors retain copyright.</p>
-          </div>
+        <p><strong>Evidence over authority.</strong> Claims must be grounded in evidence: primary sources, empirical data, historical record, or close textual analysis. Citation of respected authorities is not a substitute for argument.</p>
+
+        <p><strong>Accessible without being simple.</strong> We write for an intelligent general reader who does not share the writer's specialist background. Jargon should be minimised. Arabic terms should be transliterated using IJMES conventions and glossed on first use.</p>
+
+        <p><strong>Intellectual honesty.</strong> Engage seriously with the strongest counterarguments to your position. A piece that ignores obvious objections is weaker than one that confronts them. We are particularly alert to motivated reasoning in politically sensitive areas.</p>
+
+        <p><strong>On sensitive topics.</strong> Many of our focus areas involve contested theological, political, and communal questions. We expect writers to engage with sensitivity, intellectual rigour, and a commitment to respectful discourse. We do not publish writing that demeans communities, individuals, or traditions. This is not a restriction on argument — it is a standard of conduct.</p>
+      </div>
+    </div>
+
+    <!-- FOCUS AREAS -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">Focus Areas</h2>
+      <p class="sub-section-intro">
+        We give particular attention to submissions in these areas, though we consider strong work from adjacent fields on a case-by-case basis.
+      </p>
+      <div class="sub-prose">
+        <ul>
+          <li><strong>Islamic theology, jurisprudence, and intellectual history</strong> — including classical and contemporary kalam, usul al-fiqh, tasawwuf, and the history of ideas</li>
+          <li><strong>Politics, governance, and political theory</strong> in Muslim-majority contexts, including Islamic constitutionalism, authoritarianism, and democratic transitions</li>
+          <li><strong>Geopolitics and international relations</strong> of the Muslim world — including foreign policy, regional orders, and Muslim minorities globally</li>
+          <li><strong>Society, identity, and community</strong> — including gender, generational change, sectarianism, and Muslim life in diaspora contexts</li>
+          <li><strong>Science, technology, and ethics</strong> from an Islamic perspective, including bioethics, AI, and the philosophy of science</li>
+          <li><strong>Religious harmony and comparative theology</strong> — including interfaith relations and the theology of religious pluralism</li>
+          <li><strong>Philosophy</strong> — both classical Islamic philosophy and contemporary engagement with Western philosophical traditions</li>
+          <li><strong>Cultural history, literature, and the arts</strong> — including material culture, architecture, and the relationship between aesthetics and Islamic thought</li>
+          <li><strong>South Asian Muslim intellectual and political history</strong> — a particular area of editorial focus for this publication</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FORMATTING -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">Formatting Requirements</h2>
+      <div class="info-grid">
+        <div>
+          <span class="info-label">File Format</span>
+          <p class="info-text">Microsoft Word (.docx). Do not submit PDFs. Use minimal formatting — standard headings only, no custom styles.</p>
         </div>
-      </section>
-
-      <section class="section-form" id="submit-form">
-        <div class="form-layout">
-          <div class="form-info">
-            <span class="section-label">Submit Now</span>
-            <div class="divider-gold"></div>
-            <h2>Send Your Submission</h2>
-            <p>Complete all fields. Include your abstract and a brief author biography. Attach your manuscript as a Word document using the file field below.</p>
-            <p>We acknowledge all submissions within five working days.</p>
-            <div class="response-note">For peer-reviewed journal submissions, please use the <a href={`${base}/journal/submit`} style="color:var(--teal)">Nahj Journal submission form</a> instead.</div>
-          </div>
-
-          <form action="https://formspree.io/f/YOUR_RESEARCH_FORM_ID" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="_subject" value="Website Submission — Nahj Institute" />
-            <input type="hidden" name="_next" value="https://nahj14.github.io/Nahj-Institute/research?submitted=true" />
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fname">First Name <span>*</span></label>
-                <input type="text" id="fname" name="fname" placeholder="First name" required />
-              </div>
-              <div class="form-group">
-                <label for="lname">Last Name <span>*</span></label>
-                <input type="text" id="lname" name="lname" placeholder="Last name" required />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="email">Email Address <span>*</span></label>
-                <input type="email" id="email" name="email" placeholder="your@email.com" required />
-              </div>
-              <div class="form-group">
-                <label for="affiliation">Affiliation</label>
-                <input type="text" id="affiliation" name="affiliation" placeholder="University, institution, or independent" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="title">Title of Submission <span>*</span></label>
-              <input type="text" id="title" name="title" placeholder="Working title" required />
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="type">Submission Type <span>*</span></label>
-                <select id="type" name="type" required>
-                  <option value="" disabled selected>Select type</option>
-                  <option value="Essay">Essay (3,000–8,000 words)</option>
-                  <option value="Commentary">Commentary (1,500–3,000 words)</option>
-                  <option value="Policy Brief">Policy Brief (1,500–3,000 words)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="category">Focus Area <span>*</span></label>
-                <select id="category" name="category" required>
-                  <option value="" disabled selected>Select area</option>
-                  <option>Theology & Politics</option>
-                  <option>Geopolitics</option>
-                  <option>Society</option>
-                  <option>Science & Ethics</option>
-                  <option>Religious Harmony</option>
-                  <option>Philosophy</option>
-                  <option>Cultural History</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="abstract">Abstract <span>*</span></label>
-              <textarea id="abstract" name="abstract" placeholder="100 to 150 words summarising your argument and its significance." required style="min-height:110px;"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="bio">Author Biography <span>*</span></label>
-              <textarea id="bio" name="bio" placeholder="50 to 80 words. Name, institutional affiliation if applicable, and relevant research interests." required style="min-height:100px;"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="manuscript">Manuscript File <span>*</span></label>
-              <input type="file" id="manuscript" name="manuscript" accept=".doc,.docx" style="padding:0.6rem 0;border:none;background:none;font-size:0.95rem;" required />
-            </div>
-
-            <div class="form-submit">
-              <button type="submit" class="btn-primary">Submit Manuscript</button>
-              <p class="form-privacy">Your information is used solely to process your submission and is not shared with third parties.</p>
-            </div>
-          </form>
+        <div>
+          <span class="info-label">Citation Style</span>
+          <p class="info-text">Chicago author-date for all citations. Footnotes preferred over endnotes. Bibliography required for essays and policy briefs.</p>
         </div>
-      </section>
-    </main>
+        <div>
+          <span class="info-label">Transliteration</span>
+          <p class="info-text">IJMES system for Arabic. Gloss Arabic terms on first use. Avoid diacritics for general readership pieces unless essential.</p>
+        </div>
+        <div>
+          <span class="info-label">Abstract</span>
+          <p class="info-text">100–150 words required for essays and policy briefs. Not required for commentary, book reviews, or poetry.</p>
+        </div>
+        <div>
+          <span class="info-label">Author Biography</span>
+          <p class="info-text">50–80 words in the third person. Include institutional affiliation if applicable, research interests, and any relevant disclosures.</p>
+        </div>
+        <div>
+          <span class="info-label">Anonymisation</span>
+          <p class="info-text">Website submissions are reviewed editorially, not through peer review. Remove identifying information from the manuscript body.</p>
+        </div>
+      </div>
+    </div>
 
-    <Footer />
-  </body>
+    <!-- REVIEW PROCESS -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">Review Process</h2>
+      <p class="sub-section-intro">
+        Every submission receives a substantive response. We commit to four weeks.
+      </p>
+
+      <div class="timeline">
+        <div class="tl-step">
+          <span class="tl-num">01</span>
+          <div class="tl-label">Submission</div>
+          <div class="tl-note">Via form or email. Receipt confirmed within 48 hours.</div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-num">02</span>
+          <div class="tl-label">Initial Review</div>
+          <div class="tl-note">Fit, originality, and basic standards. 1–2 weeks.</div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-num">03</span>
+          <div class="tl-label">Editorial Read</div>
+          <div class="tl-note">Full assessment. Revisions may be requested. Up to 4 weeks total.</div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-num">04</span>
+          <div class="tl-label">Decision</div>
+          <div class="tl-note">Accept, revise, or decline — with reasons. We do not ghost submissions.</div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-num">05</span>
+          <div class="tl-label">Publication</div>
+          <div class="tl-note">Copy-editing, author sign-off, and scheduled publication date.</div>
+        </div>
+      </div>
+
+      <div class="copyright-box">
+        <p><strong>Copyright &amp; Licensing:</strong> Nahj Institute publishes all website content under Creative Commons Attribution 4.0 (CC BY 4.0). Authors retain copyright and may republish elsewhere provided Nahj Institute is credited as the original publisher. We ask for a 30-day exclusive window before republication. Simultaneous submissions are accepted provided you notify us immediately upon acceptance elsewhere.</p>
+      </div>
+    </div>
+
+    <!-- WHAT WE DO NOT PUBLISH -->
+    <div class="sub-section">
+      <h2 class="sub-section-title">What We Do Not Publish</h2>
+      <div class="sub-prose">
+        <ul>
+          <li>Writing that is primarily polemical without analytical substance — including sectarian rhetoric presented as scholarship</li>
+          <li>Institutional press releases or advocacy material, regardless of framing</li>
+          <li>Previously published work, including blog posts, op-eds, or preprints — unless substantially revised and disclosed</li>
+          <li>Writing that demeans individuals, communities, or traditions through hateful or abusive language</li>
+          <li>Unsourced claims about living individuals that could constitute defamation</li>
+          <li>Conspiracy theories, pseudoscientific claims, or factual assertions that cannot withstand scrutiny</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="sub-cta">
+      <span class="sub-cta-label">Ready to Submit</span>
+      <h2>Send Us Your Work</h2>
+      <p>
+        Use the form below to submit your manuscript with a short cover letter explaining what you are submitting and why it matters now.<br />
+        Or email directly: <strong style="color:rgba(255,255,255,0.7)">submissions@nahj.org</strong>
+      </p>
+      <a href={`${base}/research/form`} class="sub-btn">Submit via Form →</a>
+      <a href="mailto:submissions@nahj.org" class="sub-btn-outline">Email Directly</a>
+    </div>
+
+  </div>
+
+  <Footer />
+</body>
 </html>
