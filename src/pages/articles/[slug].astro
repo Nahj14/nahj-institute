@@ -6,18 +6,33 @@ import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 export async function getStaticPaths() {
-  const articles = await getCollection('articles', ({ data }) => !data.draft);
-  return articles.map(entry => ({
+  const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+  // Sort by date descending so prev/next make sense
+  allArticles.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+  return allArticles.map((entry, index) => ({
     params: { slug: entry.id.replace(/\.mdx?$/, '').toLowerCase() },
-    props: { entry },
+    props: {
+      entry,
+      prevArticle: allArticles[index + 1] ?? null,
+      nextArticle: allArticles[index - 1] ?? null,
+      // Pass up to 4 other articles for the sidebar "More Articles"
+      moreArticles: allArticles.filter((_, i) => i !== index).slice(0, 4),
+    },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, prevArticle, nextArticle, moreArticles } = Astro.props;
 const { Content } = await entry.render();
+
+const wordCount   = Math.round((entry.body?.length ?? 0) / 5);
+const readingTime = Math.max(1, Math.round(wordCount / 220));
 
 function formatDate(date: Date) {
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+function shortDate(date: Date) {
+  return date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
 }
 ---
 
@@ -27,93 +42,754 @@ function formatDate(date: Date) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{entry.data.title} — Nahj Institute</title>
     <meta name="description" content={entry.data.excerpt} />
+    <!-- Open Graph -->
+    <meta property="og:title"       content={`${entry.data.title} — Nahj Institute`} />
+    <meta property="og:description" content={entry.data.excerpt} />
+    <meta property="og:type"        content="article" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
     <style>
+      /* ══════════════════════════════════════════ VARIABLES */
       :root {
-        --navy:#0C1B2E;--teal:#1B5E6F;--gold:#C8A252;--gold-light:#E2BC75;
-        --cream:#F7F2E8;--cream-dark:#EDE6D5;--charcoal:#2B2B2B;--muted:#6B6B6B;--white:#FFFFFF;
+        --navy:       #0C1B2E;
+        --teal:       #1B5E6F;
+        --gold:       #C8A252;
+        --gold-light: #E2BC75;
+        --cream:      #F7F2E8;
+        --cream-dark: #EDE6D5;
+        --charcoal:   #2B2B2B;
+        --muted:      #6B6B6B;
+        --white:      #FFFFFF;
       }
-      *{box-sizing:border-box;margin:0;padding:0;}
-      body{background:var(--cream);color:var(--charcoal);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
 
-      .article-hero{background:var(--navy);padding:5rem 2rem 4rem;position:relative;overflow:hidden;}
-      .article-hero::before{content:'نهج';font-family:'Amiri',serif;font-size:clamp(10rem,20vw,20rem);font-weight:700;color:rgba(255,255,255,0.032);position:absolute;right:-1rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;user-select:none;}
-      .article-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1;}
-      .breadcrumb{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:2rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
-      .breadcrumb a{color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;}
-      .breadcrumb a:hover{color:var(--gold);}
-      .breadcrumb span{color:rgba(255,255,255,0.15);}
-      .article-tag{font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem;}
-      .article-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:600;line-height:1.1;color:var(--white);margin-bottom:1.5rem;}
-      .article-byline{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
-      .byline-author{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--gold-light);}
-      .byline-date{font-size:0.85rem;color:rgba(255,255,255,0.38);}
-      .byline-type{font-size:0.7rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.55);padding:0.25rem 0.65rem;}
+      body {
+        background: var(--cream);
+        color: var(--charcoal);
+        font-family: 'Crimson Pro', Georgia, serif;
+        font-size: 19px;
+        line-height: 1.85;
+        -webkit-font-smoothing: antialiased;
+      }
 
-      .back-row{max-width:760px;margin:0 auto;padding:2rem 2rem 0;}
-      .back-link{font-size:0.82rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);text-decoration:none;transition:color 0.2s;}
-      .back-link:hover{color:var(--gold);}
+      /* ══════════════════════════════════════════ PROGRESS BAR */
+      #progress-bar {
+        position: fixed; top: 0; left: 0;
+        height: 3px; width: 0%;
+        background: linear-gradient(90deg, var(--teal), var(--gold));
+        z-index: 9999; pointer-events: none;
+        transition: width 0.1s linear;
+      }
 
-      .article-body{max-width:760px;margin:0 auto;padding:4rem 2rem 5rem;}
-      .article-body :global(h2){font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:var(--navy);margin:3rem 0 1rem;line-height:1.15;}
-      .article-body :global(h3){font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--navy);margin:2rem 0 0.75rem;}
-      .article-body :global(p){margin-bottom:1.5rem;font-size:1.08rem;line-height:1.88;color:var(--charcoal);}
-      .article-body :global(blockquote){border-left:3px solid var(--gold);padding:1rem 1.5rem;margin:2rem 0;background:var(--cream-dark);}
-      .article-body :global(blockquote p){margin:0;font-style:italic;color:var(--muted);}
-      .article-body :global(ul),.article-body :global(ol){padding-left:2rem;margin-bottom:1.5rem;}
-      .article-body :global(li){margin-bottom:0.5rem;font-size:1.05rem;line-height:1.75;}
-      .article-body :global(a){color:var(--teal);text-decoration:underline;text-underline-offset:3px;}
-      .article-body :global(a:hover){color:var(--gold);}
-      .article-body :global(hr){border:none;border-top:1px solid var(--cream-dark);margin:3rem 0;}
-      .article-body :global(strong){font-weight:600;color:var(--navy);}
-      .article-body :global(em){font-style:italic;}
+      /* ══════════════════════════════════════════ HERO */
+      .article-hero {
+        background: var(--navy);
+        padding: 5.5rem 2rem 4.5rem;
+        position: relative; overflow: hidden;
+      }
+      .article-hero::before {
+        content: 'نهج';
+        font-family: 'Amiri', serif;
+        font-size: clamp(10rem, 20vw, 20rem); font-weight: 700;
+        color: rgba(255,255,255,0.03);
+        position: absolute; right: -1rem; top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none; user-select: none; line-height: 1;
+      }
+      .hero-inner {
+        max-width: 1340px; margin: 0 auto;
+        position: relative; z-index: 1;
+      }
+      .breadcrumb {
+        font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(255,255,255,0.32); margin-bottom: 1.75rem;
+        display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      }
+      .breadcrumb a { color: rgba(255,255,255,0.32); text-decoration: none; transition: color 0.2s; }
+      .breadcrumb a:hover { color: var(--gold); }
+      .breadcrumb .sep { color: rgba(255,255,255,0.12); }
+      .article-cat {
+        font-size: 0.68rem; font-weight: 600; letter-spacing: 0.24em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.85rem;
+      }
+      .article-hero h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2rem, 4.5vw, 3.4rem);
+        font-weight: 600; line-height: 1.1; color: var(--white);
+        margin-bottom: 1.75rem; max-width: 820px;
+      }
+      .article-byline {
+        display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,0.1);
+      }
+      .byline-author { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500; color: var(--gold-light); }
+      .byline-dot    { color: rgba(255,255,255,0.15); font-size: 0.35rem; }
+      .byline-date   { font-size: 0.82rem; color: rgba(255,255,255,0.36); }
+      .byline-read   { font-size: 0.78rem; color: rgba(255,255,255,0.32); font-style: italic; }
+      .byline-type   {
+        margin-left: auto; font-size: 0.64rem; font-weight: 600; letter-spacing: 0.16em;
+        text-transform: uppercase; border: 1px solid rgba(255,255,255,0.16);
+        color: rgba(255,255,255,0.48); padding: 0.2rem 0.65rem;
+      }
 
-      .author-bio{max-width:760px;margin:0 auto;padding:0 2rem 5rem;}
-      .author-bio-inner{border-top:2px solid var(--gold);padding-top:1.5rem;}
-      .author-bio-label{font-size:0.72rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.75rem;}
-      .author-bio-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;}
-      .author-bio-text{font-size:0.95rem;color:var(--muted);line-height:1.75;font-weight:300;}
+      /* ══════════════════════════════════════════ THREE-COLUMN GRID
+         left-col (ads/more) | article | right-col (details/TOC)
+      */
+      .page-grid {
+        display: grid;
+        grid-template-columns: 220px 1fr 280px;
+        max-width: 1340px;
+        margin: 0 auto;
+        align-items: start;
+        padding-bottom: 5rem;
+      }
+
+      /* ══════════════════════════════════════════ LEFT COLUMN */
+      .left-col {
+        position: sticky;
+        top: 4.5rem;
+        padding: 3rem 1.25rem 3rem 1.5rem;
+        align-self: start;
+        max-height: calc(100vh - 5.5rem);
+        overflow-y: auto;
+        scrollbar-width: none;
+        border-right: 1px solid var(--cream-dark);
+      }
+      .left-col::-webkit-scrollbar { display: none; }
+
+      /* ══════════════════════════════════════════ ARTICLE COLUMN */
+      .article-col {
+        padding: 3rem 3rem 4rem 3rem;
+        border-right: 1px solid var(--cream-dark);
+        min-width: 0;
+        min-height: 70vh;
+      }
+      .back-link {
+        font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em;
+        text-transform: uppercase; color: var(--teal); text-decoration: none;
+        display: block; margin-bottom: 2.5rem; padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--cream-dark); transition: color 0.2s;
+      }
+      .back-link:hover { color: var(--gold); }
+
+      /* ══════════════════════════════════════════ PROSE */
+      .prose {
+        font-size: 1.08rem;
+        line-height: 1.92;
+        color: var(--charcoal);
+        max-width: 72ch;  /* ← readable line length, inspired by Foreign Affairs */
+      }
+
+      /* Drop cap — first letter of first paragraph (like The Atlantic, Aeon) */
+      .prose :global(p:first-of-type::first-letter) {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 4.2em;
+        font-weight: 600;
+        color: var(--navy);
+        float: left;
+        line-height: 0.78;
+        margin-right: 0.1em;
+        margin-top: 0.1em;
+        padding-bottom: 0.05em;
+      }
+
+      .prose :global(h2) {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.72em; font-weight: 600; color: var(--navy);
+        margin: 3.5rem 0 1.1rem; line-height: 1.18;
+        padding-top: 1.5rem; border-top: 1px solid var(--cream-dark);
+        scroll-margin-top: 5rem;
+      }
+      .prose :global(h2:first-child) { margin-top: 0; padding-top: 0; border-top: none; }
+      .prose :global(h3) {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.38em; font-weight: 600; color: var(--navy);
+        margin: 2.5rem 0 0.85rem; line-height: 1.2; scroll-margin-top: 5rem;
+      }
+      .prose :global(h4) {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.16em; font-weight: 600; color: var(--navy);
+        margin: 2rem 0 0.6rem; scroll-margin-top: 5rem;
+      }
+      .prose :global(p)   { margin-bottom: 1.5rem; }
+      .prose :global(ul), .prose :global(ol) { padding-left: 1.75rem; margin-bottom: 1.65rem; }
+      .prose :global(li)  { margin-bottom: 0.5rem; }
+      .prose :global(hr)  { display: none; }
+      .prose :global(strong) { font-weight: 600; color: var(--navy); }
+      .prose :global(em)     { font-style: italic; }
+
+      /* Links — Nahj teal, not browser blue */
+      .prose :global(a) {
+        color: var(--teal);
+        text-decoration: underline; text-underline-offset: 3px;
+        text-decoration-color: rgba(27,94,111,0.38);
+        transition: color 0.2s, text-decoration-color 0.2s;
+      }
+      .prose :global(a:hover) { color: var(--gold); text-decoration-color: rgba(200,162,82,0.45); }
+
+      /* Pull quote blockquote */
+      .prose :global(blockquote) {
+        border-left: 3px solid var(--gold);
+        padding: 1.1rem 1.65rem; margin: 2.5rem 0;
+        background: var(--cream-dark);
+        cursor: pointer;
+        transition: background 0.25s, transform 0.2s, border-left-color 0.25s;
+        position: relative;
+      }
+      .prose :global(blockquote p) { margin: 0; font-style: italic; color: var(--muted); font-size: 1.08em; }
+      .prose :global(blockquote.highlighted) {
+        background: rgba(200,162,82,0.12);
+        border-left-color: var(--gold);
+        transform: translateX(6px);
+      }
+      .prose :global(blockquote.highlighted p) { color: var(--charcoal); }
+
+      /* Key Takeaways box (writers add <div class="takeaways"> in markdown) */
+      .prose :global(.takeaways) {
+        background: var(--navy);
+        padding: 1.5rem 1.75rem; margin: 2.5rem 0;
+        border-left: 4px solid var(--gold);
+      }
+      .prose :global(.takeaways h4) {
+        font-size: 0.68rem !important; font-weight: 600; letter-spacing: 0.22em;
+        text-transform: uppercase; color: var(--gold) !important;
+        margin: 0 0 0.85rem !important; padding: 0 !important; border: none !important;
+      }
+      .prose :global(.takeaways ul)  { padding-left: 1.25rem; margin: 0; }
+      .prose :global(.takeaways li)  { color: rgba(255,255,255,0.78); font-size: 0.94em; margin-bottom: 0.45rem; }
+
+      /* Ornamental section divider (replaces ---) */
+      .prose :global(.section-ornament) {
+        display: flex; align-items: center; justify-content: center;
+        gap: 0.75rem; margin: 3rem 0; opacity: 0.45;
+      }
+      .prose :global(.section-ornament span) { display: block; height: 1px; flex: 1; background: var(--charcoal); }
+      .prose :global(.section-ornament em)   { font-style: normal; font-size: 0.55rem; color: var(--gold); letter-spacing: 0.6em; }
+
+      /* Tables — simple academic, no colour palette */
+      .prose :global(.table-wrap) {
+        overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 2.25rem 0;
+      }
+      .prose :global(table) {
+        width: 100%; border-collapse: collapse;
+        font-size: 0.875rem; line-height: 1.55; margin: 0;
+        font-family: 'Crimson Pro', Georgia, serif;
+        border: 1px solid #d0cfc8;
+      }
+      .prose :global(thead tr)   { background: #f0ede6; border-bottom: 2px solid #bbb9b0; }
+      .prose :global(thead th)   { padding: 0.6rem 1rem; text-align: left; font-weight: 600; font-size: 0.875rem; color: var(--charcoal); border-right: 1px solid #d0cfc8; }
+      .prose :global(thead th:last-child) { border-right: none; }
+      .prose :global(tbody tr)   { border-bottom: 1px solid #d0cfc8; }
+      .prose :global(tbody tr:nth-child(even)) { background: #f8f6f1; }
+      .prose :global(tbody tr:hover)           { background: #f2efe8; }
+      .prose :global(tbody td)   { padding: 0.62rem 1rem; font-size: 0.875rem; color: var(--charcoal); line-height: 1.55; vertical-align: top; border-right: 1px solid #d0cfc8; }
+      .prose :global(tbody td:last-child) { border-right: none; }
+
+      /* Footnotes */
+      .prose :global([data-footnote-ref]) {
+        font-size: 0.68em; vertical-align: super; line-height: 0;
+        font-weight: 600; color: var(--teal) !important;
+        text-decoration: none !important; padding: 0 0.12em;
+      }
+      .prose :global([data-footnote-ref]:hover) { color: var(--gold) !important; }
+      .prose :global([data-footnotes]) { border-top: 2px solid var(--cream-dark); margin-top: 3.5rem; padding-top: 2rem; }
+      .prose :global([data-footnotes] .sr-only) { display: none; }
+      .prose :global([data-footnotes] ol) { list-style: none; padding: 0; counter-reset: fn; }
+      .prose :global([data-footnotes] li) {
+        display: flex; gap: 0.75rem; align-items: baseline;
+        margin-bottom: 0.85rem; font-size: 0.88rem; line-height: 1.65;
+        color: var(--muted); counter-increment: fn;
+      }
+      .prose :global([data-footnotes] li::before) {
+        content: counter(fn) '.';
+        font-size: 0.72rem; font-weight: 600; color: var(--gold);
+        min-width: 1.5rem; flex-shrink: 0;
+      }
+      .prose :global([data-footnotes] li p)          { margin: 0; }
+      .prose :global([data-footnote-backref]) { color: var(--teal) !important; text-decoration: none !important; opacity: 0.55; margin-left: 0.3rem; }
+      .prose :global([data-footnote-backref]:hover) { opacity: 1; }
+
+      /* ══════════════════════════════════════════ AUTHOR BIO */
+      .author-bio {
+        border-top: 2px solid var(--gold);
+        padding-top: 1.75rem; margin-top: 2.5rem;
+        max-width: 72ch;
+      }
+      .bio-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+      .bio-name  { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--navy); margin-bottom: 0.45rem; }
+      .bio-text  { font-size: 0.97rem; color: var(--muted); line-height: 1.75; }
+
+      /* ══════════════════════════════════════════ PREV / NEXT NAV */
+      .article-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        max-width: 72ch;
+        margin-top: 3.5rem;
+        border-top: 2px solid var(--cream-dark);
+      }
+      .nav-card {
+        padding: 1.5rem 1.75rem;
+        text-decoration: none;
+        background: var(--white);
+        border: 1px solid var(--cream-dark);
+        transition: background 0.2s, border-color 0.2s;
+        display: flex; flex-direction: column; gap: 0.4rem;
+      }
+      .nav-card:hover { background: var(--navy); border-color: var(--navy); }
+      .nav-card:hover .nav-dir, .nav-card:hover .nav-title { color: var(--gold-light); }
+      .nav-card:hover .nav-excerpt { color: rgba(255,255,255,0.45); }
+      .nav-card.next { text-align: right; }
+      .nav-dir {
+        font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em;
+        text-transform: uppercase; color: var(--gold); display: flex;
+        align-items: center; gap: 0.4rem; transition: color 0.2s;
+      }
+      .nav-card.next .nav-dir { justify-content: flex-end; }
+      .nav-title   { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--navy); line-height: 1.28; transition: color 0.2s; }
+      .nav-excerpt { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-top: 0.2rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.2s; }
+      .nav-empty   { background: transparent; border: 1px dashed var(--cream-dark); }
+
+      /* ══════════════════════════════════════════ RIGHT SIDEBAR */
+      .right-col {
+        position: sticky;
+        top: 4.5rem;
+        padding: 3rem 1.5rem 3rem 1.75rem;
+        align-self: start;
+        max-height: calc(100vh - 5.5rem);
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      .right-col::-webkit-scrollbar { display: none; }
+
+      /* Sidebar shared elements */
+      .sb-block  { margin-bottom: 2rem; }
+      .sb-block:last-child { margin-bottom: 0; }
+      .sb-label  { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.4rem; }
+      .sb-rule   { width: 1.75rem; height: 2px; background: var(--gold); margin-bottom: 1rem; }
+
+      /* Meta card */
+      .sb-meta  { border: 1px solid var(--cream-dark); background: var(--white); }
+      .sb-row   { padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--cream-dark); }
+      .sb-row:last-child { border-bottom: none; }
+      .sb-key   { font-size: 0.56rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.1rem; }
+      .sb-val   { font-size: 0.86rem; color: var(--charcoal); line-height: 1.38; }
+
+      /* Reading progress */
+      .sb-progress-wrap { background: var(--cream-dark); height: 4px; border-radius: 2px; overflow: hidden; margin-top: 0.6rem; }
+      .sb-progress-bar  { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); width: 0%; transition: width 0.1s linear; border-radius: 2px; }
+      .sb-progress-pct  { font-size: 0.72rem; color: var(--muted); display: block; margin-top: 0.3rem; }
+
+      /* TOC */
+      .toc-list { list-style: none; padding: 0; border-left: 2px solid var(--cream-dark); }
+      .toc-list a {
+        display: block; font-family: 'Crimson Pro', serif;
+        font-size: 0.88rem; line-height: 1.42; color: var(--muted);
+        text-decoration: none; padding: 0.36rem 0 0.36rem 0.85rem;
+        border-left: 2px solid transparent; margin-left: -2px;
+        transition: color 0.18s, border-color 0.18s;
+      }
+      .toc-list a:hover  { color: var(--navy); border-left-color: var(--teal); }
+      .toc-list a.active { color: var(--navy); border-left-color: var(--gold); font-weight: 600; }
+      .toc-list .h3 a    { font-size: 0.8rem; padding-left: 1.5rem; color: rgba(107,107,107,0.65); }
+
+      /* Share */
+      .share-row { display: flex; gap: 0.4rem; }
+      .share-btn {
+        flex: 1; padding: 0.52rem 0.2rem;
+        font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+        border: 1px solid var(--cream-dark); color: var(--muted); background: none;
+        cursor: pointer; font-family: 'Crimson Pro', serif; text-decoration: none;
+        text-align: center; display: flex; align-items: center; justify-content: center;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .share-btn:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+
+      /* Ad */
+      .sb-ad { border: 1px dashed rgba(107,107,107,0.28); padding: 1.75rem 0.75rem; text-align: center; }
+      .sb-ad-tag  { font-size: 0.52rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(107,107,107,0.32); display: block; margin-bottom: 0.4rem; }
+      .sb-ad-note { font-size: 0.76rem; color: rgba(107,107,107,0.32); line-height: 1.55; }
+
+      /* ══════════════════════════════════════════ LEFT COLUMN ELEMENTS */
+      .lc-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.4rem; }
+      .lc-rule  { width: 1.75rem; height: 2px; background: var(--gold); margin-bottom: 1rem; }
+
+      /* More articles list */
+      .more-article-link {
+        display: block; text-decoration: none;
+        padding: 0.75rem 0; border-bottom: 1px solid var(--cream-dark);
+        transition: opacity 0.18s;
+      }
+      .more-article-link:first-child { border-top: 1px solid var(--cream-dark); }
+      .more-article-link:hover { opacity: 0.7; }
+      .ma-cat   { font-size: 0.56rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 0.2rem; }
+      .ma-title { font-family: 'Cormorant Garamond', serif; font-size: 0.93rem; font-weight: 600; color: var(--navy); line-height: 1.28; display: block; margin-bottom: 0.2rem; }
+      .ma-date  { font-size: 0.7rem; color: var(--muted); }
+
+      /* Left ad slot */
+      .lc-ad { border: 1px dashed rgba(107,107,107,0.28); padding: 2.5rem 0.5rem; text-align: center; margin-top: 2rem; }
+      .lc-ad-tag  { font-size: 0.5rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(107,107,107,0.3); display: block; margin-bottom: 0.4rem; }
+      .lc-ad-note { font-size: 0.72rem; color: rgba(107,107,107,0.3); line-height: 1.55; }
+
+      /* Print button */
+      .print-btn {
+        display: flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
+        font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--muted); background: none; border: 1px solid var(--cream-dark);
+        padding: 0.55rem 0.75rem; cursor: pointer; width: 100%; justify-content: center;
+        font-family: 'Crimson Pro', serif; transition: background 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .print-btn:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+
+      /* Quote tooltip */
+      #quote-tooltip {
+        position: fixed;
+        background: var(--navy); color: var(--gold-light);
+        font-family: 'Crimson Pro', serif; font-size: 0.7rem; font-weight: 600;
+        letter-spacing: 0.1em; text-transform: uppercase;
+        padding: 0.42rem 0.85rem; pointer-events: none;
+        opacity: 0; transform: translateY(4px);
+        transition: opacity 0.18s, transform 0.18s;
+        z-index: 8000; white-space: nowrap; cursor: pointer;
+      }
+      #quote-tooltip.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+      /* ══════════════════════════════════════════ RESPONSIVE */
+      @media (max-width: 1200px) {
+        .page-grid { grid-template-columns: 180px 1fr 250px; }
+      }
+      @media (max-width: 1000px) {
+        /* Drop left column into a top strip */
+        .page-grid { grid-template-columns: 1fr 240px; }
+        .left-col  {
+          display: none; /* hidden — could become a top bar on further work */
+        }
+      }
+      @media (max-width: 820px) {
+        .page-grid { grid-template-columns: 1fr; padding-bottom: 2rem; }
+        .article-col { border-right: none; padding: 2rem 1.5rem 3rem; }
+        .right-col {
+          position: static; max-height: none; overflow-y: visible;
+          border-top: 2px solid var(--cream-dark);
+          display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem;
+        }
+        .sb-block { margin-bottom: 0; }
+        .toc-block { display: none; }
+        .article-nav { grid-template-columns: 1fr; }
+        .nav-card.next { text-align: left; }
+        .nav-card.next .nav-dir { justify-content: flex-start; }
+      }
+      @media (max-width: 560px) {
+        .article-hero { padding: 3.5rem 1.25rem 2.75rem; }
+        .article-col  { padding: 1.75rem 1.25rem 3rem; }
+        .right-col    { grid-template-columns: 1fr; padding: 1.5rem 1.25rem; }
+        .prose { max-width: 100%; }
+      }
     </style>
   </head>
+
   <body>
+    <div id="progress-bar"></div>
+    <div id="quote-tooltip">Share Quote →</div>
     <Header />
+
+    <!-- ════════════════════════════════════════════════ HERO -->
     <section class="article-hero">
-      <div class="article-hero-inner">
+      <div class="hero-inner">
         <nav class="breadcrumb">
-          <a href={`${base}/`}>Home</a>
-          <span>/</span>
-          <a href={`${base}/research`}>Research</a>
-          <span>/</span>
-          <span style="color:rgba(255,255,255,0.55)">{entry.data.type}</span>
+          <a href={`${base}/`}>Home</a><span class="sep">/</span>
+          <a href={`${base}/research`}>Research</a><span class="sep">/</span>
+          <span>{entry.data.type}</span>
         </nav>
-        <span class="article-tag">{entry.data.category}</span>
+        {entry.data.category && <span class="article-cat">{entry.data.category}</span>}
         <h1>{entry.data.title}</h1>
         <div class="article-byline">
           <span class="byline-author">{entry.data.author}</span>
+          <span class="byline-dot">◆</span>
           <span class="byline-date">{formatDate(entry.data.date)}</span>
+          <span class="byline-dot">◆</span>
+          <span class="byline-read">{readingTime} min read</span>
           <span class="byline-type">{entry.data.type}</span>
         </div>
       </div>
     </section>
-    <main>
-      <div class="back-row">
+
+    <!-- ══════════════════════════ THREE-COLUMN GRID -->
+    <div class="page-grid">
+
+      <!-- ════════════════ LEFT COLUMN -->
+      <aside class="left-col" aria-label="More articles">
+
+        {moreArticles.length > 0 && (
+          <div style="margin-bottom: 2rem;">
+            <span class="lc-label">More Articles</span>
+            <div class="lc-rule"></div>
+            {moreArticles.map(a => (
+              <a
+                href={`${base}/articles/${a.id.replace(/\.mdx?$/, '').toLowerCase()}`}
+                class="more-article-link"
+              >
+                <span class="ma-cat">{a.data.category ?? a.data.type}</span>
+                <span class="ma-title">{a.data.title}</span>
+                <span class="ma-date">{shortDate(a.data.date)}</span>
+              </a>
+            ))}
+          </div>
+        )}
+
+        <button class="print-btn" onclick="window.print()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          Print / Save PDF
+        </button>
+
+        <div class="lc-ad">
+          <span class="lc-ad-tag">Advertisement</span>
+          <p class="lc-ad-note">Ad space<br />available</p>
+        </div>
+
+      </aside>
+
+      <!-- ════════════════ ARTICLE -->
+      <div class="article-col">
         <a href={`${base}/research`} class="back-link">← Back to Research</a>
+
+        <article class="prose" id="article-content">
+          <Content />
+        </article>
+
+        {entry.data.authorBio && (
+          <div class="author-bio">
+            <span class="bio-label">About the Author</span>
+            <div class="bio-name">{entry.data.author}</div>
+            <p class="bio-text">{entry.data.authorBio}</p>
+          </div>
+        )}
+
+        <!-- Prev / Next navigation -->
+        <nav class="article-nav" aria-label="Article navigation">
+          {prevArticle ? (
+            <a
+              href={`${base}/articles/${prevArticle.id.replace(/\.mdx?$/, '').toLowerCase()}`}
+              class="nav-card prev"
+            >
+              <span class="nav-dir">← Previous</span>
+              <span class="nav-title">{prevArticle.data.title}</span>
+              {prevArticle.data.excerpt && <span class="nav-excerpt">{prevArticle.data.excerpt}</span>}
+            </a>
+          ) : (
+            <div class="nav-card nav-empty"></div>
+          )}
+
+          {nextArticle ? (
+            <a
+              href={`${base}/articles/${nextArticle.id.replace(/\.mdx?$/, '').toLowerCase()}`}
+              class="nav-card next"
+            >
+              <span class="nav-dir">Next →</span>
+              <span class="nav-title">{nextArticle.data.title}</span>
+              {nextArticle.data.excerpt && <span class="nav-excerpt">{nextArticle.data.excerpt}</span>}
+            </a>
+          ) : (
+            <div class="nav-card nav-empty"></div>
+          )}
+        </nav>
       </div>
-      <article class="article-body">
-        <Content />
-      </article>
-      {entry.data.authorBio && (
-        <div class="author-bio">
-          <div class="author-bio-inner">
-            <span class="author-bio-label">About the Author</span>
-            <div class="author-bio-name">{entry.data.author}</div>
-            <p class="author-bio-text">{entry.data.authorBio}</p>
+
+      <!-- ════════════════ RIGHT SIDEBAR -->
+      <aside class="right-col">
+
+        <!-- Article Details -->
+        <div class="sb-block">
+          <span class="sb-label">Article Details</span>
+          <div class="sb-rule"></div>
+          <div class="sb-meta">
+            <div class="sb-row"><span class="sb-key">Author</span><span class="sb-val">{entry.data.author}</span></div>
+            <div class="sb-row"><span class="sb-key">Published</span><span class="sb-val">{formatDate(entry.data.date)}</span></div>
+            <div class="sb-row"><span class="sb-key">Format</span><span class="sb-val">{entry.data.type}</span></div>
+            {entry.data.category && <div class="sb-row"><span class="sb-key">Topic</span><span class="sb-val">{entry.data.category}</span></div>}
+            <div class="sb-row"><span class="sb-key">Reading Time</span><span class="sb-val">{readingTime} min</span></div>
+            <div class="sb-row"><span class="sb-key">Publisher</span><span class="sb-val">Nahj Institute</span></div>
           </div>
         </div>
-      )}
-    </main>
+
+        <!-- Reading Progress -->
+        <div class="sb-block">
+          <span class="sb-label">Reading Progress</span>
+          <div class="sb-rule"></div>
+          <div class="sb-progress-wrap">
+            <div class="sb-progress-bar" id="sb-progress"></div>
+          </div>
+          <span class="sb-progress-pct" id="sb-pct">0% complete</span>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="sb-block toc-block">
+          <span class="sb-label">Contents</span>
+          <div class="sb-rule"></div>
+          <ul class="toc-list" id="toc-list" aria-label="Article sections"></ul>
+        </div>
+
+        <!-- Share -->
+        <div class="sb-block">
+          <span class="sb-label">Share</span>
+          <div class="sb-rule"></div>
+          <div class="share-row">
+            <button class="share-btn" id="share-copy">Copy Link</button>
+            <a class="share-btn" id="share-tw" href="#" target="_blank" rel="noopener">Twitter</a>
+          </div>
+        </div>
+
+        <!-- Ad -->
+        <div class="sb-block">
+          <div class="sb-ad">
+            <span class="sb-ad-tag">Advertisement</span>
+            <p class="sb-ad-note">Ad space available.<br />Contact us to enquire.</p>
+          </div>
+        </div>
+
+      </aside>
+    </div><!-- /page-grid -->
+
     <Footer />
+
+    <script>
+      // ── Progress bar + sidebar reading progress
+      const bar    = document.getElementById('progress-bar');
+      const sbBar  = document.getElementById('sb-progress') as HTMLElement | null;
+      const sbPct  = document.getElementById('sb-pct');
+
+      function updateProgress() {
+        const d   = document.documentElement;
+        const pct = Math.min((d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100, 100);
+        if (bar)   bar.style.width       = `${pct}%`;
+        if (sbBar) sbBar.style.width     = `${pct}%`;
+        if (sbPct) sbPct.textContent     = `${Math.round(pct)}% complete`;
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+      // ── Wrap tables
+      document.querySelectorAll('.prose table').forEach(t => {
+        const w = document.createElement('div');
+        w.className = 'table-wrap';
+        (t as HTMLElement).style.margin = '0';
+        t.parentNode?.insertBefore(w, t);
+        w.appendChild(t);
+      });
+
+      // ── Replace <hr> with ornamental dividers
+      document.querySelectorAll('.prose hr').forEach(hr => {
+        const o = document.createElement('div');
+        o.className = 'section-ornament';
+        o.innerHTML = '<span></span><em>◆ ◆ ◆</em><span></span>';
+        hr.parentNode?.replaceChild(o, hr);
+      });
+
+      // ── Click blockquote to highlight
+      document.querySelectorAll('.prose blockquote').forEach(bq => {
+        bq.addEventListener('click', () => bq.classList.toggle('highlighted'));
+      });
+
+      // ── BUILD TOC
+      // Uses requestAnimationFrame to wait for Astro to fully paint the DOM,
+      // then assigns ids to headings before building the list.
+      function buildTOC() {
+        const article = document.getElementById('article-content');
+        const toc     = document.getElementById('toc-list');
+        if (!article || !toc) return;
+
+        const heads = Array.from(article.querySelectorAll('h2, h3'));
+        if (heads.length === 0) {
+          // Retry once more if DOM not ready
+          setTimeout(buildTOC, 200);
+          return;
+        }
+
+        toc.innerHTML = ''; // clear any stale content
+        heads.forEach((h, i) => {
+          // Always assign/overwrite id to guarantee freshness
+          h.id = `heading-${i}`;
+
+          const li = document.createElement('li');
+          if (h.tagName === 'H3') li.className = 'h3';
+
+          const a = document.createElement('a');
+          a.href        = `#heading-${i}`;
+          // Strip leading "1. " or "2. " numbering from TOC labels
+          a.textContent = (h.textContent ?? '').replace(/^\d+\.\s*/, '').trim();
+          li.appendChild(a);
+          toc.appendChild(li);
+        });
+
+        // IntersectionObserver for active section highlight
+        const links = Array.from(toc.querySelectorAll('a'));
+        const obs   = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              links.forEach(l => l.classList.remove('active'));
+              const match = toc.querySelector(`a[href="#${e.target.id}"]`);
+              if (match) match.classList.add('active');
+            }
+          });
+        }, { rootMargin: '-8% 0px -78% 0px', threshold: 0 });
+
+        heads.forEach(h => obs.observe(h));
+      }
+
+      // Run after paint — this fixes the "empty TOC" bug
+      requestAnimationFrame(() => { setTimeout(buildTOC, 0); });
+
+      // ── Text selection share tooltip
+      const tooltip = document.getElementById('quote-tooltip');
+      let   lastSel = '';
+      const proseEl = document.getElementById('article-content');
+
+      if (tooltip && proseEl) {
+        document.addEventListener('selectionchange', () => {
+          const sel  = window.getSelection();
+          const text = sel?.toString().trim() ?? '';
+          if (text.length > 30 && sel && proseEl.contains(sel.anchorNode)) {
+            const rect = sel.getRangeAt(0).getBoundingClientRect();
+            tooltip.style.left = `${rect.left + rect.width / 2 - 70}px`;
+            tooltip.style.top  = `${rect.top + window.scrollY - 46}px`;
+            tooltip.classList.add('visible');
+            lastSel = text;
+          } else {
+            tooltip.classList.remove('visible');
+            lastSel = '';
+          }
+        });
+        tooltip.addEventListener('click', () => {
+          if (!lastSel) return;
+          const excerpt = lastSel.length > 180 ? lastSel.substring(0, 180) + '…' : lastSel;
+          window.open(
+            `https://twitter.com/intent/tweet?text=${encodeURIComponent(`"${excerpt}" — Nahj Institute`)}&url=${encodeURIComponent(location.href)}`,
+            '_blank', 'noopener'
+          );
+          tooltip.classList.remove('visible');
+          window.getSelection()?.removeAllRanges();
+        });
+        window.addEventListener('scroll', () => tooltip.classList.remove('visible'), { passive: true });
+      }
+
+      // ── Share buttons
+      document.getElementById('share-copy')?.addEventListener('click', function() {
+        navigator.clipboard.writeText(location.href).then(() => {
+          this.textContent = 'Copied!';
+          setTimeout(() => { this.textContent = 'Copy Link'; }, 2200);
+        });
+      });
+      const tw = document.getElementById('share-tw');
+      if (tw) tw.setAttribute('href',
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(document.title)}&url=${encodeURIComponent(location.href)}`
+      );
+    </script>
   </body>
 </html>
