@@ -3,7 +3,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const { frontmatter } = Astro.props;
-
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 function formatDate(dateStr: string) {
@@ -26,7 +25,6 @@ function formatDate(dateStr: string) {
       :root {
         --navy:       #0C1B2E;
         --teal:       #1B5E6F;
-        --teal-light: #246E82;
         --gold:       #C8A252;
         --gold-light: #E2BC75;
         --cream:      #F7F2E8;
@@ -42,8 +40,8 @@ function formatDate(dateStr: string) {
         background: var(--cream);
         color: var(--charcoal);
         font-family: 'Crimson Pro', Georgia, serif;
-        font-size: 18px;
-        line-height: 1.75;
+        font-size: 20px;
+        line-height: 1.8;
         -webkit-font-smoothing: antialiased;
       }
 
@@ -52,11 +50,11 @@ function formatDate(dateStr: string) {
         position: fixed;
         top: 0;
         left: 0;
-        height: 2px;
+        height: 3px;
         width: 0%;
         background: var(--gold);
         z-index: 9999;
-        transition: width 0.1s linear;
+        transition: width 0.08s linear;
       }
 
       /* ─── ARTICLE HERO ─────────────────────────────────────── */
@@ -83,10 +81,11 @@ function formatDate(dateStr: string) {
       }
 
       .article-hero-inner {
-        max-width: 900px;
+        max-width: 1180px;
         margin: 0 auto;
         position: relative;
         z-index: 1;
+        padding: 0 2rem;
       }
 
       .breadcrumb {
@@ -101,12 +100,7 @@ function formatDate(dateStr: string) {
         flex-wrap: wrap;
       }
 
-      .breadcrumb a {
-        color: rgba(255,255,255,0.35);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
+      .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
       .breadcrumb a:hover { color: var(--gold); }
       .breadcrumb span { color: rgba(255,255,255,0.15); }
 
@@ -122,12 +116,12 @@ function formatDate(dateStr: string) {
 
       .article-hero h1 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2rem, 4.5vw, 3.8rem);
+        font-size: clamp(2rem, 4.5vw, 3.6rem);
         font-weight: 600;
         line-height: 1.1;
         color: var(--white);
         margin-bottom: 1.75rem;
-        max-width: 800px;
+        max-width: 820px;
       }
 
       .article-byline {
@@ -146,15 +140,9 @@ function formatDate(dateStr: string) {
         color: var(--gold-light);
       }
 
-      .byline-sep {
-        color: rgba(255,255,255,0.2);
-        font-size: 0.7rem;
-      }
+      .byline-sep { color: rgba(255,255,255,0.2); font-size: 0.5rem; }
 
-      .byline-date {
-        font-size: 0.85rem;
-        color: rgba(255,255,255,0.38);
-      }
+      .byline-date { font-size: 0.88rem; color: rgba(255,255,255,0.38); }
 
       .byline-type {
         font-size: 0.68rem;
@@ -167,20 +155,20 @@ function formatDate(dateStr: string) {
         margin-left: auto;
       }
 
-      /* ─── MAIN CONTENT LAYOUT ──────────────────────────────── */
-      .article-layout {
+      /* ─── TWO-COLUMN LAYOUT ────────────────────────────────── */
+      .article-outer {
         max-width: 1180px;
         margin: 0 auto;
         padding: 0 2rem;
         display: grid;
-        grid-template-columns: 1fr 260px;
+        grid-template-columns: 1fr 280px;
         gap: 5rem;
         align-items: start;
       }
 
-      /* ─── ARTICLE BODY ─────────────────────────────────────── */
+      /* ─── MAIN ARTICLE COLUMN ──────────────────────────────── */
       .article-main {
-        padding: 3.5rem 0 5rem;
+        padding: 3.5rem 0 6rem;
         min-width: 0;
       }
 
@@ -195,53 +183,55 @@ function formatDate(dateStr: string) {
         color: var(--teal);
         text-decoration: none;
         transition: color 0.2s;
-        margin-bottom: 3rem;
+        margin-bottom: 3.5rem;
       }
 
       .back-link:hover { color: var(--gold); }
 
-      /* Markdown content styles */
+      /* ─── PROSE STYLES ─────────────────────────────────────── */
       .prose h2 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.95rem;
+        font-size: 2rem;
         font-weight: 600;
         color: var(--navy);
-        margin: 3rem 0 1rem;
+        margin: 3.5rem 0 1.25rem;
         line-height: 1.15;
-        padding-top: 1rem;
+        padding-top: 1.5rem;
         border-top: 1px solid var(--cream-dark);
         scroll-margin-top: 6rem;
       }
 
+      .prose h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
       .prose h3 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.5rem;
+        font-size: 1.55rem;
         font-weight: 600;
         color: var(--navy);
-        margin: 2.5rem 0 0.8rem;
+        margin: 2.5rem 0 0.9rem;
         line-height: 1.2;
         scroll-margin-top: 6rem;
       }
 
       .prose h4 {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         font-weight: 600;
         color: var(--navy);
-        margin: 2rem 0 0.6rem;
+        margin: 2rem 0 0.7rem;
         scroll-margin-top: 6rem;
       }
 
       .prose p {
-        margin-bottom: 1.5rem;
-        font-size: 1.08rem;
+        margin-bottom: 1.6rem;
+        font-size: 1.1rem;
         line-height: 1.9;
         color: var(--charcoal);
       }
 
       .prose blockquote {
         border-left: 3px solid var(--gold);
-        padding: 1rem 1.75rem;
+        padding: 1.1rem 1.75rem;
         margin: 2.5rem 0;
         background: var(--cream-dark);
       }
@@ -255,50 +245,75 @@ function formatDate(dateStr: string) {
 
       .prose ul, .prose ol {
         padding-left: 2rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.75rem;
       }
 
       .prose li {
-        margin-bottom: 0.5rem;
-        font-size: 1.05rem;
-        line-height: 1.78;
+        margin-bottom: 0.6rem;
+        font-size: 1.08rem;
+        line-height: 1.8;
       }
 
-      .prose a {
-        color: var(--teal);
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        transition: color 0.2s;
-      }
-
+      .prose a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
       .prose a:hover { color: var(--gold); }
-
-      .prose hr {
-        border: none;
-        border-top: 1px solid var(--cream-dark);
-        margin: 3rem 0;
-      }
-
-      .prose strong {
-        font-weight: 600;
-        color: var(--navy);
-      }
-
+      .prose hr { border: none; border-top: 1px solid var(--cream-dark); margin: 3rem 0; }
+      .prose strong { font-weight: 600; color: var(--navy); }
       .prose em { font-style: italic; }
 
-      .prose code {
-        font-family: monospace;
-        font-size: 0.88rem;
+      /* ─── TABLE STYLES ─────────────────────────────────────── */
+      .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2.5rem 0;
+        font-size: 0.97rem;
+        overflow-x: auto;
+        display: block;
+      }
+
+      .prose thead tr {
+        background: var(--navy);
+      }
+
+      .prose thead th {
+        padding: 0.9rem 1.25rem;
+        text-align: left;
+        font-family: 'Crimson Pro', serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid rgba(255,255,255,0.08);
+        white-space: nowrap;
+      }
+
+      .prose tbody tr {
+        border-bottom: 1px solid var(--cream-dark);
+        transition: background 0.15s;
+      }
+
+      .prose tbody tr:nth-child(even) {
         background: var(--cream-dark);
-        padding: 0.15em 0.4em;
-        border-radius: 2px;
+      }
+
+      .prose tbody tr:hover {
+        background: rgba(27,94,111,0.06);
+      }
+
+      .prose tbody td {
+        padding: 0.9rem 1.25rem;
+        font-size: 0.97rem;
+        color: var(--charcoal);
+        line-height: 1.65;
+        vertical-align: top;
+        border: 1px solid var(--cream-dark);
       }
 
       /* ─── AUTHOR BIO ───────────────────────────────────────── */
       .author-bio {
         border-top: 2px solid var(--gold);
         padding-top: 1.75rem;
-        margin-top: 1rem;
+        margin-top: 2rem;
       }
 
       .author-bio-label {
@@ -320,7 +335,7 @@ function formatDate(dateStr: string) {
       }
 
       .author-bio-text {
-        font-size: 0.96rem;
+        font-size: 0.97rem;
         color: var(--muted);
         line-height: 1.78;
         font-weight: 300;
@@ -333,21 +348,26 @@ function formatDate(dateStr: string) {
         top: 5rem;
       }
 
-      .toc-label {
-        font-size: 0.7rem;
+      .sidebar-section-label {
+        font-size: 0.68rem;
         font-weight: 600;
-        letter-spacing: 0.2em;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--gold);
         display: block;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.6rem;
       }
 
-      .toc-divider {
+      .sidebar-divider {
         width: 2.5rem;
         height: 2px;
         background: var(--gold);
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.1rem;
+      }
+
+      /* TOC */
+      .toc-nav {
+        margin-bottom: 2.5rem;
       }
 
       .toc-list {
@@ -356,86 +376,61 @@ function formatDate(dateStr: string) {
         border-left: 2px solid var(--cream-dark);
       }
 
-      .toc-list li {
-        margin: 0;
-      }
+      .toc-list li { margin: 0; }
 
       .toc-list a {
         display: block;
         font-family: 'Crimson Pro', serif;
-        font-size: 0.92rem;
+        font-size: 0.93rem;
         line-height: 1.45;
         color: var(--muted);
         text-decoration: none;
-        padding: 0.45rem 0 0.45rem 1rem;
+        padding: 0.42rem 0 0.42rem 1rem;
         border-left: 2px solid transparent;
         margin-left: -2px;
         transition: color 0.2s, border-color 0.2s;
       }
 
-      .toc-list a:hover {
-        color: var(--navy);
-        border-left-color: var(--teal);
-      }
+      .toc-list a:hover { color: var(--navy); border-left-color: var(--teal); }
+      .toc-list a.active { color: var(--navy); border-left-color: var(--gold); font-weight: 600; }
 
-      .toc-list a.active {
-        color: var(--navy);
-        border-left-color: var(--gold);
-        font-weight: 600;
-      }
-
-      .toc-list .toc-h3 a {
+      .toc-list .toc-sub a {
         font-size: 0.84rem;
         padding-left: 1.75rem;
-        color: rgba(107,107,107,0.75);
+        color: rgba(107,107,107,0.7);
       }
 
-      /* Sidebar meta card */
+      /* Meta card */
       .sidebar-meta {
-        margin-top: 2.5rem;
         border: 1px solid var(--cream-dark);
         background: var(--white);
+        margin-bottom: 2rem;
       }
 
       .sidebar-meta-row {
-        padding: 0.85rem 1.1rem;
+        padding: 0.8rem 1.1rem;
         border-bottom: 1px solid var(--cream-dark);
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
       }
 
       .sidebar-meta-row:last-child { border-bottom: none; }
 
       .sidebar-meta-key {
-        font-size: 0.66rem;
+        font-size: 0.64rem;
         font-weight: 600;
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: var(--gold);
+        display: block;
+        margin-bottom: 0.15rem;
       }
 
       .sidebar-meta-val {
-        font-size: 0.9rem;
+        font-size: 0.92rem;
         color: var(--charcoal);
         line-height: 1.4;
       }
 
-      /* Share strip */
-      .sidebar-share {
-        margin-top: 1.75rem;
-      }
-
-      .sidebar-share-label {
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--muted);
-        display: block;
-        margin-bottom: 0.75rem;
-      }
-
+      /* Share */
       .share-buttons {
         display: flex;
         gap: 0.5rem;
@@ -444,18 +439,18 @@ function formatDate(dateStr: string) {
       .share-btn {
         flex: 1;
         text-align: center;
-        padding: 0.55rem 0.5rem;
-        font-size: 0.74rem;
+        padding: 0.6rem 0.4rem;
+        font-size: 0.72rem;
         font-weight: 600;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         text-decoration: none;
         border: 1px solid var(--cream-dark);
         color: var(--muted);
-        transition: background 0.2s, color 0.2s, border-color 0.2s;
-        cursor: pointer;
         background: none;
+        cursor: pointer;
         font-family: 'Crimson Pro', serif;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
       }
 
       .share-btn:hover {
@@ -465,8 +460,15 @@ function formatDate(dateStr: string) {
       }
 
       /* ─── RESPONSIVE ───────────────────────────────────────── */
-      @media (max-width: 900px) {
-        .article-layout {
+      @media (max-width: 1024px) {
+        .article-outer {
+          grid-template-columns: 1fr 240px;
+          gap: 3rem;
+        }
+      }
+
+      @media (max-width: 860px) {
+        .article-outer {
           grid-template-columns: 1fr;
           gap: 0;
         }
@@ -474,17 +476,16 @@ function formatDate(dateStr: string) {
         .article-sidebar {
           position: static;
           padding-top: 0;
-          border-top: 1px solid var(--cream-dark);
           padding-bottom: 3rem;
+          border-top: 1px solid var(--cream-dark);
         }
-
-        .toc-list { display: none; }
       }
 
-      @media (max-width: 768px) {
-        .article-hero { padding: 4rem 1.5rem 3.5rem; }
-        .article-hero::before { font-size: 8rem; }
-        .article-layout { padding: 0 1.25rem; }
+      @media (max-width: 640px) {
+        .article-hero { padding: 4rem 1.25rem 3rem; }
+        .article-outer { padding: 0 1.25rem; }
+        .article-hero-inner { padding: 0 1.25rem; }
+        body { font-size: 18px; }
       }
     </style>
   </head>
@@ -511,30 +512,20 @@ function formatDate(dateStr: string) {
         <h1>{frontmatter.title}</h1>
 
         <div class="article-byline">
-          {frontmatter.author && (
-            <span class="byline-author">{frontmatter.author}</span>
-          )}
-          {frontmatter.author && frontmatter.date && (
-            <span class="byline-sep">◆</span>
-          )}
-          {frontmatter.date && (
-            <span class="byline-date">{formatDate(frontmatter.date)}</span>
-          )}
-          {frontmatter.type && (
-            <span class="byline-type">{frontmatter.type}</span>
-          )}
+          {frontmatter.author && <span class="byline-author">{frontmatter.author}</span>}
+          {frontmatter.author && frontmatter.date && <span class="byline-sep">◆</span>}
+          {frontmatter.date && <span class="byline-date">{formatDate(String(frontmatter.date))}</span>}
+          {frontmatter.type && <span class="byline-type">{frontmatter.type}</span>}
         </div>
       </div>
     </section>
 
     <main>
-      <div class="article-layout">
+      <div class="article-outer">
 
         <!-- ══════════════════════════════════════ ARTICLE BODY -->
         <div class="article-main">
-          <a href={`${base}/research`} class="back-link">
-            ← Back to Research
-          </a>
+          <a href={`${base}/research`} class="back-link">← Back to Research</a>
 
           <article class="prose" id="article-content">
             <slot />
@@ -551,14 +542,19 @@ function formatDate(dateStr: string) {
 
         <!-- ══════════════════════════════════════════ SIDEBAR -->
         <aside class="article-sidebar">
-          <span class="toc-label">Contents</span>
-          <div class="toc-divider"></div>
-          <nav>
-            <ul class="toc-list" id="toc-list">
-              <!-- Populated by JS -->
-            </ul>
-          </nav>
 
+          <!-- Table of Contents -->
+          <div class="toc-nav">
+            <span class="sidebar-section-label">Contents</span>
+            <div class="sidebar-divider"></div>
+            <nav aria-label="Table of contents">
+              <ul class="toc-list" id="toc-list">
+                <!-- Populated by JS -->
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Article Meta -->
           <div class="sidebar-meta">
             {frontmatter.author && (
               <div class="sidebar-meta-row">
@@ -569,7 +565,7 @@ function formatDate(dateStr: string) {
             {frontmatter.date && (
               <div class="sidebar-meta-row">
                 <span class="sidebar-meta-key">Published</span>
-                <span class="sidebar-meta-val">{formatDate(frontmatter.date)}</span>
+                <span class="sidebar-meta-val">{formatDate(String(frontmatter.date))}</span>
               </div>
             )}
             {frontmatter.type && (
@@ -586,65 +582,70 @@ function formatDate(dateStr: string) {
             )}
           </div>
 
-          <div class="sidebar-share">
-            <span class="sidebar-share-label">Share</span>
-            <div class="share-buttons">
-              <button class="share-btn" id="share-copy" title="Copy link">Copy Link</button>
-              <a class="share-btn" id="share-twitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
-            </div>
+          <!-- Share -->
+          <span class="sidebar-section-label">Share</span>
+          <div class="sidebar-divider"></div>
+          <div class="share-buttons">
+            <button class="share-btn" id="share-copy">Copy Link</button>
+            <a class="share-btn" id="share-twitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
           </div>
-        </aside>
 
+        </aside>
       </div>
     </main>
 
     <Footer />
 
     <script>
-      // ── Reading progress bar
+      // Reading progress bar
       const bar = document.getElementById('progress-bar');
-      function updateProgress() {
+      window.addEventListener('scroll', () => {
         const el = document.documentElement;
         const scrolled = el.scrollTop || document.body.scrollTop;
         const total = el.scrollHeight - el.clientHeight;
-        if (bar) bar.style.width = `${(scrolled / total) * 100}%`;
-      }
-      window.addEventListener('scroll', updateProgress, { passive: true });
+        if (bar) bar.style.width = `${Math.min((scrolled / total) * 100, 100)}%`;
+      }, { passive: true });
 
-      // ── Build TOC from headings
+      // Build TOC from h2 headings
       const article = document.getElementById('article-content');
       const tocList = document.getElementById('toc-list');
+
       if (article && tocList) {
-        const headings = article.querySelectorAll('h2, h3, h4');
+        const headings = article.querySelectorAll('h2, h3');
+        let hasHeadings = false;
+
         headings.forEach((h, i) => {
-          // Assign IDs if not present
-          if (!h.id) {
-            h.id = 'heading-' + i;
-          }
+          if (!h.id) h.id = `section-${i}`;
+          hasHeadings = true;
+
           const li = document.createElement('li');
-          li.className = h.tagName === 'H3' ? 'toc-h3' : h.tagName === 'H4' ? 'toc-h3' : '';
+          if (h.tagName === 'H3') li.className = 'toc-sub';
+
           const a = document.createElement('a');
-          a.href = '#' + h.id;
+          a.href = `#${h.id}`;
           a.textContent = h.textContent || '';
           li.appendChild(a);
           tocList.appendChild(li);
         });
 
-        // Highlight active section on scroll
-        const tocLinks = tocList.querySelectorAll('a');
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              tocLinks.forEach(l => l.classList.remove('active'));
-              const active = tocList.querySelector(`a[href="#${entry.target.id}"]`);
-              if (active) active.classList.add('active');
-            }
-          });
-        }, { rootMargin: '-15% 0px -70% 0px' });
-        headings.forEach(h => observer.observe(h));
+        // Active highlighting on scroll
+        if (hasHeadings) {
+          const tocLinks = tocList.querySelectorAll('a');
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                tocLinks.forEach(l => l.classList.remove('active'));
+                const match = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+                if (match) match.classList.add('active');
+              }
+            });
+          }, { rootMargin: '-10% 0px -75% 0px' });
+
+          headings.forEach(h => observer.observe(h));
+        }
       }
 
-      // ── Share buttons
+      // Share: copy link
       const copyBtn = document.getElementById('share-copy');
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
@@ -655,6 +656,7 @@ function formatDate(dateStr: string) {
         });
       }
 
+      // Share: Twitter
       const twitterBtn = document.getElementById('share-twitter');
       if (twitterBtn) {
         const title = encodeURIComponent(document.title);

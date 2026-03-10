@@ -1,10 +1,10 @@
 ---
 title: "Beyond the Headlines: Islamic Governance and Mysticism"
-author: "Your Name Here"
-date: 2025-03-15
+author: "NAHJ Team"
+date: 2025-03-09
 category: "Theology & Politics"
 type: "Essay"
-excerpt: "The history of Islamic thought is not a linear march toward a single model of governance; it is a sophisticated dialogue between the judge, the king, and the mystic. As we observe the modern........"
+excerpt: "The history of Islamic thought is not a linear march toward a single model of governance; it is a sophisticated dialogue between the judge, the king, and the mystic. As we observe the modern..Read More"
 featured: false
 draft: false
 ---

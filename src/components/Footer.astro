@@ -5,8 +5,8 @@ const footerLinks = {
   'Research': [
     { label: 'All Publications',     href: `${base}/research` },
     { label: 'Nahj Journal',         href: `${base}/journal` },
-    { label: 'Submit an Article',    href: `${base}/contact#submissions` },
-    { label: 'Editorial Guidelines', href: `${base}/contact#guidelines` },
+    { label: 'Submit an Article',    href: `${base}/contact` },
+    { label: 'Editorial Guidelines', href: `${base}/contact` },
   ],
   'Institute': [
     { label: 'About Nahj',           href: `${base}/about` },
@@ -33,7 +33,7 @@ const year = new Date().getFullYear();
 
       <!-- Brand column -->
       <div class="footer-brand">
-        <a href="/Nahj-Institute/"{`${base}/`} class="footer-logo" aria-label="Nahj Institute">
+        <a href={`${base}/`} class="footer-logo" aria-label="Nahj Institute">
           <span class="flogo-en">Nahj Institute</span>
         </a>
         <p class="footer-tagline">Charting the Path.<br />Shaping the Discourse.</p>
@@ -87,6 +87,16 @@ const year = new Date().getFullYear();
         </div>
       ))}
 
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ EDITORIAL DISCLAIMER -->
+  <div class="footer-disclaimer">
+    <div class="footer-disclaimer-inner">
+      <span class="disclaimer-label">Editorial Notice</span>
+      <p class="disclaimer-text">
+        The views expressed in articles, essays, commentary, and other publications are those of the individual authors alone and do not necessarily represent the positions, editorial views, or institutional stance of Nahj Institute. Publication does not constitute endorsement. Nahj Institute is committed to rigorous, evidence-based scholarship and to the standards of respectful intellectual engagement. We do not publish content that is hateful, abusive, or derogatory toward any individual, community, or tradition, nor content that promotes division, incitement, or discrimination on any grounds. Please contact us directly for any concerns regarding any content.
+      </p>
     </div>
   </div>
 
@@ -162,14 +172,6 @@ const year = new Date().getFullYear();
 
   .footer-logo:hover .flogo-en { color: var(--gold-light); }
 
-  .flogo-ar {
-    font-family: 'Amiri', 'Times New Roman', serif;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.28);
-    line-height: 1;
-    text-align: right;
-  }
-
   .footer-tagline {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 0.9rem;
@@ -216,8 +218,6 @@ const year = new Date().getFullYear();
   }
 
   /* ─── LINK COLUMNS ──────────────────────────────────────── */
-  .footer-col {}
-
   .footer-col-title {
     font-family: 'Crimson Pro', Georgia, serif;
     font-size: 0.72rem;
@@ -247,8 +247,43 @@ const year = new Date().getFullYear();
     font-weight: 300;
   }
 
-  .footer-col ul li a:hover {
-    color: rgba(255,255,255,0.88);
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.88); }
+
+  /* ─── EDITORIAL DISCLAIMER ──────────────────────────────── */
+  .footer-disclaimer {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 2rem 2rem;
+    background: rgba(0,0,0,0.15);
+  }
+
+  .footer-disclaimer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .disclaimer-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+    padding-top: 0.2rem;
+    border-left: 2px solid var(--gold);
+    padding-left: 0.85rem;
+  }
+
+  .disclaimer-text {
+    font-size: 0.84rem;
+    color: rgba(255,255,255,0.32);
+    line-height: 1.75;
+    font-weight: 300;
+    font-style: italic;
   }
 
   /* ─── BOTTOM BAR ────────────────────────────────────────── */
@@ -272,10 +307,7 @@ const year = new Date().getFullYear();
     letter-spacing: 0.04em;
   }
 
-  .footer-legal {
-    display: flex;
-    gap: 1.5rem;
-  }
+  .footer-legal { display: flex; gap: 1.5rem; }
 
   .footer-legal a {
     font-size: 0.82rem;
@@ -289,23 +321,14 @@ const year = new Date().getFullYear();
 
   /* ─── RESPONSIVE ────────────────────────────────────────── */
   @media (max-width: 900px) {
-    .footer-inner {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-
-    .footer-brand {
-      grid-column: span 2;
-    }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .footer-brand { grid-column: span 2; }
+    .footer-disclaimer-inner { grid-template-columns: 1fr; gap: 1rem; }
+    .disclaimer-label { border-left: none; padding-left: 0; border-bottom: 1px solid rgba(200,162,82,0.4); padding-bottom: 0.5rem; }
   }
 
   @media (max-width: 520px) {
-    .footer-inner {
-      grid-template-columns: 1fr;
-    }
-
-    .footer-brand {
-      grid-column: span 1;
-    }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-brand { grid-column: span 1; }
   }
 </style>
