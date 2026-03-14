@@ -1,0 +1,347 @@
+---
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Submit | NAHJ: Journal of Transdisciplinary Theory</title>
+    <meta name="description" content="Submit a manuscript, apply as a reviewer, apply for the editorial board, or propose a special issue for NAHJ." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style is:global>
+      :root {
+        --navy:#0C1B2E; --teal:#1B5E6F; --gold:#C8A252; --gold-light:#E2BC75;
+        --cream:#F7F2E8; --cream-dark:#EDE6D5; --charcoal:#2B2B2B; --muted:#6B6B6B; --white:#FFFFFF;
+      }
+      html { font-size: 16px; }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: var(--cream); color: var(--charcoal);
+        font-family: 'Crimson Pro', Georgia, serif;
+        font-size: 18px; line-height: 1.82; -webkit-font-smoothing: antialiased;
+      }
+      main { width: 100%; }
+      .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+
+      /* ── HERO (matches journal.astro exactly) ── */
+      .hero { background: var(--navy); padding: 4rem 2rem 3.5rem; position: relative; overflow: hidden; }
+      .hero::before {
+        content: 'نهج'; font-family: 'Amiri', serif;
+        font-size: clamp(100px, 18vw, 180px); font-weight: 700;
+        color: rgba(255,255,255,0.025);
+        position: absolute; right: -1rem; top: 50%;
+        transform: translateY(-50%); line-height: 1; pointer-events: none; user-select: none;
+      }
+      .hero-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+      .bc {
+        font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(255,255,255,0.32); margin-bottom: 1.75rem;
+        display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      }
+      .bc a { color: rgba(255,255,255,0.32); text-decoration: none; transition: color 0.2s; }
+      .bc a:hover { color: var(--gold); }
+      .bc .sep { color: rgba(255,255,255,0.14); }
+      .jm-pre {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.26em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.4rem; font-family: 'Crimson Pro', serif;
+      }
+      .hero-journal-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(36px, 4.5vw, 52px);
+        font-weight: 600; color: var(--white); line-height: 1.08; letter-spacing: -0.01em;
+      }
+      .hero-journal-title em { font-style: italic; color: var(--gold-light); }
+      .hero-journal-sub {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 17px; font-weight: 300; font-style: italic;
+        color: rgba(255,255,255,0.38); margin-top: 0.4rem; display: block;
+      }
+      .hero-page-label {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+        text-transform: uppercase; color: rgba(200,162,82,0.7);
+        display: block; margin-top: 2rem; margin-bottom: 0.3rem; font-family: 'Crimson Pro', serif;
+      }
+      .hero-page-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(22px, 2.5vw, 28px);
+        font-weight: 600; color: rgba(255,255,255,0.80); line-height: 1.15;
+      }
+
+      /* ── TAB NAV ── */
+      .snav { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.06); }
+      .snav-inner { max-width: 1120px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+      .snav-inner::-webkit-scrollbar { display: none; }
+      .snav-a {
+        font-family: 'Crimson Pro', serif; font-size: 12px; font-weight: 700;
+        letter-spacing: 0.14em; text-transform: uppercase;
+        color: rgba(255,255,255,0.42); padding: 1.1rem 1.35rem;
+        text-decoration: none; border-bottom: 2px solid transparent;
+        white-space: nowrap; transition: color 0.2s, border-color 0.2s;
+      }
+      .snav-a:hover { color: rgba(255,255,255,0.82); }
+      .snav-a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+      /* ── LANDING CONTENT ── */
+      .landing-body { max-width: 1120px; margin: 0 auto; padding: 5rem 2rem 6rem; }
+
+      .landing-intro {
+        max-width: 680px; margin-bottom: 4rem;
+      }
+      .landing-intro .section-label {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; font-family: 'Crimson Pro', serif;
+      }
+      .gold-rule { width: 3.5rem; height: 2px; background: var(--gold); margin: 0.75rem 0 1.5rem; }
+      .landing-intro h2 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 30px; font-weight: 600; color: var(--navy); line-height: 1.12;
+        margin-bottom: 0.85rem;
+      }
+      .landing-intro p {
+        font-size: 18px; color: var(--charcoal); font-weight: 300;
+        line-height: 1.82; max-width: 600px;
+      }
+
+      /* ── PATHWAY CARDS ── */
+      .pathways { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: rgba(0,0,0,0.06); }
+
+      .pathway {
+        background: var(--white); padding: 2.5rem 2rem;
+        display: flex; flex-direction: column;
+        border: 1px solid var(--cream-dark);
+        transition: box-shadow 0.2s, border-color 0.2s;
+        text-decoration: none;
+      }
+      .pathway:hover {
+        box-shadow: 0 4px 24px rgba(12,27,46,0.1);
+        border-color: rgba(200,162,82,0.4);
+        z-index: 1;
+      }
+
+      .pathway-num {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+        text-transform: uppercase; color: var(--gold);
+        display: block; margin-bottom: 0.75rem; font-family: 'Crimson Pro', serif;
+      }
+
+      .pathway-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22px; font-weight: 600; color: var(--navy);
+        line-height: 1.2; margin-bottom: 0.85rem;
+      }
+
+      .pathway-desc {
+        font-size: 16px; color: var(--muted); font-weight: 300;
+        line-height: 1.72; flex: 1; margin-bottom: 1.75rem;
+      }
+
+      /* Spec strip inside card */
+      .pathway-spec {
+        border-top: 1px solid var(--cream-dark);
+        padding-top: 1rem; margin-bottom: 1.75rem;
+      }
+      .ps-row {
+        display: flex; gap: 0.5rem; padding: 0.2rem 0;
+        font-size: 14px; align-items: baseline;
+      }
+      .ps-k { color: var(--gold); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; min-width: 80px; }
+      .ps-v { color: var(--charcoal); }
+
+      /* CTA arrow */
+      .pathway-cta {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--navy);
+        font-family: 'Crimson Pro', serif;
+        transition: color 0.18s, gap 0.18s;
+      }
+      .pathway:hover .pathway-cta { color: var(--teal); gap: 0.75rem; }
+      .pathway-cta::after { content: '→'; font-size: 15px; }
+
+      /* Wide card for the first (manuscript) — spans full row */
+      .pathway.featured {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 4rem;
+        background: var(--navy);
+        border-color: transparent;
+        padding: 3rem 3rem;
+      }
+      .pathway.featured:hover {
+        background: #112340;
+        border-color: rgba(200,162,82,0.3);
+      }
+      .pathway.featured .pathway-num { color: var(--gold); }
+      .pathway.featured .pathway-title { color: var(--white); font-size: 28px; }
+      .pathway.featured .pathway-desc { color: rgba(255,255,255,0.60); font-size: 17px; }
+      .pathway.featured .pathway-spec { border-top-color: rgba(255,255,255,0.08); }
+      .pathway.featured .ps-v { color: var(--gold-light); }
+      .pathway.featured .pathway-cta { color: var(--gold); }
+      .pathway.featured:hover .pathway-cta { color: var(--gold-light); }
+
+      /* Open access note */
+      .open-note {
+        margin-top: 3rem; padding: 1.25rem 1.5rem;
+        border: 1px solid var(--cream-dark);
+        border-left: 3px solid var(--teal);
+        background: rgba(27,94,111,0.04);
+        display: flex; align-items: baseline; gap: 0.75rem;
+      }
+      .open-note-label {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--teal); flex-shrink: 0;
+        font-family: 'Crimson Pro', serif;
+      }
+      .open-note p { font-size: 16px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+      .open-note a { color: var(--teal); }
+
+      @media (max-width: 768px) {
+        .pathway.featured { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 2rem; }
+        .pathway.featured .pathway-title { font-size: 24px; }
+      }
+      @media (max-width: 640px) {
+        .pathways { grid-template-columns: 1fr; background: transparent; gap: 3px; }
+        .pathway.featured { grid-column: span 1; }
+        .landing-body { padding: 3rem 1.25rem 4rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <!-- HERO — identical structure to journal.astro -->
+    <section class="hero">
+      <div class="hero-inner">
+        <nav class="bc">
+          <a href={`${base}/`}>Home</a>
+          <span class="sep">/</span>
+          <a href={`${base}/journal`}>Nahj Journal</a>
+          <span class="sep">/</span>
+          <span style="color:rgba(255,255,255,0.58)">Submit &amp; Engage</span>
+        </nav>
+        <span class="jm-pre">A Publication of Nahj Institute</span>
+        <div class="hero-journal-title"><em>NAHJ</em></div>
+        <span class="hero-journal-sub">The Journal of Transdisciplinary Theory</span>
+        <div class="hero-page-label">Submit &amp; Engage</div>
+        <div class="hero-page-title">Submission, Review, and Editorial Opportunities</div>
+      </div>
+    </section>
+
+    <!-- TAB NAV -->
+    <nav class="snav">
+      <div class="snav-inner">
+        <a href={`${base}/journal/submit`}       class="snav-a active">Overview</a>
+        <a href={`${base}/journal/submit/manuscript`}   class="snav-a">Submit Manuscript</a>
+        <a href={`${base}/journal/submit/reviewer`}     class="snav-a">Apply as Reviewer</a>
+        <a href={`${base}/journal/submit/board`}        class="snav-a">Editorial Board</a>
+        <a href={`${base}/journal/submit/special-issue`} class="snav-a">Special Issue</a>
+        <a href={`${base}/journal/submit/guest-editor`} class="snav-a">Guest Editor</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="landing-body">
+
+        <div class="landing-intro">
+          <span class="section-label">Pathways</span>
+          <div class="gold-rule"></div>
+          <h2>How to Engage with NAHJ</h2>
+          <p>NAHJ welcomes original research, qualified reviewers, and experienced scholars to shape the journal's intellectual programme. Select your pathway below. There are no fees at any stage.</p>
+        </div>
+
+        <div class="pathways">
+
+          <!-- Featured: Manuscript Submission -->
+          <a href={`${base}/journal/submit/manuscript`} class="pathway featured">
+            <div>
+              <span class="pathway-num">Pathway 01</span>
+              <div class="pathway-title">Submit a Manuscript</div>
+              <p class="pathway-desc">NAHJ publishes original research articles and review essays across three thematic pillars. All submissions undergo double-blind peer review. The journal is Diamond Open Access: no fees for authors or readers at any stage.</p>
+              <div class="pathway-cta">Submit your work</div>
+            </div>
+            <div>
+              <div class="pathway-spec">
+                <div class="ps-row"><span class="ps-k">Articles</span><span class="ps-v">6,000–10,000 words</span></div>
+                <div class="ps-row"><span class="ps-k">Reviews</span><span class="ps-v">3,000–6,000 words</span></div>
+                <div class="ps-row"><span class="ps-k">Abstract</span><span class="ps-v">150–200 words</span></div>
+                <div class="ps-row"><span class="ps-k">Style</span><span class="ps-v">Chicago author-date</span></div>
+                <div class="ps-row"><span class="ps-k">Format</span><span class="ps-v">Word (.docx), anonymised</span></div>
+                <div class="ps-row"><span class="ps-k">Decision</span><span class="ps-v">10–14 weeks</span></div>
+                <div class="ps-row"><span class="ps-k">Fees</span><span class="ps-v">None</span></div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Reviewer -->
+          <a href={`${base}/journal/submit/reviewer`} class="pathway">
+            <span class="pathway-num">Pathway 02</span>
+            <div class="pathway-title">Apply as a Reviewer</div>
+            <p class="pathway-desc">Join NAHJ's reviewer database. Reviewers are invited on a per-submission basis across all three thematic pillars. No fixed commitment required.</p>
+            <div class="pathway-spec">
+              <div class="ps-row"><span class="ps-k">Window</span><span class="ps-v">Four weeks per review</span></div>
+              <div class="ps-row"><span class="ps-k">Basis</span><span class="ps-v">Per-submission invitation</span></div>
+              <div class="ps-row"><span class="ps-k">Requirement</span><span class="ps-v">Doctoral qualification</span></div>
+            </div>
+            <div class="pathway-cta">Apply now</div>
+          </a>
+
+          <!-- Editorial Board -->
+          <a href={`${base}/journal/submit/board`} class="pathway">
+            <span class="pathway-num">Pathway 03</span>
+            <div class="pathway-title">Editorial Board Membership</div>
+            <p class="pathway-desc">Editorial board members provide strategic scholarly guidance and assist with reviewer identification. The board is international in composition.</p>
+            <div class="pathway-spec">
+              <div class="ps-row"><span class="ps-k">Commitment</span><span class="ps-v">2–4 reviews annually</span></div>
+              <div class="ps-row"><span class="ps-k">Level</span><span class="ps-v">Post-doctoral</span></div>
+              <div class="ps-row"><span class="ps-k">Scope</span><span class="ps-v">International</span></div>
+            </div>
+            <div class="pathway-cta">Apply now</div>
+          </a>
+
+          <!-- Special Issue -->
+          <a href={`${base}/journal/submit/special-issue`} class="pathway">
+            <span class="pathway-num">Pathway 04</span>
+            <div class="pathway-title">Propose a Special Issue</div>
+            <p class="pathway-desc">NAHJ publishes one thematically focused special issue per volume. Submit a proposal with intellectual rationale, proposed contributors, and a timeline.</p>
+            <div class="pathway-spec">
+              <div class="ps-row"><span class="ps-k">Frequency</span><span class="ps-v">One per volume</span></div>
+              <div class="ps-row"><span class="ps-k">Articles</span><span class="ps-v">6–10 per issue</span></div>
+              <div class="ps-row"><span class="ps-k">Timeline</span><span class="ps-v">12–18 months</span></div>
+            </div>
+            <div class="pathway-cta">Submit proposal</div>
+          </a>
+
+          <!-- Guest Editor -->
+          <a href={`${base}/journal/submit/guest-editor`} class="pathway">
+            <span class="pathway-num">Pathway 05</span>
+            <div class="pathway-title">Apply as Guest Editor</div>
+            <p class="pathway-desc">Guest editors develop a call for papers, manage peer review, and write an editorial introduction for a themed issue. The role carries formal acknowledgement in publication.</p>
+            <div class="pathway-spec">
+              <div class="ps-row"><span class="ps-k">Role</span><span class="ps-v">Voluntary, acknowledged</span></div>
+              <div class="ps-row"><span class="ps-k">Process</span><span class="ps-v">Standard double-blind</span></div>
+              <div class="ps-row"><span class="ps-k">Duration</span><span class="ps-v">12 months</span></div>
+            </div>
+            <div class="pathway-cta">Apply now</div>
+          </a>
+
+        </div>
+
+        <div class="open-note">
+          <span class="open-note-label">Open Access</span>
+          <p>NAHJ operates on a Diamond Open Access model. There are no article processing charges, no submission fees, and no reader paywalls at any stage. All published content is freely available in perpetuity under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Authors retain full copyright.</p>
+        </div>
+
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>

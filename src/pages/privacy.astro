@@ -1,0 +1,235 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lastUpdated = "March 2026";
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy | Nahj Institute</title>
+  <meta name="description" content="Nahj Institute's privacy policy — how we collect, use, and protect information about our visitors and correspondents." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style is:global>
+    :root {
+      --navy: #0C1B2E; --teal: #1B5E6F; --gold: #C8A252;
+      --cream: #F7F2E8; --cream-dark: #EDE6D5;
+      --charcoal: #2B2B2B; --muted: #6B6B6B; --white: #FFFFFF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background: var(--cream); color: var(--charcoal);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px; line-height: 1.78;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+
+    .policy-hero {
+      background: var(--navy); padding: 4rem 2rem 3.5rem;
+    }
+    .hero-inner { max-width: 760px; margin: 0 auto; }
+    .breadcrumb {
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.30); margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.30); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: rgba(255,255,255,0.12); }
+    .policy-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 2.8vw, 36px);
+      font-weight: 600; color: #FFFFFF; line-height: 1.12; margin-bottom: 0.75rem;
+    }
+    .hero-meta { font-size: 14px; color: rgba(255,255,255,0.35); }
+
+    .policy-body {
+      max-width: 760px; margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    /* Section */
+    .policy-section { margin-bottom: 3rem; }
+    .policy-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--navy);
+      margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--cream-dark);
+      line-height: 1.2;
+    }
+    .policy-section p {
+      font-size: 18px; color: var(--charcoal); line-height: 1.82;
+      margin-bottom: 1.1rem; font-weight: 300;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+    .policy-section ul {
+      padding-left: 1.5rem; margin-bottom: 1.1rem;
+    }
+    .policy-section li {
+      font-size: 18px; color: var(--charcoal); line-height: 1.78;
+      margin-bottom: 0.55rem; font-weight: 300;
+    }
+    .policy-section li::marker { color: var(--gold); }
+    .policy-section strong { font-weight: 600; color: var(--navy); }
+    .policy-section a { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
+    .policy-section a:hover { color: var(--gold); }
+
+    /* Related links */
+    .policy-links {
+      background: var(--white); border: 1px solid var(--cream-dark);
+      border-left: 3px solid var(--gold); padding: 1.25rem 1.5rem;
+      margin-top: 3rem;
+    }
+    .policy-links p { font-size: 16px; color: var(--muted); margin-bottom: 0.5rem; }
+    .policy-links a { color: var(--teal); text-decoration: none; font-weight: 600; display: inline-block; margin-right: 1.5rem; font-size: 15px; }
+    .policy-links a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <Header />
+
+  <section class="policy-hero">
+    <div class="hero-inner">
+      <nav class="breadcrumb">
+        <a href={`${base}/`}>Home</a>
+        <span>/</span>
+        <span>Privacy Policy</span>
+      </nav>
+      <h1>Privacy Policy</h1>
+      <p class="hero-meta">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="policy-body">
+
+      <div class="policy-section">
+        <p>
+          Nahj Institute is committed to protecting the privacy of everyone who visits this website or contacts us. This policy describes what information we collect, how we use it, and what rights you have in relation to it. It applies to nahj14.github.io/Nahj-Institute and any related services operated by Nahj Institute.
+        </p>
+        <p>
+          We do not sell personal data. We do not share personal data with third parties for commercial purposes. If you have any questions about this policy, please contact us at <a href="mailto:info@nahj.institute">info@nahj.institute</a>.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>1. Information We Collect</h2>
+        <p>We collect information in two ways: information you give us directly, and information collected automatically when you visit this website.</p>
+
+        <p><strong>Information you provide directly:</strong></p>
+        <ul>
+          <li><strong>Contact and enquiry forms:</strong> when you use the contact form on our website, we collect your name, email address, organisation (if provided), the nature of your enquiry, and any message you include. This information is used solely to respond to your enquiry.</li>
+          <li><strong>Submission forms:</strong> when you submit a manuscript or article for consideration, we collect your name, email address, institutional affiliation (if applicable), biography, and the content of your submission. This information is used to manage the editorial review process.</li>
+          <li><strong>Newsletter sign-ups:</strong> if you subscribe to receive updates from Nahj Institute, we collect your email address. You may unsubscribe at any time using the link in any email we send.</li>
+          <li><strong>Email correspondence:</strong> if you contact us by email, we retain that correspondence for as long as it is necessary to handle your enquiry or relationship with us.</li>
+        </ul>
+
+        <p><strong>Information collected automatically:</strong></p>
+        <ul>
+          <li><strong>Usage data:</strong> our website hosting provider may collect standard server logs, which can include your IP address, browser type, operating system, referring URLs, and pages visited. This data is used for security, troubleshooting, and aggregate statistical purposes. We do not use this data to identify individuals.</li>
+          <li><strong>Cookies:</strong> this website uses only functional cookies necessary for the site to operate correctly. We do not use advertising or tracking cookies. We do not use third-party analytics services that profile individual visitors.</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <h2>2. How We Use Your Information</h2>
+        <p>We use the information we collect only for the following purposes:</p>
+        <ul>
+          <li>To respond to enquiries, applications, and correspondence you have sent to us</li>
+          <li>To manage the editorial review and publication process for submitted manuscripts</li>
+          <li>To send you information you have specifically requested, such as newsletter updates or event announcements</li>
+          <li>To maintain the security and stability of this website</li>
+          <li>To comply with any legal obligation that applies to us</li>
+        </ul>
+        <p>We do not use automated decision-making or profiling in connection with any of these purposes.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>3. Legal Basis for Processing</h2>
+        <p>For individuals in the United Kingdom and European Union, we process personal data on the following legal bases:</p>
+        <ul>
+          <li><strong>Consent:</strong> where you have provided your data voluntarily, for example by signing up to receive updates or submitting a contact form</li>
+          <li><strong>Legitimate interests:</strong> where processing is necessary for purposes such as responding to correspondence, maintaining the security of our systems, or managing ongoing editorial or academic relationships, and where these interests do not override your fundamental rights</li>
+          <li><strong>Legal obligation:</strong> where we are required to process data to comply with a legal requirement</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <h2>4. Data Retention</h2>
+        <p>We retain personal data only for as long as necessary for the purpose for which it was collected:</p>
+        <ul>
+          <li>Contact form submissions are retained for a maximum of 24 months after the enquiry has been resolved, unless an ongoing relationship requires longer retention</li>
+          <li>Manuscript submissions and editorial correspondence are retained for the duration of any editorial relationship and for a reasonable period thereafter, in line with standard academic publishing practice</li>
+          <li>Newsletter email addresses are retained until you unsubscribe or request deletion</li>
+          <li>Server log data is retained for a maximum of 90 days</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <h2>5. Data Sharing and Third Parties</h2>
+        <p>We do not sell, trade, or otherwise transfer your personal data to external parties for commercial purposes.</p>
+        <p>We may share data with third parties only in the following limited circumstances:</p>
+        <ul>
+          <li><strong>Service providers:</strong> we may use third-party services to operate the website (such as hosting providers) or to manage correspondence (such as email platforms). These providers are bound by confidentiality obligations and are not permitted to use your data for their own purposes.</li>
+          <li><strong>Legal requirements:</strong> we may disclose personal data if required by law, court order, or other legal process, or to protect the rights, property, or safety of Nahj Institute or others.</li>
+        </ul>
+        <p>This website is hosted on GitHub Pages. GitHub's privacy practices are governed by GitHub's own Privacy Statement, available at <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com</a>.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>6. Your Rights</h2>
+        <p>Subject to applicable law, you have the following rights in relation to your personal data:</p>
+        <ul>
+          <li><strong>Access:</strong> to request a copy of the personal data we hold about you</li>
+          <li><strong>Rectification:</strong> to request correction of inaccurate or incomplete data</li>
+          <li><strong>Erasure:</strong> to request deletion of your personal data, subject to any legal obligations we may have to retain it</li>
+          <li><strong>Restriction:</strong> to request that we limit the processing of your data in certain circumstances</li>
+          <li><strong>Portability:</strong> to receive your data in a structured, commonly used format where processing is based on your consent or contract</li>
+          <li><strong>Objection:</strong> to object to processing based on legitimate interests</li>
+          <li><strong>Withdraw consent:</strong> where processing is based on consent, to withdraw that consent at any time without affecting the lawfulness of prior processing</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us at <a href="mailto:info@nahj.institute">info@nahj.institute</a>. We will respond within 30 days.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>7. Security</h2>
+        <p>We take reasonable technical and organisational measures to protect your personal data against unauthorised access, disclosure, alteration, or destruction. This website is served over HTTPS. However, no method of transmission over the internet or electronic storage is entirely secure. We cannot guarantee absolute security, but we are committed to maintaining appropriate safeguards.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>8. Children's Privacy</h2>
+        <p>This website is not directed at children under the age of 16, and we do not knowingly collect personal data from children. If you believe we have inadvertently collected information from a child, please contact us immediately and we will take steps to delete it.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>9. Changes to This Policy</h2>
+        <p>We may update this policy from time to time to reflect changes in our practices or legal requirements. When we do, we will revise the date at the top of this page. Where changes are material, we will take reasonable steps to notify you. Your continued use of this website following the posting of changes constitutes your acceptance of those changes.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>10. Contact Us</h2>
+        <p>If you have any questions, concerns, or requests relating to this Privacy Policy or our handling of your personal data, please contact:</p>
+        <p><strong>Nahj Institute</strong><br />Email: <a href="mailto:info@nahj.institute">info@nahj.institute</a></p>
+        <p>If you are dissatisfied with our response, you have the right to lodge a complaint with a supervisory authority. In the UK, this is the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a>. In the EU, please contact the supervisory authority in your country of residence.</p>
+      </div>
+
+      <div class="policy-links">
+        <p>Related policies:</p>
+        <a href={`${base}/terms`}>Terms of Use →</a>
+        <a href={`${base}/contact`}>Contact Us →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</body>
+</html>

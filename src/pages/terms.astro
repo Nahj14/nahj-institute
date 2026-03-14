@@ -1,0 +1,226 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lastUpdated = "March 2026";
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms of Use | Nahj Institute</title>
+  <meta name="description" content="Terms and conditions governing use of the Nahj Institute website and published content." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style is:global>
+    :root {
+      --navy: #0C1B2E; --teal: #1B5E6F; --gold: #C8A252;
+      --cream: #F7F2E8; --cream-dark: #EDE6D5;
+      --charcoal: #2B2B2B; --muted: #6B6B6B; --white: #FFFFFF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background: var(--cream); color: var(--charcoal);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px; line-height: 1.78;
+      -webkit-font-smoothing: antialiased;
+    }
+    main { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+
+    .policy-hero { background: var(--navy); padding: 4rem 2rem 3.5rem; }
+    .hero-inner { max-width: 760px; margin: 0 auto; }
+    .breadcrumb {
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.30); margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.30); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: rgba(255,255,255,0.12); }
+    .policy-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 2.8vw, 36px);
+      font-weight: 600; color: #FFFFFF; line-height: 1.12; margin-bottom: 0.75rem;
+    }
+    .hero-meta { font-size: 14px; color: rgba(255,255,255,0.35); }
+
+    .policy-body {
+      max-width: 760px; margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .policy-section { margin-bottom: 3rem; }
+    .policy-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--navy);
+      margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--cream-dark); line-height: 1.2;
+    }
+    .policy-section p {
+      font-size: 18px; color: var(--charcoal); line-height: 1.82;
+      margin-bottom: 1.1rem; font-weight: 300;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+    .policy-section ul { padding-left: 1.5rem; margin-bottom: 1.1rem; }
+    .policy-section li {
+      font-size: 18px; color: var(--charcoal); line-height: 1.78;
+      margin-bottom: 0.55rem; font-weight: 300;
+    }
+    .policy-section li::marker { color: var(--gold); }
+    .policy-section strong { font-weight: 600; color: var(--navy); }
+    .policy-section a { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
+    .policy-section a:hover { color: var(--gold); }
+
+    .policy-links {
+      background: var(--white); border: 1px solid var(--cream-dark);
+      border-left: 3px solid var(--gold); padding: 1.25rem 1.5rem; margin-top: 3rem;
+    }
+    .policy-links p { font-size: 16px; color: var(--muted); margin-bottom: 0.5rem; }
+    .policy-links a { color: var(--teal); text-decoration: none; font-weight: 600; display: inline-block; margin-right: 1.5rem; font-size: 15px; }
+    .policy-links a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <Header />
+
+  <section class="policy-hero">
+    <div class="hero-inner">
+      <nav class="breadcrumb">
+        <a href={`${base}/`}>Home</a>
+        <span>/</span>
+        <span>Terms of Use</span>
+      </nav>
+      <h1>Terms of Use</h1>
+      <p class="hero-meta">Last updated: {lastUpdated}</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="policy-body">
+
+      <div class="policy-section">
+        <p>
+          These Terms of Use govern your access to and use of the Nahj Institute website at nahj14.github.io/Nahj-Institute and any content, publications, or services made available through it. By accessing this website, you agree to be bound by these terms. If you do not agree, please do not use this site.
+        </p>
+        <p>
+          Nahj Institute reserves the right to modify these terms at any time. Changes will be posted on this page with an updated date. Continued use of the website following the posting of changes constitutes acceptance of those changes.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>1. Use of the Website</h2>
+        <p>You may use this website for lawful, personal, and non-commercial purposes. You agree not to:</p>
+        <ul>
+          <li>Use this website in any way that violates applicable local, national, or international law or regulation</li>
+          <li>Transmit any unsolicited or unauthorised advertising or promotional material</li>
+          <li>Attempt to gain unauthorised access to any part of the website, its servers, or any database connected to it</li>
+          <li>Interfere with or disrupt the operation of this website or its associated systems</li>
+          <li>Scrape, crawl, or otherwise systematically extract content from this website without our prior written consent</li>
+          <li>Impersonate Nahj Institute or any member of its team in any context</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <h2>2. Intellectual Property and Content Licensing</h2>
+        <p>
+          Most original content published on this website — including articles, essays, commentary, and research papers — is published under a <strong>Creative Commons Attribution 4.0 International licence (CC BY 4.0)</strong>. Under this licence, you are free to share (copy and redistribute) and adapt (remix, transform, and build upon) the material for any purpose, provided you give appropriate attribution to the original author and Nahj Institute, provide a link to the licence, and indicate if changes were made.
+        </p>
+        <p>
+          Attribution should take the following form: [Author Name], "[Title of Work]," Nahj Institute, [Date of Publication], [URL].
+        </p>
+        <p>
+          Content that is <strong>not</strong> covered by CC BY 4.0 includes: the Nahj Institute name, logo, and branding materials; content contributed by third parties that carries its own copyright notice; and photographic or illustrative material where a separate licence is indicated. Do not reproduce these without prior permission.
+        </p>
+        <p>
+          The Nahj Institute name, wordmark, and associated branding are proprietary. They may not be used in connection with any product, service, or publication without the express written consent of Nahj Institute.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>3. Accuracy of Information</h2>
+        <p>
+          Nahj Institute makes reasonable efforts to ensure that the content published on this website is accurate, current, and substantiated. However, content represents the views and analysis of individual authors and does not constitute professional advice of any kind, including legal, medical, financial, or policy advice.
+        </p>
+        <p>
+          Nahj Institute does not warrant that this website will be uninterrupted, error-free, or free from viruses or other harmful components. You use this website at your own risk.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>4. Editorial Independence and Views</h2>
+        <p>
+          The views expressed in all articles, essays, commentary, and other content on this website are those of the individual authors alone. They do not necessarily represent the positions, editorial views, or institutional stance of Nahj Institute. Publication of a piece does not constitute endorsement of its arguments or conclusions by the Institute.
+        </p>
+        <p>
+          Nahj Institute exercises editorial oversight to ensure that published content meets its standards of intellectual seriousness, factual accuracy, and respectful engagement. It does not publish content that is hateful, abusive, defamatory, or designed to incite violence or discrimination.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>5. Third-Party Links</h2>
+        <p>
+          This website may contain links to external websites operated by third parties. These links are provided for informational purposes only. Nahj Institute does not control, endorse, or accept responsibility for the content, privacy practices, or availability of any third-party website. Access to linked sites is at your own risk.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>6. Submissions and Contributions</h2>
+        <p>
+          Authors who submit manuscripts to Nahj Institute for consideration on this website grant the Institute a non-exclusive, royalty-free licence to publish, reproduce, and distribute the accepted work in accordance with the CC BY 4.0 terms stated above. Authors retain copyright in their own work.
+        </p>
+        <p>
+          By submitting a manuscript, you represent and warrant that: the work is original; you have the right to grant the above licence; the work does not infringe any third party's intellectual property rights; and the work does not contain material that is defamatory, harmful, or unlawful.
+        </p>
+        <p>
+          Nahj Institute is not obligated to publish any submission and may decline any work without stating reasons.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>7. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by law, Nahj Institute excludes all liability for any loss or damage (whether direct, indirect, consequential, or otherwise) arising from your use of this website or reliance on any content published on it. This includes, without limitation, loss of data, loss of revenue, or any other economic loss.
+        </p>
+        <p>
+          Nothing in these terms limits liability for death or personal injury caused by negligence, for fraud or fraudulent misrepresentation, or for any other matter that cannot be excluded by law.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>8. Governing Law</h2>
+        <p>
+          These Terms of Use are governed by and construed in accordance with the laws of England and Wales. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of England and Wales, except where applicable consumer protection law in your jurisdiction provides otherwise.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>9. Contact</h2>
+        <p>
+          If you have any questions about these Terms of Use, or if you believe any content on this website infringes your intellectual property rights, please contact:
+        </p>
+        <p>
+          <strong>Nahj Institute</strong><br />
+          Email: <a href="mailto:info@nahj.institute">info@nahj.institute</a>
+        </p>
+        <p>
+          For copyright queries, please include: a description of the work you believe has been infringed, its location on our website, and your contact details. We will respond within 14 working days.
+        </p>
+      </div>
+
+      <div class="policy-links">
+        <p>Related policies:</p>
+        <a href={`${base}/privacy`}>Privacy Policy →</a>
+        <a href={`${base}/contact`}>Contact Us →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</body>
+</html>

@@ -1,0 +1,176 @@
+---
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apply for Editorial Board Membership | NAHJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style is:global>
+      :root { --navy:#0C1B2E; --teal:#1B5E6F; --gold:#C8A252; --gold-light:#E2BC75; --cream:#F7F2E8; --cream-dark:#EDE6D5; --charcoal:#2B2B2B; --muted:#6B6B6B; --white:#FFFFFF; }
+      html { font-size: 16px; }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: var(--cream); color: var(--charcoal); font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; line-height: 1.82; -webkit-font-smoothing: antialiased; }
+      main { width: 100%; }
+      .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: block; font-family: 'Crimson Pro', serif; }
+      .gold-rule { width: 3.5rem; height: 2px; background: var(--gold); margin: 0.75rem 0 1.4rem; }
+      .hero { background: var(--navy); padding: 4rem 2rem 3.5rem; position: relative; overflow: hidden; }
+      .hero::before { content: 'نهج'; font-family: 'Amiri', serif; font-size: clamp(100px, 18vw, 180px); font-weight: 700; color: rgba(255,255,255,0.025); position: absolute; right: -1rem; top: 50%; transform: translateY(-50%); line-height: 1; pointer-events: none; user-select: none; }
+      .hero-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+      .bc { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 1.75rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+      .bc a { color: rgba(255,255,255,0.32); text-decoration: none; transition: color 0.2s; }
+      .bc a:hover { color: var(--gold); }
+      .bc .sep { color: rgba(255,255,255,0.14); }
+      .jm-pre { font-size: 11px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.4rem; font-family: 'Crimson Pro', serif; }
+      .hero-journal-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4.5vw, 52px); font-weight: 600; color: var(--white); line-height: 1.08; }
+      .hero-journal-title em { font-style: italic; color: var(--gold-light); }
+      .hero-journal-sub { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.38); margin-top: 0.4rem; display: block; }
+      .hero-page-label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,162,82,0.7); display: block; margin-top: 2rem; margin-bottom: 0.3rem; font-family: 'Crimson Pro', serif; }
+      .hero-page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.5vw, 28px); font-weight: 600; color: rgba(255,255,255,0.80); line-height: 1.15; }
+      .tab-nav { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.06); }
+      .tab-nav-inner { max-width: 1120px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+      .tab-nav-inner::-webkit-scrollbar { display: none; }
+      .tab-btn { font-family: 'Crimson Pro', serif; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); padding: 1.1rem 1.35rem; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; text-decoration: none; display: block; }
+      .tab-btn:hover { color: rgba(255,255,255,0.82); }
+      .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+      .sec-layout { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 5rem; align-items: start; padding: 5.5rem 2rem; }
+      .sec-info { position: sticky; top: 7rem; }
+      .sec-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600; color: var(--navy); line-height: 1.1; margin-top: 0.4rem; }
+      .sec-info p { font-size: 16px; color: var(--muted); line-height: 1.78; font-weight: 300; margin-top: 0.85rem; }
+      .info-note { padding: 1rem 1.25rem; border-left: 3px solid var(--teal); background: rgba(27,94,111,0.06); font-size: 15px; color: var(--muted); line-height: 1.65; margin-top: 1.5rem; }
+      .info-note a { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
+      .spec-mini { border: 1px solid var(--cream-dark); margin-top: 1.5rem; }
+      .sm-row { display: flex; padding: 0.65rem 1rem; border-bottom: 1px solid var(--cream-dark); gap: 1rem; align-items: baseline; }
+      .sm-row:last-child { border-bottom: none; }
+      .sm-k { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); flex-shrink: 0; min-width: 110px; }
+      .sm-v { font-size: 15px; color: var(--charcoal); }
+      .form-group { margin-bottom: 1.6rem; }
+      .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.6rem; }
+      label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 0.45rem; font-family: 'Crimson Pro', serif; }
+      label .req { color: var(--gold); }
+      input, select, textarea { width: 100%; padding: 0.82rem 1rem; border: 1px solid rgba(0,0,0,0.12); background: var(--white); font-family: 'Crimson Pro', serif; font-size: 17px; color: var(--charcoal); outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; border-radius: 0; line-height: 1.5; }
+      input:focus, select:focus, textarea:focus { border-color: var(--teal); }
+      input::placeholder, textarea::placeholder { color: rgba(107,107,107,0.55); }
+      select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6B6B'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
+      textarea { min-height: 130px; resize: vertical; }
+      .form-divider { font-family: 'Crimson Pro', serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy); border-bottom: 1px solid var(--cream-dark); padding-bottom: 0.5rem; margin: 2.5rem 0 1.75rem; }
+      .form-footer { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid var(--cream-dark); }
+      .privacy-note { font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; font-family: 'Crimson Pro', serif; }
+      .privacy-note a { color: var(--teal); }
+      .btn-submit { background: var(--navy); color: var(--gold); font-family: 'Crimson Pro', serif; font-size: 14px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.9rem 2.5rem; border: none; cursor: pointer; transition: background 0.2s; display: inline-block; }
+      .btn-submit:hover { background: var(--teal); }
+
+      /* Eligibility block in sec-info */
+      .eligibility {
+        margin-top: 1.5rem;
+        border: 1px solid var(--cream-dark);
+        border-top: 3px solid var(--gold);
+      }
+      .eligibility-title {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--gold);
+        padding: 0.75rem 1rem 0.35rem;
+        display: block; font-family: 'Crimson Pro', serif;
+        border-bottom: 1px solid var(--cream-dark);
+      }
+      .eligibility ul { list-style: none; padding: 0; }
+      .eligibility li {
+        font-size: 15px; color: var(--charcoal); font-weight: 300;
+        padding: 0.45rem 1rem; line-height: 1.55;
+        border-bottom: 1px solid rgba(0,0,0,0.04);
+        display: flex; align-items: baseline; gap: 0.6rem;
+      }
+      .eligibility li:last-child { border-bottom: none; }
+      .eligibility li::before {
+        content: ''; width: 5px; height: 5px; border-radius: 50%;
+        background: rgba(200,162,82,0.55); flex-shrink: 0; margin-top: 0.55rem;
+      }
+      @media (max-width: 900px) { .sec-layout { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; } .sec-info { position: static; } .form-row { grid-template-columns: 1fr; } }
+      @media (max-width: 768px) { .hero { padding: 3rem 1.5rem 2.5rem; } }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <section class="hero">
+      <div class="hero-inner">
+        <nav class="bc">
+          <a href={`${base}/`}>Home</a><span class="sep">/</span>
+          <a href={`${base}/journal`}>Nahj Journal</a><span class="sep">/</span>
+          <a href={`${base}/journal/submit`}>Submit &amp; Engage</a><span class="sep">/</span>
+          <span style="color:rgba(255,255,255,0.58)">Editorial Board</span>
+        </nav>
+        <span class="jm-pre">A Publication of Nahj Institute</span>
+        <div class="hero-journal-title"><em>NAHJ</em></div>
+        <span class="hero-journal-sub">The Journal of Transdisciplinary Theory</span>
+        <div class="hero-page-label">Pathway 03</div>
+        <div class="hero-page-title">Apply for Editorial Board Membership</div>
+      </div>
+    </section>
+    <nav class="tab-nav">
+      <div class="tab-nav-inner">
+        <a href={`${base}/journal/submit`} class="tab-btn">Overview</a>
+        <a href={`${base}/journal/submit/manuscript`} class="tab-btn">Submit Manuscript</a>
+        <a href={`${base}/journal/submit/reviewer`} class="tab-btn">Apply as Reviewer</a>
+        <a href={`${base}/journal/submit/board`} class="tab-btn active">Editorial Board</a>
+        <a href={`${base}/journal/submit/special-issue`} class="tab-btn">Special Issue</a>
+        <a href={`${base}/journal/submit/guest-editor`} class="tab-btn">Guest Editor</a>
+      </div>
+    </nav>
+    <main>
+      <div class="sec-layout">
+        <div class="sec-info">
+          <span class="section-label">03</span>
+          <div class="gold-rule"></div>
+          <h2>Apply for Editorial Board Membership</h2>
+            <p>The editorial board provides strategic scholarly guidance, assists with reviewer identification, and contributes to the intellectual direction of the journal. The board is international in composition.</p>
+            <p>Board members are expected to review two to four manuscripts per year and advise the editor on matters of scope and policy as required.</p>
+
+
+
+          <div class="eligibility">
+            <span class="eligibility-title">Minimum Eligibility</span>
+            <ul>
+                <li>Established academic at post-doctoral level or above</li>
+                <li>Recognised publication record in a relevant discipline</li>
+                <li>Capacity to review two to four manuscripts per year</li>
+                <li>Commitment to the journal's open access and transdisciplinary mission</li>
+                <li>No unmanageable conflict of interest with the journal's editorial team</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <form action="https://formspree.io/f/YOUR_BOARD_FORM_ID" method="POST">
+            <input type="hidden" name="_subject" value="NAHJ Editorial Board Application" />
+            <div class="form-divider">Personal Details</div>
+            <div class="form-row">
+              <div class="form-group"><label>First Name <span class="req">*</span></label><input type="text" name="fname" required placeholder="First name" /></div>
+              <div class="form-group"><label>Last Name <span class="req">*</span></label><input type="text" name="lname" required placeholder="Last name" /></div>
+            </div>
+            <div class="form-group"><label>Email Address <span class="req">*</span></label><input type="email" name="email" required placeholder="your@email.com" /></div>
+            <div class="form-row">
+              <div class="form-group"><label>Title and Position <span class="req">*</span></label><input type="text" name="position" required placeholder="e.g. Professor of Islamic Philosophy" /></div>
+              <div class="form-group"><label>Institutional Affiliation <span class="req">*</span></label><input type="text" name="affiliation" required placeholder="University or institution" /></div>
+            </div>
+            <div class="form-group"><label>Country <span class="req">*</span></label><input type="text" name="country" required placeholder="Country" /></div>
+            <div class="form-divider">Scholarly Profile</div>
+            <div class="form-group"><label>Research Interests and Disciplinary Area <span class="req">*</span></label><textarea name="research_interests" required placeholder="Describe your research interests and the areas of NAHJ's scope where your expertise would be most valuable." style="min-height:120px;"></textarea></div>
+            <div class="form-group"><label>Selected Publications <span class="req">*</span></label><textarea name="publications" required placeholder="Three to five publications representing the range and quality of your work. Include full bibliographic details." style="min-height:130px;"></textarea></div>
+            <div class="form-group"><label>Editorial or Review Experience</label><textarea name="editorial_experience" placeholder="Relevant editorial or peer review experience, including journals for which you have served as editor or reviewer." style="min-height:100px;"></textarea></div>
+            <div class="form-group"><label>Statement of Interest <span class="req">*</span></label><textarea name="statement" required placeholder="In 100 to 200 words, explain why you wish to join the editorial board of NAHJ and what you would contribute to its scholarly programme." style="min-height:130px;"></textarea></div>
+            <div class="form-footer">
+              <button type="submit" class="btn-submit">Submit Application</button>
+              <p class="privacy-note">Applications are reviewed by the editor-in-chief. Candidates will be contacted individually.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
