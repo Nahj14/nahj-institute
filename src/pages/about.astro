@@ -1,984 +1,763 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>About — Nahj Institute</title>
-    <meta name="description" content="Learn about Nahj Institute — our mission, values, intellectual foundations, and the team behind one of the Muslim world's emerging independent research centres." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
-    <style is:global>
-      /* ─── DESIGN TOKENS (identical to index.astro) ────────── */
-      :root {
-        --navy:        #0C1B2E;
-        --teal:        #1B5E6F;
-        --teal-light:  #246E82;
-        --gold:        #C8A252;
-        --gold-light:  #E2BC75;
-        --cream:       #F7F2E8;
-        --cream-dark:  #EDE6D5;
-        --charcoal:    #2B2B2B;
-        --muted:       #6B6B6B;
-        --white:       #FFFFFF;
-      }
-
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-
-      body {
-        background-color: var(--cream);
-        color: var(--charcoal);
-        font-family: 'Crimson Pro', Georgia, serif;
-        font-size: 22px;
-        line-height: 1.88;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      /* ─── UTILITY ─────────────────────────────────────────── */
-      .container {
-        max-width: 1120px;
-        margin: 0 auto;
-        padding: 0 2rem;
-      }
-
-      .container--narrow {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 0 2rem;
-      }
-
-      .section-label {
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-      }
-
-      .divider-gold {
-        width: 3.5rem;
-        height: 2px;
-        background: var(--gold);
-        margin: 0.9rem 0 1.5rem;
-      }
-
-      .divider-gold.center { margin: 0.9rem auto 1.5rem; }
-
-      /* ─── PAGE HERO ───────────────────────────────────────── */
-      .page-hero {
-        background-color: var(--navy);
-        color: var(--white);
-        padding: 5.5rem 2rem 4.5rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .page-hero::before {
-        content: 'نهج';
-        font-family: 'Amiri', serif;
-        font-size: clamp(12rem, 24vw, 22rem);
-        font-weight: 700;
-        color: rgba(255,255,255,0.032);
-        position: absolute;
-        right: -1.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        line-height: 1;
-        pointer-events: none;
-        user-select: none;
-      }
-
-      .page-hero-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .breadcrumb {
-        font-size: 0.82rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.4);
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-      }
-
-      .breadcrumb a {
-        color: rgba(255,255,255,0.4);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
-      .breadcrumb a:hover { color: var(--gold); }
-      .breadcrumb span { color: rgba(255,255,255,0.2); }
-
-      .page-hero h1 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2.6rem, 5.5vw, 4.8rem);
-        font-weight: 600;
-        line-height: 1.07;
-        color: var(--white);
-        max-width: 780px;
-        margin-bottom: 1.5rem;
-      }
-
-      .page-hero h1 em {
-        font-style: italic;
-        color: var(--gold-light);
-      }
-
-      .page-hero-sub {
-        font-size: 1.24rem;
-        color: rgba(255,255,255,0.62);
-        max-width: 560px;
-        font-weight: 300;
-        line-height: 1.92;
-      }
-
-      /* ─── MISSION STATEMENT ───────────────────────────────── */
-      .section-mission {
-        padding: 5.5rem 2rem;
-        background: var(--cream);
-      }
-
-      .mission-layout {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 5rem;
-        align-items: start;
-        max-width: 1120px;
-        margin: 0 auto;
-      }
-
-      .mission-label-col {
-        padding-top: 0.3rem;
-        position: sticky;
-        top: 4rem;
-      }
-
-      .mission-label-col h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.6rem;
-        font-weight: 600;
-        color: var(--navy);
-        line-height: 1.1;
-        margin-top: 0.5rem;
-      }
-
-      .mission-body p {
-        font-size: 1.26rem;
-        color: var(--charcoal);
-        line-height: 1.9;
-        margin-bottom: 1.5rem;
-        font-weight: 300;
-      }
-
-      .mission-body p strong {
-        font-weight: 600;
-        color: var(--navy);
-      }
-
-      .mission-pullquote {
-        border-left: 3px solid var(--gold);
-        padding: 1rem 0 1rem 2rem;
-        margin: 2.5rem 0;
-      }
-
-      .mission-pullquote p {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.55rem;
-        font-style: italic;
-        font-weight: 400;
-        color: var(--navy);
-        line-height: 1.45;
-        margin: 0;
-      }
-
-      .mission-pullquote cite {
-        display: block;
-        margin-top: 0.75rem;
-        font-size: 0.82rem;
-        font-style: normal;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-        font-family: 'Crimson Pro', serif;
-      }
-
-      /* ─── OUR STORY ───────────────────────────────────────── */
-      .section-story {
-        background: var(--navy);
-        padding: 5.5rem 2rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .section-story::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(ellipse 60% 80% at 90% 50%, rgba(27,94,111,0.25) 0%, transparent 70%),
-          radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,162,82,0.06) 0%, transparent 70%);
-        pointer-events: none;
-      }
-
-      .story-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .story-header {
-        margin-bottom: 3.5rem;
-      }
-
-      .story-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2rem, 4vw, 3.2rem);
-        font-weight: 600;
-        color: var(--white);
-        margin-top: 0.5rem;
-        max-width: 680px;
-        line-height: 1.12;
-      }
-
-      .story-header h2 em {
-        color: var(--gold-light);
-        font-style: italic;
-      }
-
-      .story-columns {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: start;
-      }
-
-      .story-columns p {
-        font-size: 1.20rem;
-        color: rgba(255,255,255,0.7);
-        line-height: 1.9;
-        font-weight: 300;
-        margin-bottom: 1.25rem;
-      }
-
-      .story-columns p:last-child { margin-bottom: 0; }
-
-      .story-columns strong {
-        color: rgba(255,255,255,0.92);
-        font-weight: 500;
-      }
-
-      /* ─── VALUES ──────────────────────────────────────────── */
-      .section-values {
-        padding: 5.5rem 2rem;
-        background: var(--cream-dark);
-      }
-
-      .values-header {
-        text-align: center;
-        margin-bottom: 3.5rem;
-      }
-
-      .values-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.8vw, 3rem);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-      }
-
-      .values-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 2.5rem;
-        max-width: 1120px;
-        margin: 0 auto;
-      }
-
-      .value-item {
-        padding: 0;
-      }
-
-      .value-number {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 3.5rem;
-        font-weight: 300;
-        color: var(--cream-dark);
-        line-height: 1;
-        margin-bottom: -0.5rem;
-        /* outline effect */
-        -webkit-text-stroke: 1px var(--gold);
-        color: transparent;
-      }
-
-      .value-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.4rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin-bottom: 0.6rem;
-        padding-bottom: 0.6rem;
-        border-bottom: 1px solid var(--cream-dark);
-      }
-
-      .value-body {
-        font-size: 1.12rem;
-        color: var(--muted);
-        line-height: 1.72;
-      }
-
-      /* ─── FOCUS AREAS ─────────────────────────────────────── */
-      .section-focus {
-        padding: 5.5rem 2rem;
-        background: var(--cream);
-      }
-
-      .focus-header {
-        max-width: 1120px;
-        margin: 0 auto 3.5rem;
-      }
-
-      .focus-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.8vw, 3rem);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-        max-width: 520px;
-      }
-
-      .focus-list {
-        max-width: 1120px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 0;
-      }
-
-      .focus-item {
-        padding: 2rem 1.75rem;
-        border: 1px solid var(--cream-dark);
-        display: flex;
-        gap: 1.25rem;
-        align-items: flex-start;
-        transition: background 0.2s ease;
-      }
-
-      .focus-item:hover {
-        background: var(--white);
-      }
-
-      .focus-num {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.20rem;
-        font-weight: 600;
-        color: var(--gold);
-        flex-shrink: 0;
-        padding-top: 0.1rem;
-      }
-
-      .focus-text h4 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin-bottom: 0.35rem;
-      }
-
-      .focus-text p {
-        font-size: 1.26rem;
-        color: var(--muted);
-        line-height: 1.80;
-      }
-
-      /* ─── TEAM ────────────────────────────────────────────── */
-      .section-team {
-        background: var(--cream-dark);
-        padding: 5.5rem 2rem;
-      }
-
-      .team-header {
-        text-align: center;
-        margin-bottom: 3.5rem;
-      }
-
-      .team-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.8vw, 3rem);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-      }
-
-      .team-header p {
-        font-size: 1.16rem;
-        color: var(--muted);
-        max-width: 500px;
-        margin: 0 auto;
-        font-weight: 300;
-      }
-
-      .team-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 2rem;
-        max-width: 1120px;
-        margin: 0 auto;
-      }
-
-      .team-card {
-        background: var(--white);
-        padding: 2rem 1.75rem;
-        border-top: 3px solid var(--cream-dark);
-        transition: border-color 0.25s ease;
-      }
-
-      .team-card:hover {
-        border-color: var(--gold);
-      }
-
-      .team-avatar {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: var(--navy);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.25rem;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--gold);
-        flex-shrink: 0;
-      }
-
-      .team-name {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--navy);
-        margin-bottom: 0.25rem;
-      }
-
-      .team-role {
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.13em;
-        text-transform: uppercase;
-        color: var(--teal);
-        margin-bottom: 0.75rem;
-      }
-
-      .team-bio {
-        font-size: 1.26rem;
-        color: var(--muted);
-        line-height: 1.80;
-      }
-
-      /* ─── VISITOR GUIDE ───────────────────────────────────── */
-      .section-guide {
-        background: var(--navy);
-        padding: 5.5rem 2rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .section-guide::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse 50% 70% at 80% 40%, rgba(200,162,82,0.07) 0%, transparent 70%);
-        pointer-events: none;
-      }
-
-      .guide-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .guide-header {
-        margin-bottom: 3.5rem;
-      }
-
-      .guide-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.9rem, 3.8vw, 3rem);
-        font-weight: 600;
-        color: var(--white);
-        margin-top: 0.5rem;
-        max-width: 600px;
-        line-height: 1.1;
-      }
-
-      .guide-header h2 em {
-        color: var(--gold-light);
-        font-style: italic;
-      }
-
-      .guide-steps {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 0;
-      }
-
-      .guide-step {
-        padding: 2.25rem 2rem;
-        border: 1px solid rgba(255,255,255,0.07);
-        position: relative;
-      }
-
-      .guide-step:hover {
-        background: rgba(255,255,255,0.03);
-      }
-
-      .guide-step-num {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 0.82rem;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        color: var(--gold);
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-      }
-
-      .guide-step h4 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: var(--white);
-        margin-bottom: 0.6rem;
-        line-height: 1.2;
-      }
-
-      .guide-step p {
-        font-size: 1.10rem;
-        color: rgba(255,255,255,0.58);
-        line-height: 1.92;
-        margin-bottom: 1rem;
-      }
-
-      .guide-step a {
-        font-size: 0.82rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--gold);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
-      .guide-step a:hover { color: var(--gold-light); }
-
-      /* ─── CLOSING CTA ─────────────────────────────────────── */
-      .section-cta {
-        background: var(--cream);
-        padding: 5rem 2rem;
-        text-align: center;
-        border-top: 1px solid var(--cream-dark);
-      }
-
-      .section-cta h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-        margin-bottom: 1rem;
-        line-height: 1.15;
-      }
-
-      .section-cta p {
-        font-size: 1.20rem;
-        color: var(--muted);
-        max-width: 520px;
-        margin: 0 auto 2.25rem;
-        font-weight: 300;
-        line-height: 1.90;
-      }
-
-      .cta-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .btn-primary {
-        display: inline-block;
-        background: var(--gold);
-        color: var(--navy);
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.9rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.85rem 2rem;
-        text-decoration: none;
-        transition: background 0.2s ease, transform 0.15s ease;
-      }
-
-      .btn-primary:hover {
-        background: var(--gold-light);
-        transform: translateY(-1px);
-      }
-
-      .btn-outline-dark {
-        display: inline-block;
-        border: 1px solid var(--navy);
-        color: var(--navy);
-        font-family: 'Crimson Pro', serif;
-        font-size: 0.9rem;
-        font-weight: 500;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.85rem 2rem;
-        text-decoration: none;
-        transition: background 0.2s, color 0.2s, transform 0.15s ease;
-      }
-
-      .btn-outline-dark:hover {
-        background: var(--navy);
-        color: var(--gold);
-        transform: translateY(-1px);
-      }
-
-      /* ─── RESPONSIVE ──────────────────────────────────────── */
-      @media (max-width: 768px) {
-        .mission-layout { grid-template-columns: 1fr; gap: 2rem; }
-        .mission-label-col { position: static; }
-        .story-columns { grid-template-columns: 1fr; gap: 2rem; }
-        .page-hero { padding: 4rem 1.5rem 3rem; }
-        .page-hero::before { font-size: 8rem; }
-      }
-    </style>
-  </head>
-
-  <body>
-    <Header />
-
-    <!-- ═══════════════════════════════════════════════ PAGE HERO -->
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="breadcrumb">
-          <a href="/Nahj-Institute/">Home</a>
-          <span>/</span>
-          <span style="color: rgba(255,255,255,0.65);">About the Institute</span>
-        </nav>
-        <h1>
-          An Institute Built on the <em>Conviction</em><br />
-          That Ideas Have Consequences
-        </h1>
-        <p class="page-hero-sub">
-          Nahj Institute is an independent research centre and think tank dedicated to rigorous scholarship at the crossroads of Islamic intellectual tradition, contemporary politics, social ethics, and the questions that define our age.
-        </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About | Nahj Institute</title>
+  <meta name="description" content="Nahj Institute is an independent research centre dedicated to serious scholarship on religion, politics, and society, with a focus on the Muslim world and the Global South." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style is:global>
+    :root {
+      --navy:       #0C1B2E;
+      --teal:       #1B5E6F;
+      --gold:       #C8A252;
+      --gold-light: #E2BC75;
+      --cream:      #F7F2E8;
+      --cream-dark: #EDE6D5;
+      --charcoal:   #2B2B2B;
+      --muted:      #6B6B6B;
+      --white:      #FFFFFF;
+      }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 24px;
+      line-height: 1.88;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Prevent global.css main{width:720px} from constraining this page */
+    main { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+
+    /* ── UTILITIES ──────────────────────────────────────── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+
+    /* Section label: was 0.78rem = 12.5px. Now explicit 13px. */
+    .slabel {
+      font-family: 'Crimson Pro', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+    }
+
+    .gold-rule { width: 3rem; height: 2px; background: var(--gold); margin: 0.75rem 0 1.4rem; }
+    .gold-rule.center { margin: 0.75rem auto 1.4rem; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .page-hero {
+      background: var(--navy);
+      padding: 5rem 2rem 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: 'نهج';
+      font-family: 'Amiri', serif;
+      font-size: clamp(120px, 22vw, 220px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.03);
+      position: absolute;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* Breadcrumb: was 0.82rem = 13px. Explicit 14px now. */
+    .breadcrumb {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.42);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.42); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: rgba(255,255,255,0.18); }
+
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 44px);   /* explicit px, no rem ambiguity */
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--white);
+      max-width: 680px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-sub {
+      font-size: 21px;
+      color: rgba(255,255,255,0.60);
+      max-width: 560px;
+      font-weight: 300;
+      line-height: 1.82;
+    }
+
+    /* ── MISSION ────────────────────────────────────────── */
+    .section-mission { padding: 5rem 2rem; background: var(--cream); }
+
+    .mission-layout {
+      display: grid;
+      grid-template-columns: 1fr 2.2fr;
+      gap: 5rem;
+      align-items: start;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .mission-label-col { padding-top: 0.25rem; position: sticky; top: 4.5rem; }
+
+    .mission-label-col h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.12;
+      margin-top: 0.5rem;
+    }
+
+    /* Carnegie-style: mission body is a large, clear, readable block */
+    .mission-body p {
+      font-size: 24px;
+      color: var(--charcoal);
+      line-height: 1.92;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .mission-body p:last-child { margin-bottom: 0; }
+    .mission-body strong { font-weight: 600; color: var(--navy); }
+
+    /* Pull quote */
+    .pullquote {
+      border-left: 3px solid var(--gold);
+      padding: 0.75rem 0 0.75rem 1.75rem;
+      margin: 2rem 0;
+    }
+    .pullquote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px !important;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.45;
+      margin: 0 !important;
+    }
+    .pullquote cite {
+      display: block;
+      margin-top: 0.6rem;
+      font-size: 13px;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── STORY (dark section) ───────────────────────────── */
+    .section-story {
+      background: var(--navy);
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-story::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(27,94,111,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .story-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+
+    .story-inner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.18;
+      margin-top: 0.5rem;
+      margin-bottom: 2.5rem;
+      max-width: 700px;
+    }
+
+    .story-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .story-cols p {
+      font-size: 20px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.92;
+      font-weight: 300;
+      margin-bottom: 1.4rem;
+    }
+    .story-cols p:last-child { margin-bottom: 0; }
+    .story-cols strong { color: rgba(255,255,255,0.92); font-weight: 500; }
+
+    /* VALUES: clean grid, NO decorative numbers ─────── */
+    .section-values { padding: 5rem 2rem; background: var(--cream-dark); }
+
+    .section-values h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3vw, 36px);
+      font-weight: 600;
+      color: var(--navy);
+      text-align: center;
+      margin-top: 0.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .value-card {
+      background: var(--white);
+      padding: 2rem 1.75rem;
+      border-top: 3px solid transparent;
+      transition: border-color 0.25s;
+    }
+    .value-card:hover { border-color: var(--gold); }
+
+    /* Title: clean Cormorant, no decorative number */
+    .value-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    /* Body text: explicit px */
+    .value-card p {
+      font-size: 20px;
+      color: var(--muted);
+      line-height: 1.78;
+    }
+
+    /* ── WRITING / INTELLECTUAL CULTURE ─────────────────── */
+    .section-writing { padding: 5rem 2rem; background: var(--cream); border-top: 1px solid var(--cream-dark); }
+    .writing-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .writing-label h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.12;
+      margin-top: 0.5rem;
+      position: sticky;
+      top: 4.5rem;
+    }
+    .writing-body p {
+      font-size: 24px;
+      color: var(--charcoal);
+      line-height: 1.92;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    .writing-body p:last-child { margin-bottom: 0; }
+
+    /* ── FOCUS AREAS ────────────────────────────────────── */
+    .section-focus { padding: 5rem 2rem; background: var(--cream-dark); }
+    .focus-header { max-width: 1120px; margin: 0 auto 3rem; }
+    .focus-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3vw, 36px);
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: 0.5rem;
+    }
+    .focus-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0;
+    }
+    .focus-item {
+      padding: 1.75rem;
+      border: 1px solid var(--cream);
+      background: var(--white);
+      transition: background 0.2s;
+    }
+    .focus-item:hover { background: var(--cream); }
+    .focus-item h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .focus-item p {
+      font-size: 19px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── TEAM TEASER ────────────────────────────────────── */
+    .section-team-teaser {
+      background: var(--cream);
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .team-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .team-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3vw, 36px);
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+    .team-text p { font-size: 20px; color: var(--muted); max-width: 580px; line-height: 1.80; font-weight: 300; }
+
+    .btn-team {
+      display: inline-block;
+      border: 1px solid var(--navy);
+      color: var(--navy);
+      font-family: 'Crimson Pro', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.88rem 2rem;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-team:hover { background: var(--navy); color: var(--gold); }
+
+    /* ── VISITOR GUIDE ──────────────────────────────────── */
+    .section-guide {
+      background: var(--navy);
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-guide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 70% at 80% 40%, rgba(200,162,82,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .guide-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+    .guide-inner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 600;
+      color: var(--white);
+      margin-top: 0.5rem;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      line-height: 1.18;
+    }
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .guide-step { padding: 2rem 1.75rem; border: 1px solid rgba(255,255,255,0.07); }
+    .guide-step:hover { background: rgba(255,255,255,0.03); }
+    .step-num { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.75rem; }
+    .guide-step h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
+    .guide-step p { font-size: 19px; color: rgba(255,255,255,0.60); line-height: 1.78; margin-bottom: 1rem; }
+    .guide-step a { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    .guide-step a:hover { color: var(--gold-light); }
+
+    /* ── CTA ────────────────────────────────────────────── */
+    .section-cta { background: var(--cream); padding: 5rem 2rem; border-top: 1px solid var(--cream-dark); }
+
+    /* Institutional profile strip */
+    .inst-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--cream-dark);
+      background: var(--white);
+      max-width: 1120px;
+      margin: 0 auto 4rem;
+    }
+    .inst-item {
+      padding: 1.5rem 1.75rem;
+      border-right: 1px solid var(--cream-dark);
+    }
+    .inst-item:last-child { border-right: none; }
+    .inst-item strong { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .inst-item p { font-size: 19px; color: var(--charcoal); line-height: 1.65; font-weight: 300; }
+
+    .cta-center { text-align: center; max-width: 640px; margin: 0 auto; }
+    .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 3vw, 36px); font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
+    .cta-center p { font-size: 20px; color: var(--muted); margin-bottom: 2.25rem; font-weight: 300; line-height: 1.80; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Crimson Pro', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.25rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      margin-right: 0.75rem;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid var(--navy);
+      color: var(--navy);
+      font-family: 'Crimson Pro', serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.25rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { background: var(--navy); color: var(--gold); transform: translateY(-1px); }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .mission-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .mission-label-col { position: static; }
+      .writing-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .story-cols { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .page-hero { padding: 3.5rem 1.25rem 3rem; }
+      .page-hero::before { font-size: 80px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .inst-strip { grid-template-columns: 1fr 1fr; }
+      .inst-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+      .team-inner { flex-direction: column; gap: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <Header />
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-inner">
+      <nav class="breadcrumb">
+        <a href={`${base}/`}>Home</a>
+        <span>/</span>
+        <span style="color:rgba(255,255,255,0.65)">About the Institute</span>
+      </nav>
+      <h1>An Independent Research Centre for the Study of Religion, Politics, and Society</h1>
+      <p class="hero-sub">
+        Dedicated to serious scholarship on the Muslim world and the societies of the Global South.
+      </p>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- MISSION -->
+    <section class="section-mission">
+      <div class="mission-layout">
+        <div class="mission-label-col">
+          <span class="slabel">Our Mission</span>
+          <div class="gold-rule"></div>
+          <h2>What We Do and Why</h2>
+        </div>
+
+        <div class="mission-body">
+          <p>
+            Nahj Institute is an independent research centre dedicated to serious scholarship on religion, politics, philosophy, and society. Our work focuses primarily on the Muslim world and the societies of the Global South, engaging both classical intellectual traditions and the pressing questions of contemporary global life.
+          </p>
+          <p>
+            The Islamic intellectual tradition has never been averse to difficulty. Scholars such as Imam Ali ibn Abi Talib, al-Farabi, Ibn Rushd, and Allama Iqbal did not treat received positions as final. They tested them through disciplined reasoning and genuine engagement with the world as they found it. Nahj Institute is grounded in that tradition.
+          </p>
+
+          <div class="pullquote">
+            <p>"Knowledge is a light that God casts into the heart of whomever He wills."</p>
+            <cite>Imam Ja'far al-Sadiq (AS)</cite>
+          </div>
+
+          <p>
+            We are not a seminary, though we take theology seriously. We are not a political organisation, though we engage politics unflinchingly. We are not a media outlet, though we believe ideas must reach people. <strong>We are a place of serious scholarship.</strong>
+          </p>
+        </div>
       </div>
     </section>
 
-    <main>
+    <!-- ORIGINS -->
+    <section class="section-story">
+      <div class="story-inner">
+        <span class="slabel" style="color:var(--gold)">Our Story</span>
+        <div class="gold-rule"></div>
+        <h2>How Nahj Institute Came to Be</h2>
 
-      <!-- ══════════════════════════════════════════ MISSION -->
-      <section class="section-mission">
-        <div class="mission-layout">
-          <div class="mission-label-col">
-            <span class="section-label">Our Mission</span>
-            <div class="divider-gold"></div>
-            <h2>Why We Exist</h2>
+        <div class="story-cols">
+          <div>
+            <p>
+              Nahj Institute grew out of a frustration shared by a group of scholars, researchers, and practitioners: that serious, independent intellectual work on the Muslim world and the Global South lacked a dedicated platform in the English-speaking world.
+            </p>
+            <p>
+              The name <strong>Nahj</strong> means path, method, or way in Arabic. It evokes Nahj al-Balagha, the collected sermons of Imam Ali ibn Abi Talib: one of the most demanding and profound texts in the Arabic literary canon. The path of knowledge is not a destination but a discipline.
+            </p>
           </div>
-
-          <div class="mission-body">
+          <div>
             <p>
-              The Muslim world faces an extraordinary confluence of crises — intellectual, political, and civilisational. Old certainties are dissolving. New questions are pressing. And too often, the discourse that ought to address them is either shallow, partisan, or locked behind the walls of institutions too cautious to ask the hardest things.
+              Scholarship on the Muslim world has often been shaped primarily by frameworks developed within Western academic and policy institutions. These frameworks carry genuine insight, yet they do not always account for the full range of intellectual traditions and social realities of the societies they describe. Nahj Institute supports scholarship that takes those perspectives seriously on their own terms.
             </p>
             <p>
-              <strong>Nahj Institute was founded to do something different.</strong> We believe that genuine scholarship — fearless, grounded, and honest — is not a luxury but a necessity. That the Islamic intellectual tradition, at its best, was never afraid of difficult questions. That thinkers like Imam Ali, al-Farabi, Ibn Rushd, and Allama Iqbal did not inherit answers — they forged them through discipline, courage, and deep engagement with the world as it actually was.
-            </p>
-
-            <div class="mission-pullquote">
-              <p>"Knowledge is a light that God casts into the heart of whomever He wills."</p>
-              <cite>— Imam Ja'far al-Sadiq (AS)</cite>
-            </div>
-
-            <p>
-              Our mission is to cultivate that tradition anew. To produce research that is academically rigorous and publicly legible. To host conversations that are substantive rather than performative. To nurture the next generation of Muslim scholars, writers, and public thinkers — not by handing them conclusions, but by honing their capacity to reason well.
-            </p>
-            <p>
-              We are not a seminary, though we take theology seriously. We are not a political party, though we engage politics unflinchingly. We are not a social media presence, though ideas must travel. <strong>We are a place of inquiry</strong> — and we hold that the examined life, rigorously and honestly pursued, remains the most important work there is.
+              We remain independent, self-funded, and governed by our founding principles rather than by donors with agendas or states with interests. <strong>That independence is our most valuable asset.</strong>
             </p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ═══════════════════════════════════════════ OUR STORY -->
-      <section class="section-story">
-        <div class="story-inner">
-          <div class="story-header">
-            <span class="section-label">Our Story</span>
-            <div class="divider-gold"></div>
-            <h2>Born from <em>Frustration.</em><br />Built with Purpose.</h2>
+    <!-- VALUES: clean cards, no decorative numbers -->
+    <section class="section-values">
+      <div class="container">
+        <div style="text-align:center">
+          <span class="slabel">What We Stand For</span>
+          <div class="gold-rule center"></div>
+        </div>
+        <h2>Our Founding Principles</h2>
+
+        <div class="values-grid">
+          <div class="value-card">
+            <h3>Intellectual Rigour</h3>
+            <p>Claims require evidence. Arguments require logic. We hold our work to the standards of serious academic scholarship and have no patience for polemic dressed as analysis.</p>
           </div>
 
-          <div class="story-columns">
-            <div>
-              <p>
-                Nahj Institute grew out of a simple frustration shared by a small group of students, scholars, and practitioners: that the Muslim intellectual community in the English-speaking world lacked a serious, independent forum. A place that could hold together rigour and relevance. That could speak across disciplines — theology and political science, philosophy and sociology, history and contemporary affairs — without losing depth in any of them.
-              </p>
-              <p>
-                The name <strong>Nahj</strong> — Arabic for <em>path</em>, <em>method</em>, or <em>way</em> — was chosen deliberately. It evokes Nahj al-Balagha, the collected sermons and letters of Imam Ali ibn Abi Talib: perhaps the most intellectually demanding and spiritually profound text in the Arabic literary canon. It reminds us that the path of knowledge is not a destination but a discipline. Not a position but a practice.
-              </p>
-            </div>
-            <div>
-              <p>
-                What began as a reading circle and a handful of published essays has grown into a full research programme: with commissioned papers, an annual writing competition, a lecture series that has hosted scholars from across the Muslim world, and a student development programme now serving hundreds of young people seeking mentorship and intellectual formation.
-              </p>
-              <p>
-                We remain independent, self-funded, and governed by our founding principles rather than by donors with agendas or states with interests. <strong>That independence is our most valuable asset.</strong> It is what allows us to say what needs to be said — with care, with evidence, and without apology.
-              </p>
-            </div>
+          <div class="value-card">
+            <h3>Moral Courage</h3>
+            <p>Some questions are uncomfortable and some conclusions are unpopular. Nahj will not shy from either. The duty to speak truthfully is an obligation we take with full seriousness.</p>
+          </div>
+
+          <div class="value-card">
+            <h3>Civilisational Rootedness</h3>
+            <p>We engage modernity as inheritors of one of history's great intellectual traditions, drawing on classical Islamic thought not as a relic but as a living resource for contemporary questions.</p>
+          </div>
+
+          <div class="value-card">
+            <h3>Genuine Pluralism</h3>
+            <p>We welcome contributors across legal schools, political perspectives, and academic disciplines. Disagreement, conducted honestly and respectfully, is among the most productive forces in intellectual life.</p>
+          </div>
+
+          <div class="value-card">
+            <h3>Accessibility</h3>
+            <p>Depth need not mean obscurity. We write for the educated general reader as much as the specialist, believing that important ideas must be capable of reaching the most people.</p>
+          </div>
+
+          <div class="value-card">
+            <h3>Service</h3>
+            <p>Knowledge divorced from service is incomplete. Our scholarship is grounded in genuine concern for the communities we serve, expressed in publication, education, mentorship, and charitable action.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ═══════════════════════════════════════════ VALUES -->
-      <section class="section-values">
-        <div class="container">
-          <div class="values-header">
-            <span class="section-label">What We Stand For</span>
-            <div class="divider-gold center"></div>
-            <h2>Our Founding Principles</h2>
-          </div>
-
-          <div class="values-grid">
-            <div class="value-item">
-              <div class="value-number">01</div>
-              <h3 class="value-title">Intellectual Rigour</h3>
-              <p class="value-body">We hold our work to the standards of serious academic scholarship. Claims require evidence. Arguments require logic. Conclusions must remain open to revision. We have no patience for polemic dressed as analysis.</p>
-            </div>
-
-            <div class="value-item">
-              <div class="value-number">02</div>
-              <h3 class="value-title">Moral Courage</h3>
-              <p class="value-body">Some questions are uncomfortable. Some conclusions are unpopular. Nahj will not shy from either. The duty to speak truthfully — to one's community, to power, and to oneself — is an obligation we take with full seriousness.</p>
-            </div>
-
-            <div class="value-item">
-              <div class="value-number">03</div>
-              <h3 class="value-title">Civilisational Rootedness</h3>
-              <p class="value-body">We are heirs to one of history's great intellectual traditions. We engage modernity not as supplicants but as inheritors — drawing on classical Islamic thought not as a relic, but as a living resource for contemporary questions.</p>
-            </div>
-
-            <div class="value-item">
-              <div class="value-number">04</div>
-              <h3 class="value-title">Genuine Pluralism</h3>
-              <p class="value-body">We welcome contributors across legal schools, political perspectives, and academic disciplines. Disagreement, conducted honestly and respectfully, is among the most productive forces in intellectual life. We cultivate it deliberately.</p>
-            </div>
-
-            <div class="value-item">
-              <div class="value-number">05</div>
-              <h3 class="value-title">Accessibility</h3>
-              <p class="value-body">Depth need not mean obscurity. We write for the educated general reader as much as the specialist, believing that the most important ideas must be capable of reaching the most people without sacrificing their complexity.</p>
-            </div>
-
-            <div class="value-item">
-              <div class="value-number">06</div>
-              <h3 class="value-title">Service</h3>
-              <p class="value-body">Knowledge divorced from service is incomplete. Our scholarship is grounded in genuine concern for the communities we serve — Muslim and otherwise — and expressed not only in publication, but in education, mentorship, and charitable action.</p>
-            </div>
-          </div>
+    <!-- WHY SERIOUS SCHOLARSHIP MATTERS -->
+    <section class="section-writing">
+      <div class="writing-inner">
+        <div class="writing-label">
+          <span class="slabel">Intellectual Culture</span>
+          <div class="gold-rule"></div>
+          <h2>On the Value of Serious Scholarship</h2>
         </div>
-      </section>
-
-      <!-- ═══════════════════════════════════════ FOCUS AREAS -->
-      <section class="section-focus">
-        <div class="focus-header container">
-          <span class="section-label">Areas of Inquiry</span>
-          <div class="divider-gold"></div>
-          <h2>The Questions That Drive Our Work</h2>
-        </div>
-        <div class="focus-list container">
-          <div class="focus-item">
-            <span class="focus-num">01</span>
-            <div class="focus-text">
-              <h4>Islamic Theology & Philosophy</h4>
-              <p>Kalam, ethics, eschatology, and the enduring questions of divine justice, human agency, and the nature of revelation — engaged with classical rigour and contemporary awareness.</p>
-            </div>
-          </div>
-
-          <div class="focus-item">
-            <span class="focus-num">02</span>
-            <div class="focus-text">
-              <h4>Politics & Governance</h4>
-              <p>Islamic political theory, the crisis of legitimacy in Muslim-majority states, democracy, constitutionalism, and the contested relationship between religion and public life.</p>
-            </div>
-          </div>
-
-          <div class="focus-item">
-            <span class="focus-num">03</span>
-            <div class="focus-text">
-              <h4>Geopolitics & International Affairs</h4>
-              <p>The Muslim world in the global order: from the Gulf to South Asia, from the Sahel to Southeast Asia. Strategic analysis grounded in historical depth and ethical seriousness.</p>
-            </div>
-          </div>
-
-          <div class="focus-item">
-            <span class="focus-num">04</span>
-            <div class="focus-text">
-              <h4>Religious Harmony & Interfaith Ethics</h4>
-              <p>The theory and practice of coexistence: comparative theology, the ethics of dialogue, sectarian conflict, and the civilisational project of living well with difference.</p>
-            </div>
-          </div>
-
-          <div class="focus-item">
-            <span class="focus-num">05</span>
-            <div class="focus-text">
-              <h4>Social Issues & Contemporary Culture</h4>
-              <p>Family, identity, gender, technology, and the pressures bearing down on Muslim communities in the modern world — examined with rigour rather than reactivity.</p>
-            </div>
-          </div>
-
-          <div class="focus-item">
-            <span class="focus-num">06</span>
-            <div class="focus-text">
-              <h4>Science, Ethics & the Human Condition</h4>
-              <p>Bioethics, artificial intelligence, environmental thought, and the enduring question of what it means to be human — read through the lens of Islamic intellectual tradition.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ══════════════════════════════════════════════ TEAM -->
-      <section class="section-team">
-        <div class="container">
-          <div class="team-header">
-            <span class="section-label">The People</span>
-            <div class="divider-gold center"></div>
-            <h2>Leadership & Core Team</h2>
-            <p>Scholars, practitioners, and committed thinkers — united by the mission of Nahj.</p>
-          </div>
-
-          <div class="team-grid">
-            <div class="team-card">
-              <div class="team-avatar">F</div>
-              <div class="team-name">Founder & Director</div>
-              <div class="team-role">Executive Leadership</div>
-              <p class="team-bio">The founding vision of Nahj Institute. Leads the Institute's strategic direction, editorial standards, and external relations. <!-- Replace with actual bio --> </p>
-            </div>
-
-            <div class="team-card">
-              <div class="team-avatar">R</div>
-              <div class="team-name">Research Lead</div>
-              <div class="team-role">Academic Affairs</div>
-              <p class="team-bio">Oversees the Institute's research programme, peer-review processes, and publication standards. Specialist in Islamic political thought. <!-- Replace with actual bio --></p>
-            </div>
-
-            <div class="team-card">
-              <div class="team-avatar">E</div>
-              <div class="team-name">Editor-in-Chief</div>
-              <div class="team-role">Publications</div>
-              <p class="team-bio">Responsible for all editorial output — commissioning, editing, and shaping the voice of Nahj across essays, policy briefs, and long-form pieces. <!-- Replace with actual bio --></p>
-            </div>
-
-            <div class="team-card">
-              <div class="team-avatar">P</div>
-              <div class="team-name">Programmes Director</div>
-              <div class="team-role">Events & Student Programmes</div>
-              <p class="team-bio">Manages the lecture series, writing competitions, workshops, and the student mentorship programme that sits at the heart of Nahj's educational mission. <!-- Replace with actual bio --></p>
-            </div>
-          </div>
-
-          <p style="text-align:center; margin-top: 2.5rem; font-size: 1.10rem; color: var(--muted);">
-            We also work with a network of associate researchers, contributing writers, and academic advisors.<br />
-            <a href="/Nahj-Institute/contact" style="color: var(--teal); text-decoration: none; font-weight: 600;">Interested in joining our team? →</a>
+        <div class="writing-body">
+          <p>
+            Digital communication has expanded access to information while shortening the time given to any one idea. Complex arguments are compressed into commentary, and sustained analysis is displaced by assertion.
+          </p>
+          <p>
+            We believe that essays, research papers, and carefully constructed arguments remain essential for understanding questions that do not yield to simple answers. The Muslim world and the Global South face questions of governance, identity, theology, and international order that deserve thought, not reactions.
+          </p>
+          <p>
+            Our publications and programmes are designed to support that form of intellectual work and to cultivate a readership capable of engaging with it seriously.
           </p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ══════════════════════════════════════ VISITOR GUIDE -->
-      <section class="section-guide">
-        <div class="guide-inner">
-          <div class="guide-header">
-            <span class="section-label">Visitor Guide</span>
-            <div class="divider-gold"></div>
-            <h2>New Here? Here Is <em>How to Engage</em><br />with Nahj Institute</h2>
+    <!-- FOCUS AREAS -->
+    <section class="section-focus">
+      <div class="focus-header container">
+        <span class="slabel">Areas of Inquiry</span>
+        <div class="gold-rule"></div>
+        <h2>The Questions That Drive Our Work</h2>
+      </div>
+      <div class="focus-grid container">
+        <div class="focus-item">
+          <h4>Islamic Theology and Philosophy</h4>
+          <p>Kalam, ethics, eschatology, and the enduring questions of divine justice, human agency, and the nature of revelation, engaged with classical rigour and contemporary awareness.</p>
+        </div>
+        <div class="focus-item">
+          <h4>Politics and Governance</h4>
+          <p>Islamic political theory, the crisis of legitimacy in Muslim-majority states, democracy, constitutionalism, and the contested relationship between religion and public life.</p>
+        </div>
+        <div class="focus-item">
+          <h4>Geopolitics and International Affairs</h4>
+          <p>The Muslim world in the global order: from the Gulf to South Asia, from the Sahel to Southeast Asia. Strategic analysis grounded in historical depth and ethical seriousness.</p>
+        </div>
+        <div class="focus-item">
+          <h4>Religious Harmony and Interfaith Ethics</h4>
+          <p>The theory and practice of coexistence: comparative theology, the ethics of dialogue, sectarian conflict, and the project of living well with difference.</p>
+        </div>
+        <div class="focus-item">
+          <h4>Society and Contemporary Culture</h4>
+          <p>Family, identity, gender, technology, and the pressures bearing down on Muslim communities in the modern world, examined with rigour rather than reactivity.</p>
+        </div>
+        <div class="focus-item">
+          <h4>Science, Ethics, and the Human Condition</h4>
+          <p>Bioethics, artificial intelligence, environmental thought, and the enduring question of what it means to be human, read through the lens of Islamic intellectual tradition.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM TEASER -->
+    <section class="section-team-teaser">
+      <div class="team-inner">
+        <div class="team-text">
+          <span class="slabel">The People</span>
+          <div class="gold-rule"></div>
+          <h2>Leadership and Core Team</h2>
+          <p>
+            Nahj Institute is led and staffed by an international network of scholars, researchers, and practitioners with expertise across Islamic intellectual history, political theory, philosophy, and the social sciences.
+          </p>
+        </div>
+        <a href={`${base}/team`} class="btn-team">Meet Our Team →</a>
+      </div>
+    </section>
+
+    <!-- VISITOR GUIDE -->
+    <section class="section-guide">
+      <div class="guide-inner">
+        <span class="slabel" style="color:var(--gold)">Visitor Guide</span>
+        <div class="gold-rule"></div>
+        <h2>New Here? Here Is How to Engage with Nahj Institute</h2>
+
+        <div class="guide-steps">
+          <div class="guide-step">
+            <span class="step-num">Step 01</span>
+            <h4>Read Our Research</h4>
+            <p>Start with our featured essays and policy papers, written to be substantive and worth your time whether you are a specialist or an engaged general reader.</p>
+            <a href={`${base}/research`}>Browse the Archive →</a>
           </div>
-
-          <div class="guide-steps">
-            <div class="guide-step">
-              <div class="guide-step-num">Step 01</div>
-              <h4>Read Our Research</h4>
-              <p>Start with our featured essays and policy papers. Each piece is written to be substantive, readable, and worth your time — whether you are a specialist or an engaged general reader.</p>
-              <a href="/Nahj-Institute/research">Browse the Archive →</a>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step-num">Step 02</div>
-              <h4>Attend an Event</h4>
-              <p>Our lecture series, seminars, and public discussions bring distinguished thinkers into direct conversation. Many events are free and open to all. Some are recorded and available online.</p>
-              <a href="/Nahj-Institute/events">View Upcoming Events →</a>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step-num">Step 03</div>
-              <h4>Enter a Competition</h4>
-              <p>Our annual writing competitions are open to students and emerging writers. Generous prizes, rigorous feedback, and real publication opportunities for the strongest entries.</p>
-              <a href="/competitions">Competition Details →</a>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step-num">Step 04</div>
-              <h4>Join a Programme</h4>
-              <p>From writing workshops and research skills bootcamps to one-on-one mentorship and career counselling — our student programmes are designed to accelerate serious intellectual formation.</p>
-              <a href="/programmes">Student Programmes →</a>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step-num">Step 05</div>
-              <h4>Contribute Your Writing</h4>
-              <p>We accept submissions from researchers, academics, and informed practitioners. Our editorial standards are high — but we actively look for new voices who have something genuine to say.</p>
-              <a href="/submit">Submission Guidelines →</a>
-            </div>
-
-            <div class="guide-step">
-              <div class="guide-step-num">Step 06</div>
-              <h4>Support the Institute</h4>
-              <p>Nahj operates independently, without state or corporate patronage. If our work matters to you, consider supporting it — financially, or by sharing what we produce with those who need it.</p>
-              <a href="/support">How to Support Us →</a>
-            </div>
+          <div class="guide-step">
+            <span class="step-num">Step 02</span>
+            <h4>Attend an Event</h4>
+            <p>Our lecture series and seminars bring distinguished thinkers into direct conversation. Many events are free and open to all, with recordings available online.</p>
+            <a href={`${base}/events`}>View Upcoming Events →</a>
+          </div>
+          <div class="guide-step">
+            <span class="step-num">Step 03</span>
+            <h4>Enter a Competition</h4>
+            <p>Our annual writing competitions are open to students and emerging writers. Generous prizes, rigorous feedback, and real publication opportunities.</p>
+            <a href={`${base}/community#competitions`}>Competition Details →</a>
+          </div>
+          <div class="guide-step">
+            <span class="step-num">Step 04</span>
+            <h4>Join a Programme</h4>
+            <p>From writing workshops and research bootcamps to one-on-one mentorship and career counselling, our student programmes accelerate serious intellectual formation.</p>
+            <a href={`${base}/community#student`}>Student Programmes →</a>
+          </div>
+          <div class="guide-step">
+            <span class="step-num">Step 05</span>
+            <h4>Contribute Your Writing</h4>
+            <p>We accept submissions from researchers, academics, and informed practitioners. Our editorial standards are high but we actively look for new voices.</p>
+            <a href={`${base}/research/submit`}>Submission Guidelines →</a>
+          </div>
+          <div class="guide-step">
+            <span class="step-num">Step 06</span>
+            <h4>Support the Institute</h4>
+            <p>Nahj operates independently, without state or corporate patronage. If our work matters to you, consider supporting it financially or by sharing what we produce.</p>
+            <a href={`${base}/contact`}>How to Support Us →</a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ══════════════════════════════════════════ CLOSING CTA -->
-      <section class="section-cta">
-        <div class="container">
-          <span class="section-label">Get in Touch</span>
-          <div class="divider-gold center"></div>
+    <!-- CTA -->
+    <section class="section-cta">
+      <div class="container">
+        <div class="inst-strip">
+          <div class="inst-item">
+            <strong>Independent</strong>
+            <p>Not affiliated with any state, political party, or commercial interest.</p>
+          </div>
+          <div class="inst-item">
+            <strong>International</strong>
+            <p>Contributors and researchers based across the Muslim world, South Asia, and the West.</p>
+          </div>
+          <div class="inst-item">
+            <strong>Open Access</strong>
+            <p>Research and essays published freely for academic and general readership.</p>
+          </div>
+          <div class="inst-item">
+            <strong>Interdisciplinary</strong>
+            <p>Drawing on theology, political theory, philosophy, history, and the social sciences.</p>
+          </div>
+        </div>
+
+        <div class="cta-center">
+          <span class="slabel">Get in Touch</span>
+          <div class="gold-rule center"></div>
           <h2>We Would Like to Hear from You</h2>
-          <p>Whether you have a research proposal, a question about our programmes, a partnership idea, or simply something worth discussing — our door is open.</p>
-          <div class="cta-buttons">
-            <a href="/Nahj-Institute/contact" class="btn-primary">Contact the Institute</a>
-            <a href="/Nahj-Institute/research" class="btn-outline-dark">Read Our Research</a>
+          <p>Whether you have a research proposal, a question about our programmes, a partnership idea, or simply something worth discussing, our door is open.</p>
+          <div>
+            <a href={`${base}/contact`} class="btn-primary">Contact the Institute</a>
+            <a href={`${base}/research`} class="btn-outline">Read Our Research</a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </main>
+  </main>
 
-    <Footer />
-  </body>
+  <Footer />
+</body>
 </html>
