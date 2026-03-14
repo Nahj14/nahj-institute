@@ -34,8 +34,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       background: var(--cream);
       color: var(--charcoal);
       font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 24px;
-      line-height: 1.88;
+      font-size: 18px;
+      line-height: 1.78;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -97,9 +97,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .breadcrumb a:hover { color: var(--gold); }
     .breadcrumb span { color: rgba(255,255,255,0.18); }
 
-    .page-hero h1 {
+    .page-hero h1 em { font-style: italic; color: #E2BC75; }
+      .page-hero h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3.5vw, 44px);   /* explicit px, no rem ambiguity */
+      font-size: clamp(26px, 2.8vw, 36px);   /* explicit px, no rem ambiguity */
       font-weight: 600;
       line-height: 1.15;
       color: var(--white);
@@ -140,9 +141,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     /* Carnegie-style: mission body is a large, clear, readable block */
     .mission-body p {
-      font-size: 24px;
+      font-size: 18px;
       color: var(--charcoal);
-      line-height: 1.92;
+      line-height: 1.78;
       margin-bottom: 1.5rem;
       font-weight: 300;
     }
@@ -209,7 +210,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .story-cols p {
       font-size: 20px;
       color: rgba(255,255,255,0.72);
-      line-height: 1.92;
+      line-height: 1.78;
       font-weight: 300;
       margin-bottom: 1.4rem;
     }
@@ -221,7 +222,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .section-values h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(22px, 2.2vw, 28px);
       font-weight: 600;
       color: var(--navy);
       text-align: center;
@@ -284,9 +285,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       top: 4.5rem;
     }
     .writing-body p {
-      font-size: 24px;
+      font-size: 18px;
       color: var(--charcoal);
-      line-height: 1.92;
+      line-height: 1.78;
       font-weight: 300;
       margin-bottom: 1.5rem;
     }
@@ -297,7 +298,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .focus-header { max-width: 1120px; margin: 0 auto 3rem; }
     .focus-header h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(22px, 2.2vw, 28px);
       font-weight: 600;
       color: var(--navy);
       margin-top: 0.5rem;
@@ -346,7 +347,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .team-text h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(22px, 2.2vw, 28px);
       font-weight: 600;
       color: var(--navy);
       margin-bottom: 0.75rem;
@@ -428,7 +429,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .inst-item p { font-size: 19px; color: var(--charcoal); line-height: 1.65; font-weight: 300; }
 
     .cta-center { text-align: center; max-width: 640px; margin: 0 auto; }
-    .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 3vw, 36px); font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
+    .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
     .cta-center p { font-size: 20px; color: var(--muted); margin-bottom: 2.25rem; font-weight: 300; line-height: 1.80; }
 
     .btn-primary {
@@ -492,9 +493,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <span>/</span>
         <span style="color:rgba(255,255,255,0.65)">About the Institute</span>
       </nav>
-      <h1>An Independent Research Centre for the Study of Religion, Politics, and Society</h1>
+      <h1>An Independent Research Centre for <em>Islamic</em> Thought, Politics, and Society</h1>
       <p class="hero-sub">
-        Dedicated to serious scholarship on the Muslim world and the societies of the Global South.
+        Dedicated to rigorous scholarship on the Muslim world and the societies of the Global South, engaging classical intellectual traditions and the questions of contemporary global life.
       </p>
     </div>
   </section>
@@ -637,11 +638,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="focus-item">
           <h4>Politics and Governance</h4>
-          <p>Islamic political theory, the crisis of legitimacy in Muslim-majority states, democracy, constitutionalism, and the contested relationship between religion and public life.</p>
+          <p>Islamic political theory, the question of legitimacy in Muslim-majority states, democracy, constitutionalism, and the relationship between religion and public life.</p>
         </div>
         <div class="focus-item">
           <h4>Geopolitics and International Affairs</h4>
-          <p>The Muslim world in the global order: from the Gulf to South Asia, from the Sahel to Southeast Asia. Strategic analysis grounded in historical depth and ethical seriousness.</p>
+          <p>The Muslim world in the global order, from the Gulf to South Asia, from the Sahel to Southeast Asia. Strategic analysis grounded in historical depth and ethical seriousness.</p>
         </div>
         <div class="focus-item">
           <h4>Religious Harmony and Interfaith Ethics</h4>
