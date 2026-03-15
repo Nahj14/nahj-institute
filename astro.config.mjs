@@ -4,7 +4,6 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://Nahj14.github.io',
-  base: '/Nahj-Institute',
+  site: 'https://nahjinstitute.com',
   integrations: [mdx(), sitemap()],
 });
