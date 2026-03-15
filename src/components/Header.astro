@@ -6,7 +6,7 @@ const navLinks = [
   { label: 'Home',         href: `${base}/` },
   { label: 'About',        href: `${base}/about` },
   { label: 'Research',     href: `${base}/research` },
-  { label: 'Nahj Journal', href: `${base}/journal` },
+  { label: 'Nahj Journal', href: 'https://journal.nahjinstitute.com', external: true },
   { label: 'Events',       href: `${base}/events` },
   { label: 'Community',    href: `${base}/community` },
   { label: 'Contact',      href: `${base}/contact` },
@@ -26,7 +26,9 @@ const navLinks = [
       {navLinks.map(link => (
         <a
           href={link.href}
-          class={`nav-link ${currentPath === link.href || (link.href !== `${base}/` && currentPath.startsWith(link.href)) ? 'active' : ''}`}
+          class={`nav-link ${!link.external && (currentPath === link.href || (link.href !== `${base}/` && currentPath.startsWith(link.href))) ? 'active' : ''}`}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener' : undefined}
         >
           {link.label}
         </a>
