@@ -251,16 +251,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href={`${base}/research/submit`}>Read Submission Guidelines →</a>
     </div>
 
-    <!-- THE FORM — Netlify-ready -->
+    <!-- THE FORM — Formspree -->
     <form
       class="sub-form"
-      name="manuscript-submission"
+      action="https://formspree.io/f/YOUR_SUBMISSION_FORM_ID"
       method="POST"
-      data-netlify="true"
       enctype="multipart/form-data"
-      netlify-honeypot="bot-field"
     >
-      <input type="hidden" name="form-name" value="manuscript-submission" />
+      <!-- Honeypot anti-spam field -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
       <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
 
       <!-- ABOUT YOU -->

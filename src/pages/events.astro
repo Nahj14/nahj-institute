@@ -638,7 +638,7 @@ import Footer from '../components/Footer.astro';
     <section class="page-hero">
       <div class="page-hero-inner">
         <nav class="breadcrumb">
-          <a href="/Nahj-Institute/">Home</a>
+          <a href="/">Home</a>
           <span>/</span>
           <span style="color: rgba(255,255,255,0.65);">Events & Lectures</span>
         </nav>
@@ -763,10 +763,11 @@ import Footer from '../components/Footer.astro';
           <p>
             Enter your email address and we will notify you when new events are announced. We send one short message per event, nothing more.
           </p>
-          <div class="notify-form">
-            <input type="email" placeholder="your@email.com" />
+          <form class="notify-form" action="https://formspree.io/f/YOUR_EVENTS_FORM_ID" method="POST">
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <input type="email" name="email" placeholder="your@email.com" required />
             <button type="submit">Notify Me</button>
-          </div>
+          </form>
           <p class="notify-note">No newsletters. No marketing. Events only.</p>
         </div>
       </section>
@@ -781,7 +782,7 @@ import Footer from '../components/Footer.astro';
             <p>
               We welcome suggestions from researchers, students, and institutions. If you would like to propose a speaker, co-host a seminar, or discuss a partnership around a particular topic, please get in touch with our programmes team.
             </p>
-            <a href="/Nahj-Institute/contact" class="btn-outline-dark">Contact the Programmes Team</a>
+            <a href="/contact" class="btn-outline-dark">Contact the Programmes Team</a>
           </div>
 
           <div class="propose-details">

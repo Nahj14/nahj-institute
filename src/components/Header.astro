@@ -28,7 +28,7 @@ const navLinks = [
           href={link.href}
           class={`nav-link ${!link.external && (currentPath === link.href || (link.href !== `${base}/` && currentPath.startsWith(link.href))) ? 'active' : ''}`}
           target={link.external ? '_blank' : undefined}
-          rel={link.external ? 'noopener' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
         >
           {link.label}
         </a>
@@ -43,7 +43,14 @@ const navLinks = [
 
   <nav class="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
     {navLinks.map(link => (
-      <a href={link.href} class="mobile-nav-link">{link.label}</a>
+      <a
+        href={link.href}
+        class="mobile-nav-link"
+        target={link.external ? '_blank' : undefined}
+        rel={link.external ? 'noopener noreferrer' : undefined}
+      >
+        {link.label}
+      </a>
     ))}
   </nav>
 </header>
