@@ -1,6 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 
-// Website essays, commentary and policy briefs
 const articles = defineCollection({
   type: 'content',
   schema: z.object({
@@ -24,31 +23,4 @@ const articles = defineCollection({
   }),
 });
 
-// Nahj Journal peer-reviewed articles
-const journal = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    author: z.string(),
-    authorAffiliation: z.string().optional(),
-    authorBio: z.string().optional(),
-    volume: z.number(),
-    issue: z.number(),
-    year: z.number(),
-    season: z.enum(['Spring', 'Autumn']),
-    category: z.enum([
-      'Cultural & Historical Studies',
-      'Neuro-Humanities & Cognitive Theory',
-      'Critical Modernity & Social Dynamics',
-      'Review Essay',
-      'Research Article',
-    ]),
-    abstract: z.string(),
-    keywords: z.array(z.string()).optional(),
-    doi: z.string().optional(),
-    pages: z.string().optional(),
-    draft: z.boolean().default(false),
-  }),
-});
-
-export const collections = { articles, journal };
+export const collections = { articles };
