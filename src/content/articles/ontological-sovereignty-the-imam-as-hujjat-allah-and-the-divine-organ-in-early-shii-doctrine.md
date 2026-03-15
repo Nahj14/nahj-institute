@@ -1,5 +1,4 @@
 ---
-layout: "../../layouts/ArticleLayout.astro"
 title: "Ontological Sovereignty: The Imam as Hujjat Allah and the Divine Organ in Early Shi'i Doctrine"
 author: "NAHJ Editorial Team"
 date: 2025-03-15
