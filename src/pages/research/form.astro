@@ -9,8 +9,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Submission Form — Nahj Institute</title>
-  <meta name="description" content="Submit your essay, commentary, book review, policy brief, or poetry to Nahj Institute using our online submission form." />
+  <title>Submit Writing — Nahj Institute</title>
+  <meta name="description" content="Submit your essay, commentary, book review, policy brief, or poetry to Nahj Institute. Short pieces can be submitted directly; longer manuscripts via email." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -151,13 +151,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       line-height: 1.72;
     }
 
-    .form-file {
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      font-size: 17px;
-      color: var(--muted);
-    }
-
     /* Section heading inside form */
     .form-section-head {
       font-family: 'Cormorant Garamond', serif;
@@ -214,6 +207,44 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .guidelines-bar a:hover { color: var(--gold); }
 
+    /* Manuscript email notice */
+    .manuscript-notice {
+      display: flex;
+      gap: 1.1rem;
+      align-items: flex-start;
+      background: rgba(200,162,82,0.08);
+      border: 1px solid rgba(200,162,82,0.25);
+      border-left: 3px solid var(--gold);
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .manuscript-notice-icon {
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .manuscript-notice-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .manuscript-notice-body {
+      font-size: 17px;
+      color: var(--charcoal);
+      line-height: 1.72;
+      margin: 0;
+    }
+    .manuscript-notice-body a {
+      color: var(--teal);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .manuscript-notice-body a:hover { color: var(--gold); }
+
     @media (max-width: 660px) {
       .form-row { grid-template-columns: 1fr; }
       .form-hero { padding: 3.5rem 1.25rem 3rem; }
@@ -235,9 +266,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <span>Submission Form</span>
       </nav>
       <span class="form-hero-tag">Submission Form</span>
-      <h1>Submit Your Manuscript</h1>
+      <h1>Submit Your Writing</h1>
       <p class="form-hero-sub">
-        Complete the form below. Before submitting, please read the
+        Short pieces (up to 1,000 words) can be submitted directly below. For longer manuscripts, fill in your details here and email the .docx file to <a href="mailto:submissions@nahjinstitute.com">submissions@nahjinstitute.com</a>. Please read the
         <a href={`${base}/research/submit`}>full submission guidelines →</a>
       </p>
     </div>
@@ -251,16 +282,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href={`${base}/research/submit`}>Read Submission Guidelines →</a>
     </div>
 
-    <!-- THE FORM — Formspree -->
+    <!-- THE FORM — Formspree (text fields only; manuscripts sent via email) -->
     <form
       class="sub-form"
-      action="https://formspree.io/f/YOUR_SUBMISSION_FORM_ID"
+      action="https://https://formspree.io/f/xnjgbory"
       method="POST"
-      enctype="multipart/form-data"
     >
       <!-- Honeypot anti-spam field -->
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-      <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
 
       <!-- ABOUT YOU -->
       <h3 class="form-section-head">About You</h3>
@@ -344,23 +373,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <textarea class="form-input form-textarea" id="abstract" name="abstract" required rows="6" placeholder="Summarise your argument and explain its significance and timeliness. This is what the editorial team reads first."></textarea>
       </div>
 
-      <!-- MANUSCRIPT -->
-      <h3 class="form-section-head">Manuscript File</h3>
+      <!-- YOUR TEXT -->
+      <h3 class="form-section-head">Your Text</h3>
 
       <div class="form-group">
-        <label class="form-label" for="manuscript">
-          Upload Manuscript <span class="req">*</span>
-          <span class="form-hint"> — .docx only, maximum 10MB</span>
+        <label class="form-label" for="submission-text">
+          Submission Text
+          <span class="form-hint"> — for pieces up to 1,000 words. Paste or type your text below.</span>
         </label>
-        <input class="form-input form-file" type="file" id="manuscript" name="manuscript" accept=".docx,.doc" required />
+        <textarea class="form-input form-textarea" id="submission-text" name="submission_text" rows="14" placeholder="Paste or type your submission here (up to 1,000 words). For longer pieces, please email your manuscript as a .docx file to submissions@nahjinstitute.com"></textarea>
       </div>
 
-      <div class="form-group">
-        <label class="form-label" for="translation">
-          Translation / Summary File
-          <span class="form-hint"> — required if submitting in a language other than English</span>
-        </label>
-        <input class="form-input form-file" type="file" id="translation" name="translation" accept=".docx,.doc,.pdf" />
+      <div class="manuscript-notice">
+        <div class="manuscript-notice-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <p class="manuscript-notice-title">Submitting a longer piece?</p>
+          <p class="manuscript-notice-body">
+            For submissions over 1,000 words, please email your manuscript (.docx) and any translation files to
+            <a href="mailto:submissions@nahjinstitute.com">submissions@nahjinstitute.com</a>
+            with your name and working title in the subject line. You may still fill in this form to register your submission details with our editorial team.
+          </p>
+        </div>
       </div>
 
       <!-- DISCLOSURES -->
@@ -386,9 +421,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <!-- SUBMIT -->
       <div class="form-submit-row">
-        <button type="submit" class="form-submit-btn">Submit Manuscript →</button>
+        <button type="submit" class="form-submit-btn">Submit →</button>
         <p class="form-or-email">
-          Prefer email?
+          Longer manuscripts via email:
           <a href="mailto:submissions@nahjinstitute.com">submissions@nahjinstitute.com</a>
         </p>
       </div>
