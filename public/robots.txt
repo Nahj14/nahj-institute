@@ -1,0 +1,6 @@
+# Nahj Institute — robots.txt
+User-agent: *
+Allow: /
+Disallow: /research/form
+
+Sitemap: https://nahjinstitute.com/sitemap-index.xml
