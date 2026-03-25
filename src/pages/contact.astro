@@ -1,731 +1,447 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact — Nahj Institute</title>
-    <meta name="description" content="Contact Nahj Institute for research enquiries, event proposals, submission of articles, partnership requests, student programme applications, and general correspondence." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
-    <style is:global>
-      :root {
-        --navy:       #0C1B2E;
-        --teal:       #1B5E6F;
-        --gold:       #C8A252;
-        --gold-light: #E2BC75;
-        --cream:      #F7F2E8;
-        --cream-dark: #EDE6D5;
-        --charcoal:   #2B2B2B;
-        --muted:      #6B6B6B;
-        --white:      #FFFFFF;
-      }
-
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-
-      body {
-        background-color: var(--cream);
-        color: var(--charcoal);
-        font-family: 'Crimson Pro', Georgia, serif;
-        font-size: 18px;
-        line-height: 1.78;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-
-      .section-label {
-        font-family: 'Crimson Pro', serif;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-      }
-
-      .divider-gold { width: 3.5rem; height: 2px; background: var(--gold); margin: 0.9rem 0 1.5rem; }
-      .divider-gold.center { margin: 0.9rem auto 1.5rem; }
-
-      .btn-primary {
-        display: inline-block;
-        background: var(--navy);
-        color: var(--gold);
-        font-family: 'Crimson Pro', serif;
-        font-size: 15px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.9rem 2.25rem;
-        border: none;
-        cursor: pointer;
-        text-decoration: none;
-        transition: background 0.2s, transform 0.15s;
-      }
-
-      .btn-primary:hover { background: var(--teal); transform: translateY(-1px); }
-
-      /* ─── PAGE HERO ───────────────────────────────────────── */
-      .page-hero {
-        background: var(--navy);
-        padding: 5.5rem 2rem 4.5rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .page-hero::before {
-        content: 'نهج';
-        font-family: 'Amiri', serif;
-        font-size: clamp(192px, 24vw, 352px);
-        font-weight: 700;
-        color: rgba(255,255,255,0.032);
-        position: absolute;
-        right: -1.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        line-height: 1;
-        pointer-events: none;
-        user-select: none;
-      }
-
-      .page-hero-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .breadcrumb {
-        font-size: 13px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.35);
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-      }
-
-      .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
-      .breadcrumb a:hover { color: var(--gold); }
-      .breadcrumb span { color: rgba(255,255,255,0.15); }
-
-      .page-hero h1 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(26px, 2.8vw, 36px);
-        font-weight: 600;
-        line-height: 1.07;
-        color: var(--white);
-        max-width: 780px;
-        margin-bottom: 1.5rem;
-      }
-
-      .page-hero h1 em { font-style: italic; color: var(--gold-light); }
-
-      .page-hero-sub {
-        font-size: 21px;
-        color: rgba(255,255,255,0.62);
-        max-width: 560px;
-        font-weight: 300;
-        line-height: 1.78;
-      }
-
-      /* ─── ENQUIRY TYPES ───────────────────────────────────── */
-      .section-types {
-        background: var(--cream-dark);
-        padding: 0;
-        border-bottom: 2px solid var(--cream-dark);
-      }
-
-      .types-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        max-width: 1120px;
-        margin: 0 auto;
-      }
-
-      .type-card {
-        padding: 2.25rem 1.75rem;
-        border-right: 1px solid var(--cream-dark);
-        cursor: pointer;
-        transition: background 0.2s;
-        text-decoration: none;
-        color: inherit;
-        display: block;
-      }
-
-      .type-card:last-child { border-right: none; }
-      .type-card:hover { background: var(--cream); }
-      .type-card.active { background: var(--navy); }
-      .type-card.active .type-title { color: var(--white); }
-      .type-card.active .type-label { color: var(--gold); }
-      .type-card.active .type-desc { color: rgba(255,255,255,0.5); }
-
-      .type-label {
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-
-      .type-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 20px;
-        font-weight: 600;
-        color: var(--navy);
-        margin-bottom: 0.4rem;
-      }
-
-      .type-desc {
-        font-size: 16px;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      /* ─── MAIN CONTACT LAYOUT ─────────────────────────────── */
-      .section-contact {
-        padding: 5.5rem 2rem;
-        background: var(--cream);
-      }
-
-      .contact-layout {
-        max-width: 1120px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 6rem;
-        align-items: start;
-      }
-
-      .contact-info h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 28px;
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-        margin-bottom: 1.5rem;
-        line-height: 1.1;
-      }
-
-      .contact-info p {
-        font-size: 18px;
-        color: var(--muted);
-        line-height: 1.78;
-        font-weight: 300;
-        margin-bottom: 2rem;
-      }
-
-      .contact-detail {
-        margin-bottom: 1.75rem;
-      }
-
-      .contact-detail-label {
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--gold);
-        display: block;
-        margin-bottom: 0.35rem;
-      }
-
-      .contact-detail-val {
-        font-size: 18px;
-        color: var(--charcoal);
-        line-height: 1.6;
-      }
-
-      .contact-detail-val a {
-        color: var(--teal);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
-      .contact-detail-val a:hover { color: var(--gold); }
-
-      .contact-social-icons {
-        display: flex;
-        gap: 0.6rem;
-        margin-top: 0.4rem;
-      }
-
-      .contact-social-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 38px;
-        height: 38px;
-        border: 1px solid var(--cream-dark);
-        color: var(--muted);
-        text-decoration: none;
-        transition: border-color 0.2s, color 0.2s, background 0.2s;
-      }
-
-      .contact-social-link:hover {
-        border-color: var(--gold);
-        color: var(--gold);
-        background: rgba(200,162,82,0.06);
-      }
-
-      .response-note {
-        margin-top: 2.5rem;
-        padding: 1rem 1.25rem;
-        border-left: 3px solid var(--teal);
-        background: rgba(27,94,111,0.05);
-        font-size: 15px;
-        color: var(--muted);
-        line-height: 1.80;
-      }
-
-      /* ─── CONTACT FORM ────────────────────────────────────── */
-      .form-group { margin-bottom: 1.75rem; }
-
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.25rem;
-        margin-bottom: 1.75rem;
-      }
-
-      label {
-        display: block;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--navy);
-        margin-bottom: 0.5rem;
-      }
-
-      label span { color: var(--gold); margin-left: 0.2rem; }
-
-      input[type="text"],
-      input[type="email"],
-      select,
-      textarea {
-        width: 100%;
-        padding: 0.88rem 1.1rem;
-        border: 1px solid var(--cream-dark);
-        background: var(--white);
-        font-family: 'Crimson Pro', serif;
-        font-size: 18px;
-        color: var(--charcoal);
-        outline: none;
-        transition: border-color 0.2s;
-        appearance: none;
-      }
-
-      input:focus, select:focus, textarea:focus { border-color: var(--teal); }
-      input::placeholder, textarea::placeholder { color: #bbb; }
-
-      select {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6B6B'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        padding-right: 2.5rem;
-        cursor: pointer;
-      }
-
-      textarea { min-height: 160px; resize: vertical; line-height: 1.80; }
-
-      .form-privacy {
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.6;
-        margin-top: 0.5rem;
-      }
-
-      .form-submit {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        margin-top: 2rem;
-      }
-
-      /* ─── CONTRIBUTE SECTION ──────────────────────────────── */
-      .section-contribute {
-        background: var(--navy);
-        padding: 5.5rem 2rem;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .section-contribute::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse 50% 70% at 80% 40%, rgba(27,94,111,0.3) 0%, transparent 65%);
-        pointer-events: none;
-      }
-
-      .contribute-inner {
-        max-width: 1120px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      .contribute-header { margin-bottom: 3.5rem; }
-
-      .contribute-header h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(22px, 2.2vw, 28px);
-        font-weight: 600;
-        color: var(--white);
-        margin-top: 0.5rem;
-        max-width: 600px;
-        line-height: 1.1;
-      }
-
-      .contribute-header p {
-        font-size: 19px;
-        color: rgba(255,255,255,0.55);
-        font-weight: 300;
-        line-height: 1.78;
-        max-width: 580px;
-        margin-top: 0.75rem;
-      }
-
-      .contribute-tracks {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-      }
-
-      .ctrack {
-        padding: 2.25rem 2rem;
-        border: 1px solid rgba(255,255,255,0.07);
-        transition: background 0.2s;
-      }
-
-      .ctrack:hover { background: rgba(255,255,255,0.03); }
-
-      .ctrack-num {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 28px;
-        font-weight: 300;
-        -webkit-text-stroke: 1px var(--gold);
-        color: transparent;
-        line-height: 1;
-        margin-bottom: 1rem;
-      }
-
-      .ctrack h3 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 21px;
-        font-weight: 600;
-        color: var(--white);
-        margin-bottom: 0.6rem;
-      }
-
-      .ctrack p {
-        font-size: 18px;
-        color: rgba(255,255,255,0.5);
-        line-height: 1.78;
-        margin-bottom: 1rem;
-      }
-
-      .ctrack ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .ctrack ul li {
-        font-size: 14px;
-        color: rgba(255,255,255,0.38);
-        padding: 0.3rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
-        display: flex;
-        align-items: baseline;
-        gap: 0.5rem;
-      }
-
-      .ctrack ul li::before {
-        content: '◆';
-        font-size: 6px;
-        color: var(--gold);
-        flex-shrink: 0;
-      }
-
-      .ctrack ul li:last-child { border-bottom: none; }
-
-      /* ─── GUIDELINES ACCORDION ────────────────────────────── */
-      .section-guidelines {
-        padding: 5rem 2rem;
-        background: var(--cream-dark);
-      }
-
-      .guidelines-inner {
-        max-width: 760px;
-        margin: 0 auto;
-      }
-
-      .guidelines-inner h2 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(22px, 2.2vw, 28px);
-        font-weight: 600;
-        color: var(--navy);
-        margin-top: 0.5rem;
-        margin-bottom: 2.5rem;
-      }
-
-      details { border-bottom: 1px solid var(--cream-dark); }
-      details:first-of-type { border-top: 1px solid var(--cream-dark); }
-
-      summary {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 20px;
-        font-weight: 600;
-        color: var(--navy);
-        padding: 1.25rem 0;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        list-style: none;
-        transition: color 0.2s;
-      }
-
-      summary:hover { color: var(--teal); }
-
-      summary::after {
-        content: '+';
-        font-family: 'Crimson Pro', serif;
-        font-size: 24px;
-        font-weight: 300;
-        color: var(--gold);
-        flex-shrink: 0;
-        transition: transform 0.2s;
-      }
-
-      details[open] summary::after { transform: rotate(45deg); }
-
-      details p, details ul {
-        font-size: 19px;
-        color: var(--muted);
-        line-height: 1.78;
-        padding-bottom: 1.5rem;
-      }
-
-      details ul {
-        list-style: none;
-        padding-left: 0;
-        padding-bottom: 1.5rem;
-      }
-
-      details ul li {
-        padding: 0.3rem 0 0.3rem 1.2rem;
-        position: relative;
-      }
-
-      details ul li::before {
-        content: '◆';
-        font-size: 6px;
-        color: var(--gold);
-        position: absolute;
-        left: 0;
-        top: 0.62rem;
-      }
-
-      /* ─── RESPONSIVE ──────────────────────────────────────── */
-      @media (max-width: 900px) {
-        .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-        .contribute-tracks { grid-template-columns: 1fr; }
-        .ctrack { border-right: none; }
-        .types-grid { grid-template-columns: 1fr 1fr; }
-      }
-
-      @media (max-width: 768px) {
-        .form-row { grid-template-columns: 1fr; }
-        .page-hero { padding: 4rem 1.5rem 3rem; }
-        .page-hero::before { font-size: 128px; }
-        .types-grid { grid-template-columns: 1fr; }
-        .type-card { border-right: none; border-bottom: 1px solid var(--cream-dark); }
-      }
-    </style>
-  </head>
-
-  <body>
-    <Header />
-
-    <!-- ══════════════════════════════════════════════ PAGE HERO -->
-    <section class="page-hero">
-      <div class="page-hero-inner">
-        <nav class="breadcrumb">
-          <a href="/">Home</a>
-          <span>/</span>
-          <span style="color: rgba(255,255,255,0.65);">Contact</span>
-        </nav>
-        <h1>Get in Touch<br />with <em>Nahj Institute</em></h1>
-        <p class="page-hero-sub">
-          For research enquiries, article submissions, event proposals, student programme applications, partnership requests, or general correspondence. We respond to all messages within five working days.
-        </p>
+<BaseLayout
+  title="Contact | Nahj Institute"
+  description="Contact Nahj Institute for research enquiries, event proposals, submission of articles, partnership requests, student programme applications, and general correspondence."
+>
+
+  <!-- ══════════════════════════════════════════════ PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <span style="color: rgba(255,255,255,0.65);">Contact</span>
+      </nav>
+      <h1>Get in Touch<br />with <em>Nahj Institute</em></h1>
+      <p class="page-hero-sub">
+        For research enquiries, article submissions, event proposals, student programme applications, partnership requests, or general correspondence. We respond to all messages within five working days.
+      </p>
+    </div>
+  </section>
+
+  <main id="main-content">
+
+    <!-- ════════════════════════════════════ ENQUIRY TYPES -->
+    <section class="section-types">
+      <div class="types-grid">
+        <a href="#contact-form" class="type-card active">
+          <span class="type-label">01</span>
+          <div class="type-title">General Enquiry</div>
+          <p class="type-desc">Questions, feedback, or anything else.</p>
+        </a>
+        <a href="#contact-form" class="type-card">
+          <span class="type-label">02</span>
+          <div class="type-title">Submit Writing</div>
+          <p class="type-desc">Essays, journal articles, or policy briefs.</p>
+        </a>
+        <a href="#contact-form" class="type-card">
+          <span class="type-label">03</span>
+          <div class="type-title">Events & Speaking</div>
+          <p class="type-desc">Propose a speaker, event, or partnership.</p>
+        </a>
+        <a href="#contact-form" class="type-card">
+          <span class="type-label">04</span>
+          <div class="type-title">Student Programmes</div>
+          <p class="type-desc">Apply for mentorship, workshops, or competitions.</p>
+        </a>
+        <a href="#contact-form" class="type-card">
+          <span class="type-label">05</span>
+          <div class="type-title">Editorial Board</div>
+          <p class="type-desc">Enquiries about journal editorial roles.</p>
+        </a>
       </div>
     </section>
 
-    <main>
+    <!-- ════════════════════════════════════ CONTACT FORM -->
+    <section class="section-contact" id="contact-form">
+      <div class="contact-layout">
+        <div class="contact-info">
+          <span class="section-label">Write to Us</span>
+          <div class="divider-gold"></div>
+          <h2>Contact Information</h2>
+          <p>
+            Use the form for all enquiries. We read every message and respond personally. If your enquiry is time-sensitive, please note this in the message field.
+          </p>
 
-      <!-- ════════════════════════════════════ ENQUIRY TYPES -->
-      <section class="section-types">
-        <div class="types-grid">
-          <a href="#contact-form" class="type-card active">
-            <span class="type-label">01</span>
-            <div class="type-title">General Enquiry</div>
-            <p class="type-desc">Questions, feedback, or anything else.</p>
-          </a>
-          <a href="#contact-form" class="type-card">
-            <span class="type-label">02</span>
-            <div class="type-title">Submit Writing</div>
-            <p class="type-desc">Essays, journal articles, or policy briefs.</p>
-          </a>
-          <a href="#contact-form" class="type-card">
-            <span class="type-label">03</span>
-            <div class="type-title">Events & Speaking</div>
-            <p class="type-desc">Propose a speaker, event, or partnership.</p>
-          </a>
-          <a href="#contact-form" class="type-card">
-            <span class="type-label">04</span>
-            <div class="type-title">Student Programmes</div>
-            <p class="type-desc">Apply for mentorship, workshops, or competitions.</p>
-          </a>
-          <a href="#contact-form" class="type-card">
-            <span class="type-label">05</span>
-            <div class="type-title">Editorial Board</div>
-            <p class="type-desc">Enquiries about journal editorial roles.</p>
-          </a>
-        </div>
-      </section>
-
-      <!-- ════════════════════════════════════ CONTACT FORM -->
-      <section class="section-contact" id="contact-form">
-        <div class="contact-layout">
-          <div class="contact-info">
-            <span class="section-label">Write to Us</span>
-            <div class="divider-gold"></div>
-            <h2>Contact Information</h2>
-            <p>
-              Use the form for all enquiries. We read every message and respond personally. If your enquiry is time-sensitive, please note this in the message field.
-            </p>
-
-            <div class="contact-detail">
-              <span class="contact-detail-label">General Enquiries</span>
-              <div class="contact-detail-val">
-                <a href="mailto:info@nahjinstitute.com">info@nahjinstitute.com</a>
-              </div>
-            </div>
-
-            <div class="contact-detail">
-              <span class="contact-detail-label">Editorial Team</span>
-              <div class="contact-detail-val">
-                <a href="mailto:journal@nahjinstitute.com">journal@nahjinstitute.com</a>
-              </div>
-            </div>
-
-            <div class="contact-detail">
-              <span class="contact-detail-label">Student Programmes</span>
-              <div class="contact-detail-val">
-                <a href="mailto:programmes@nahjinstitute.com">programmes@nahjinstitute.com</a>
-              </div>
-            </div>
-
-            <div class="contact-detail">
-              <span class="contact-detail-label">Follow Our Work</span>
-              <div class="contact-social-icons">
-                <a href="https://twitter.com/NahjInstitute" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="X / Twitter">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.737l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="https://instagram.com/NahjInstitute" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="Instagram">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </a>
-                <a href="https://facebook.com/NahjInstitute" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="Facebook">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </a>
-                <a href="https://nahj.substack.com" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="Substack">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l9.54-5.538L20.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
-                </a>
-              </div>
-            </div>
-
-            <div class="response-note">
-              We aim to respond to all messages within five working days. For urgent enquiries, please mark your message accordingly.
+          <div class="contact-detail">
+            <span class="contact-detail-label">General Enquiries</span>
+            <div class="contact-detail-val">
+              <a href="mailto:info@nahjinstitute.com">info@nahjinstitute.com</a>
             </div>
           </div>
 
-          <div>
-            <span class="section-label">Send a Message</span>
-            <div class="divider-gold"></div>
+          <div class="contact-detail">
+            <span class="contact-detail-label">Editorial Team</span>
+            <div class="contact-detail-val">
+              <a href="mailto:journal@nahjinstitute.com">journal@nahjinstitute.com</a>
+            </div>
+          </div>
 
-            <form action="https://formspree.io/f/mnjgboyw" method="POST">
-              <!-- Honeypot anti-spam field -->
-              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="fname">First Name <span>*</span></label>
-                  <input type="text" id="fname" name="fname" placeholder="Your first name" required />
-                </div>
-                <div class="form-group">
-                  <label for="lname">Last Name <span>*</span></label>
-                  <input type="text" id="lname" name="lname" placeholder="Your last name" required />
-                </div>
-              </div>
+          <div class="contact-detail">
+            <span class="contact-detail-label">Student Programmes</span>
+            <div class="contact-detail-val">
+              <a href="mailto:programmes@nahjinstitute.com">programmes@nahjinstitute.com</a>
+            </div>
+          </div>
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="email">Email Address <span>*</span></label>
-                  <input type="email" id="email" name="email" placeholder="your@email.com" required />
-                </div>
-                <div class="form-group">
-                  <label for="org">Organisation or Affiliation</label>
-                  <input type="text" id="org" name="org" placeholder="University, institution, or independent" />
-                </div>
-              </div>
+          <div class="contact-detail">
+            <span class="contact-detail-label">Follow Our Work</span>
+            <div class="contact-social-icons">
+              <a href="https://twitter.com/NahjInstitute" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="X / Twitter">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.737l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="https://instagram.com/NahjInstitute" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="https://facebook.com/NahjInstitute" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://nahj.substack.com" target="_blank" rel="noopener noreferrer" class="contact-social-link" aria-label="Substack">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l9.54-5.538L20.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+              </a>
+            </div>
+          </div>
 
-              <div class="form-group">
-                <label for="subject">Nature of Enquiry <span>*</span></label>
-                <select id="subject" name="subject" required>
-                  <option value="" disabled selected>Select the nature of your enquiry</option>
-                  <option value="general">General Enquiry</option>
-                  <option value="essay">Submit a Website Essay</option>
-                  <option value="journal">Submit a Journal Article</option>
-                  <option value="special-issue">Propose a Special Issue</option>
-                  <option value="event">Event or Speaker Proposal</option>
-                  <option value="mentorship">Student Mentorship Application</option>
-                  <option value="workshop">Workshop or Programme Application</option>
-                  <option value="competition">Writing Competition</option>
-                  <option value="editorial">Editorial Board Enquiry</option>
-                  <option value="charity">Community or Charity Partnership</option>
-                  <option value="media">Press or Media Enquiry</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="message">Message <span>*</span></label>
-                <textarea id="message" name="message" placeholder="Please describe your enquiry in as much detail as is useful. For submissions, include a working title and a brief abstract of 100 to 150 words." required></textarea>
-              </div>
-
-              <div class="form-submit">
-                <button type="submit" class="btn-primary">Send Message</button>
-                <p class="form-privacy">Your information is used solely to respond to your enquiry and is not shared with third parties.</p>
-              </div>
-            </form>
+          <div class="response-note">
+            We aim to respond to all messages within five working days. For urgent enquiries, please mark your message accordingly.
           </div>
         </div>
-      </section>
+
+        <div>
+          <span class="section-label">Send a Message</span>
+          <div class="divider-gold"></div>
+
+          <form action="https://formspree.io/f/mnjgboyw" method="POST">
+            <!-- Honeypot anti-spam field -->
+            <input type="text" name="_gotcha" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden" tabindex="-1" autocomplete="off" />
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name <span>*</span></label>
+                <input type="text" id="fname" name="fname" placeholder="Your first name" required />
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name <span>*</span></label>
+                <input type="text" id="lname" name="lname" placeholder="Your last name" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address <span>*</span></label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required />
+              </div>
+              <div class="form-group">
+                <label for="org">Organisation or Affiliation</label>
+                <input type="text" id="org" name="org" placeholder="University, institution, or independent" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Nature of Enquiry <span>*</span></label>
+              <select id="subject" name="subject" required>
+                <option value="" disabled selected>Select the nature of your enquiry</option>
+                <option value="general">General Enquiry</option>
+                <option value="essay">Submit a Website Essay</option>
+                <option value="journal">Submit a Journal Article</option>
+                <option value="special-issue">Propose a Special Issue</option>
+                <option value="event">Event or Speaker Proposal</option>
+                <option value="mentorship">Student Mentorship Application</option>
+                <option value="workshop">Workshop or Programme Application</option>
+                <option value="competition">Writing Competition</option>
+                <option value="editorial">Editorial Board Enquiry</option>
+                <option value="charity">Community or Charity Partnership</option>
+                <option value="media">Press or Media Enquiry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message <span>*</span></label>
+              <textarea id="message" name="message" placeholder="Please describe your enquiry in as much detail as is useful. For submissions, include a working title and a brief abstract of 100 to 150 words." required></textarea>
+            </div>
+
+            <div class="form-submit">
+              <button type="submit" class="btn-primary">Send Message</button>
+              <p class="form-privacy">Your information is used solely to respond to your enquiry and is not shared with third parties.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
 
 
-    </main>
+  </main>
 
-    <Footer />
-  </body>
-</html>
+  <style>
+    /* ─── Page-level .btn-primary override (navy bg, gold text) ── */
+    .btn-primary {
+      background: var(--navy);
+      color: var(--gold);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover { background: var(--teal); }
+
+    /* ─── ENQUIRY TYPES ───────────────────────────────────── */
+    .section-types {
+      background: var(--cream-dark);
+      padding: 0;
+      border-bottom: 2px solid var(--cream-dark);
+    }
+
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .type-card {
+      padding: 2.25rem 1.75rem;
+      border-right: 1px solid var(--cream-dark);
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .type-card:last-child { border-right: none; }
+    .type-card:hover { background: var(--cream); }
+    .type-card.active { background: var(--navy); }
+    .type-card.active .type-title { color: var(--white); }
+    .type-card.active .type-label { color: var(--gold); }
+    .type-card.active .type-desc { color: rgba(255,255,255,0.5); }
+
+    .type-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .type-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+
+    .type-desc {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── MAIN CONTACT LAYOUT ─────────────────────────────── */
+    .section-contact {
+      padding: 5.5rem 2rem;
+      background: var(--cream);
+    }
+
+    .contact-layout {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .contact-info p {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.78;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      margin-bottom: 1.75rem;
+    }
+
+    .contact-detail-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-detail-val {
+      font-size: 18px;
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    .contact-detail-val a {
+      color: var(--teal);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-detail-val a:hover { color: var(--gold); }
+
+    .contact-social-icons {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+    }
+
+    .contact-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--cream-dark);
+      color: var(--muted);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .contact-social-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(200,162,82,0.06);
+    }
+
+    .response-note {
+      margin-top: 2.5rem;
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--teal);
+      background: rgba(27,94,111,0.05);
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.80;
+    }
+
+    /* ─── CONTACT FORM ────────────────────────────────────── */
+    .form-group { margin-bottom: 1.75rem; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    label span { color: var(--gold); margin-left: 0.2rem; }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.88rem 1.1rem;
+      border: 1px solid var(--cream-dark);
+      background: var(--white);
+      font-family: 'Crimson Pro', serif;
+      font-size: 18px;
+      color: var(--charcoal);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--teal); }
+    input::placeholder, textarea::placeholder { color: #bbb; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6B6B'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    textarea { min-height: 160px; resize: vertical; line-height: 1.80; }
+
+    .form-privacy {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .types-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .form-row { grid-template-columns: 1fr; }
+      .types-grid { grid-template-columns: 1fr; }
+      .type-card { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+    }
+  </style>
+
+  <script>
+    const typeCards = document.querySelectorAll('.type-card');
+    const subjectSelect = document.getElementById('subject') as HTMLSelectElement | null;
+
+    const cardToValue: Record<string, string> = {
+      'General Enquiry':    'general',
+      'Submit Writing':     'essay',
+      'Events & Speaking':  'event',
+      'Student Programmes': 'mentorship',
+      'Editorial Board':    'editorial',
+    };
+
+    typeCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        typeCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+
+        if (subjectSelect) {
+          const title = (card.querySelector('.type-title') as HTMLElement)?.textContent?.trim() || '';
+          const val = cardToValue[title];
+          if (val) subjectSelect.value = val;
+        }
+
+        document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</BaseLayout>

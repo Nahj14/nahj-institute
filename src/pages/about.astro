@@ -1,513 +1,37 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About | Nahj Institute</title>
-  <meta name="description" content="Nahj Institute is an independent research centre dedicated to serious scholarship on religion, politics, and society, with a focus on the Muslim world and the Global South." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-
-  <style is:global>
-    :root {
-      --navy:       #0C1B2E;
-      --teal:       #1B5E6F;
-      --gold:       #C8A252;
-      --gold-light: #E2BC75;
-      --cream:      #F7F2E8;
-      --cream-dark: #EDE6D5;
-      --charcoal:   #2B2B2B;
-      --muted:      #6B6B6B;
-      --white:      #FFFFFF;
-      }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: var(--cream);
-      color: var(--charcoal);
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.78;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Prevent global.css main{width:720px} from constraining this page */
-    main { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-
-    /* ── UTILITIES ──────────────────────────────────────── */
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-
-    /* Section label: was 0.78rem = 12.5px. Now explicit 13px. */
-    .slabel {
-      font-family: 'Crimson Pro', serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-    }
-
-    .gold-rule { width: 3rem; height: 2px; background: var(--gold); margin: 0.75rem 0 1.4rem; }
-    .gold-rule.center { margin: 0.75rem auto 1.4rem; }
-
-    /* ── HERO ───────────────────────────────────────────── */
-    .page-hero {
-      background: var(--navy);
-      padding: 5rem 2rem 4.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-hero::before {
-      content: 'نهج';
-      font-family: 'Amiri', serif;
-      font-size: clamp(120px, 22vw, 220px);
-      font-weight: 700;
-      color: rgba(255,255,255,0.03);
-      position: absolute;
-      right: -1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-    .hero-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
-
-    /* Breadcrumb: was 0.82rem = 13px. Explicit 14px now. */
-    .breadcrumb {
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.42);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .breadcrumb a { color: rgba(255,255,255,0.42); text-decoration: none; transition: color 0.2s; }
-    .breadcrumb a:hover { color: var(--gold); }
-    .breadcrumb span { color: rgba(255,255,255,0.18); }
-
-    .page-hero h1 em { font-style: italic; color: #E2BC75; }
-      .page-hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 2.8vw, 36px);   /* explicit px, no rem ambiguity */
-      font-weight: 600;
-      line-height: 1.15;
-      color: var(--white);
-      max-width: 680px;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-sub {
-      font-size: 21px;
-      color: rgba(255,255,255,0.60);
-      max-width: 560px;
-      font-weight: 300;
-      line-height: 1.82;
-    }
-
-    /* ── MISSION ────────────────────────────────────────── */
-    .section-mission { padding: 5rem 2rem; background: var(--cream); }
-
-    .mission-layout {
-      display: grid;
-      grid-template-columns: 1fr 2.2fr;
-      gap: 5rem;
-      align-items: start;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .mission-label-col { padding-top: 0.25rem; position: sticky; top: 4.5rem; }
-
-    .mission-label-col h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px;
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1.12;
-      margin-top: 0.5rem;
-    }
-
-    /* Carnegie-style: mission body is a large, clear, readable block */
-    .mission-body p {
-      font-size: 18px;
-      color: var(--charcoal);
-      line-height: 1.78;
-      margin-bottom: 1.5rem;
-      font-weight: 300;
-    }
-    .mission-body p:last-child { margin-bottom: 0; }
-    .mission-body strong { font-weight: 600; color: var(--navy); }
-
-    /* Pull quote */
-    .pullquote {
-      border-left: 3px solid var(--gold);
-      padding: 0.75rem 0 0.75rem 1.75rem;
-      margin: 2rem 0;
-    }
-    .pullquote p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 26px !important;
-      font-style: italic;
-      font-weight: 400;
-      color: var(--navy);
-      line-height: 1.45;
-      margin: 0 !important;
-    }
-    .pullquote cite {
-      display: block;
-      margin-top: 0.6rem;
-      font-size: 13px;
-      font-style: normal;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ── STORY (dark section) ───────────────────────────── */
-    .section-story {
-      background: var(--navy);
-      padding: 5rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .section-story::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(27,94,111,0.25) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .story-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
-
-    .story-inner h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 600;
-      color: var(--white);
-      line-height: 1.18;
-      margin-top: 0.5rem;
-      margin-bottom: 2.5rem;
-      max-width: 700px;
-    }
-
-    .story-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-    .story-cols p {
-      font-size: 20px;
-      color: rgba(255,255,255,0.72);
-      line-height: 1.78;
-      font-weight: 300;
-      margin-bottom: 1.4rem;
-    }
-    .story-cols p:last-child { margin-bottom: 0; }
-    .story-cols strong { color: rgba(255,255,255,0.92); font-weight: 500; }
-
-    /* VALUES: clean grid, NO decorative numbers ─────── */
-    .section-values { padding: 5rem 2rem; background: var(--cream-dark); }
-
-    .section-values h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 2.2vw, 28px);
-      font-weight: 600;
-      color: var(--navy);
-      text-align: center;
-      margin-top: 0.5rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .value-card {
-      background: var(--white);
-      padding: 2rem 1.75rem;
-      border-top: 3px solid transparent;
-      transition: border-color 0.25s;
-    }
-    .value-card:hover { border-color: var(--gold); }
-
-    /* Title: clean Cormorant, no decorative number */
-    .value-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid var(--cream-dark);
-    }
-
-    /* Body text: explicit px */
-    .value-card p {
-      font-size: 20px;
-      color: var(--muted);
-      line-height: 1.78;
-    }
-
-    /* ── WRITING / INTELLECTUAL CULTURE ─────────────────── */
-    .section-writing { padding: 5rem 2rem; background: var(--cream); border-top: 1px solid var(--cream-dark); }
-    .writing-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 2.2fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .writing-label h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px;
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1.12;
-      margin-top: 0.5rem;
-      position: sticky;
-      top: 4.5rem;
-    }
-    .writing-body p {
-      font-size: 18px;
-      color: var(--charcoal);
-      line-height: 1.78;
-      font-weight: 300;
-      margin-bottom: 1.5rem;
-    }
-    .writing-body p:last-child { margin-bottom: 0; }
-
-    /* ── FOCUS AREAS ────────────────────────────────────── */
-    .section-focus { padding: 5rem 2rem; background: var(--cream-dark); }
-    .focus-header { max-width: 1120px; margin: 0 auto 3rem; }
-    .focus-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 2.2vw, 28px);
-      font-weight: 600;
-      color: var(--navy);
-      margin-top: 0.5rem;
-    }
-    .focus-grid {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 0;
-    }
-    .focus-item {
-      padding: 1.75rem;
-      border: 1px solid var(--cream);
-      background: var(--white);
-      transition: background 0.2s;
-    }
-    .focus-item:hover { background: var(--cream); }
-    .focus-item h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 0.5rem;
-    }
-    .focus-item p {
-      font-size: 19px;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    /* ── TEAM TEASER ────────────────────────────────────── */
-    .section-team-teaser {
-      background: var(--cream);
-      padding: 4rem 2rem;
-      border-top: 1px solid var(--cream-dark);
-    }
-    .team-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 3rem;
-      flex-wrap: wrap;
-    }
-    .team-text h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 2.2vw, 28px);
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 0.75rem;
-    }
-    .team-text p { font-size: 20px; color: var(--muted); max-width: 580px; line-height: 1.80; font-weight: 300; }
-
-    .btn-team {
-      display: inline-block;
-      border: 1px solid var(--navy);
-      color: var(--navy);
-      font-family: 'Crimson Pro', serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.88rem 2rem;
-      text-decoration: none;
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: background 0.2s, color 0.2s;
-    }
-    .btn-team:hover { background: var(--navy); color: var(--gold); }
-
-    /* ── VISITOR GUIDE ──────────────────────────────────── */
-    .section-guide {
-      background: var(--navy);
-      padding: 5rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .section-guide::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 50% 70% at 80% 40%, rgba(200,162,82,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .guide-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
-    .guide-inner h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 600;
-      color: var(--white);
-      margin-top: 0.5rem;
-      margin-bottom: 3rem;
-      max-width: 600px;
-      line-height: 1.18;
-    }
-    .guide-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-    .guide-step { padding: 2rem 1.75rem; border: 1px solid rgba(255,255,255,0.07); }
-    .guide-step:hover { background: rgba(255,255,255,0.03); }
-    .step-num { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.75rem; }
-    .guide-step h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
-    .guide-step p { font-size: 19px; color: rgba(255,255,255,0.60); line-height: 1.78; margin-bottom: 1rem; }
-    .guide-step a { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: color 0.2s; }
-    .guide-step a:hover { color: var(--gold-light); }
-
-    /* ── CTA ────────────────────────────────────────────── */
-    .section-cta { background: var(--cream); padding: 5rem 2rem; border-top: 1px solid var(--cream-dark); }
-
-    /* Institutional profile strip */
-    .inst-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 1px solid var(--cream-dark);
-      background: var(--white);
-      max-width: 1120px;
-      margin: 0 auto 4rem;
-    }
-    .inst-item {
-      padding: 1.5rem 1.75rem;
-      border-right: 1px solid var(--cream-dark);
-    }
-    .inst-item:last-child { border-right: none; }
-    .inst-item strong { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-    .inst-item p { font-size: 19px; color: var(--charcoal); line-height: 1.65; font-weight: 300; }
-
-    .cta-center { text-align: center; max-width: 640px; margin: 0 auto; }
-    .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
-    .cta-center p { font-size: 20px; color: var(--muted); margin-bottom: 2.25rem; font-weight: 300; line-height: 1.80; }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--navy);
-      font-family: 'Crimson Pro', serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.9rem 2.25rem;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      margin-right: 0.75rem;
-    }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-    .btn-outline {
-      display: inline-block;
-      border: 1px solid var(--navy);
-      color: var(--navy);
-      font-family: 'Crimson Pro', serif;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.9rem 2.25rem;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s, transform 0.15s;
-    }
-    .btn-outline:hover { background: var(--navy); color: var(--gold); transform: translateY(-1px); }
-
-    /* ── RESPONSIVE ─────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .mission-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .mission-label-col { position: static; }
-      .writing-inner { grid-template-columns: 1fr; gap: 2rem; }
-      .values-grid { grid-template-columns: 1fr 1fr; }
-      .story-cols { grid-template-columns: 1fr; gap: 2rem; }
-    }
-    @media (max-width: 640px) {
-      .page-hero { padding: 3.5rem 1.25rem 3rem; }
-      .page-hero::before { font-size: 80px; }
-      .values-grid { grid-template-columns: 1fr; }
-      .inst-strip { grid-template-columns: 1fr 1fr; }
-      .inst-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
-      .team-inner { flex-direction: column; gap: 1.5rem; }
-    }
-  </style>
-</head>
-
-<body>
-  <Header />
+<BaseLayout
+  title="About | Nahj Institute"
+  description="Nahj Institute is an independent research centre dedicated to serious scholarship on religion, politics, and society, with a focus on the Muslim world and the Global South."
+>
 
   <!-- HERO -->
   <section class="page-hero">
-    <div class="hero-inner">
+    <div class="page-hero-inner">
       <nav class="breadcrumb">
         <a href={`${base}/`}>Home</a>
         <span>/</span>
         <span style="color:rgba(255,255,255,0.65)">About the Institute</span>
       </nav>
       <h1>An Independent Research Centre for <em>Islamic</em> Thought, Politics, and Society</h1>
-      <p class="hero-sub">
+      <p class="page-hero-sub">
         Dedicated to rigorous scholarship on the Muslim world and the societies of the Global South, engaging classical intellectual traditions and the questions of contemporary global life.
       </p>
     </div>
   </section>
 
-  <main>
+  <main id="main-content">
 
     <!-- MISSION -->
-    <section class="section-mission">
+    <section class="section-mission" id="mission">
       <div class="mission-layout">
         <div class="mission-label-col">
-          <span class="slabel">Our Mission</span>
-          <div class="gold-rule"></div>
+          <span class="section-label">Our Mission</span>
+          <div class="divider-gold"></div>
           <h2>What We Do and Why</h2>
         </div>
 
@@ -534,8 +58,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- ORIGINS -->
     <section class="section-story">
       <div class="story-inner">
-        <span class="slabel" style="color:var(--gold)">Our Story</span>
-        <div class="gold-rule"></div>
+        <span class="section-label" style="color:var(--gold)">Our Story</span>
+        <div class="divider-gold"></div>
         <h2>How Nahj Institute Came to Be</h2>
 
         <div class="story-cols">
@@ -563,8 +87,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <section class="section-values">
       <div class="container">
         <div style="text-align:center">
-          <span class="slabel">What We Stand For</span>
-          <div class="gold-rule center"></div>
+          <span class="section-label">What We Stand For</span>
+          <div class="divider-gold center"></div>
         </div>
         <h2>Our Founding Principles</h2>
 
@@ -606,8 +130,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <section class="section-writing">
       <div class="writing-inner">
         <div class="writing-label">
-          <span class="slabel">Intellectual Culture</span>
-          <div class="gold-rule"></div>
+          <span class="section-label">Intellectual Culture</span>
+          <div class="divider-gold"></div>
           <h2>On the Value of Serious Scholarship</h2>
         </div>
         <div class="writing-body">
@@ -625,35 +149,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </section>
 
     <!-- FOCUS AREAS -->
-    <section class="section-focus">
+    <section class="section-focus" id="focus-areas">
       <div class="focus-header container">
-        <span class="slabel">Areas of Inquiry</span>
-        <div class="gold-rule"></div>
+        <span class="section-label">Areas of Inquiry</span>
+        <div class="divider-gold"></div>
         <h2>The Questions That Drive Our Work</h2>
       </div>
       <div class="focus-grid container">
         <div class="focus-item">
-          <h4>Islamic Theology and Philosophy</h4>
+          <h3>Islamic Theology and Philosophy</h3>
           <p>Kalam, ethics, eschatology, and the enduring questions of divine justice, human agency, and the nature of revelation, engaged with classical rigour and contemporary awareness.</p>
         </div>
         <div class="focus-item">
-          <h4>Politics and Governance</h4>
+          <h3>Politics and Governance</h3>
           <p>Islamic political theory, the question of legitimacy in Muslim-majority states, democracy, constitutionalism, and the relationship between religion and public life.</p>
         </div>
         <div class="focus-item">
-          <h4>Geopolitics and International Affairs</h4>
+          <h3>Geopolitics and International Affairs</h3>
           <p>The Muslim world in the global order, from the Gulf to South Asia, from the Sahel to Southeast Asia. Strategic analysis grounded in historical depth and ethical seriousness.</p>
         </div>
         <div class="focus-item">
-          <h4>Religious Harmony and Interfaith Ethics</h4>
+          <h3>Religious Harmony and Interfaith Ethics</h3>
           <p>The theory and practice of coexistence: comparative theology, the ethics of dialogue, sectarian conflict, and the project of living well with difference.</p>
         </div>
         <div class="focus-item">
-          <h4>Society and Contemporary Culture</h4>
+          <h3>Society and Contemporary Culture</h3>
           <p>Family, identity, gender, technology, and the pressures bearing down on Muslim communities in the modern world, examined with rigour rather than reactivity.</p>
         </div>
         <div class="focus-item">
-          <h4>Science, Ethics, and the Human Condition</h4>
+          <h3>Science, Ethics, and the Human Condition</h3>
           <p>Bioethics, artificial intelligence, environmental thought, and the enduring question of what it means to be human, read through the lens of Islamic intellectual tradition.</p>
         </div>
       </div>
@@ -663,8 +187,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <section class="section-team-teaser">
       <div class="team-inner">
         <div class="team-text">
-          <span class="slabel">The People</span>
-          <div class="gold-rule"></div>
+          <span class="section-label">The People</span>
+          <div class="divider-gold"></div>
           <h2>Leadership and Core Team</h2>
           <p>
             Nahj Institute is led and staffed by an international network of scholars, researchers, and practitioners with expertise across Islamic intellectual history, political theory, philosophy, and the social sciences.
@@ -677,44 +201,44 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- VISITOR GUIDE -->
     <section class="section-guide">
       <div class="guide-inner">
-        <span class="slabel" style="color:var(--gold)">Visitor Guide</span>
-        <div class="gold-rule"></div>
+        <span class="section-label" style="color:var(--gold)">Visitor Guide</span>
+        <div class="divider-gold"></div>
         <h2>New Here? Here Is How to Engage with Nahj Institute</h2>
 
         <div class="guide-steps">
           <div class="guide-step">
             <span class="step-num">Step 01</span>
-            <h4>Read Our Research</h4>
+            <h3>Read Our Research</h3>
             <p>Start with our featured essays and policy papers, written to be substantive and worth your time whether you are a specialist or an engaged general reader.</p>
             <a href={`${base}/research`}>Browse the Archive →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 02</span>
-            <h4>Attend an Event</h4>
+            <h3>Attend an Event</h3>
             <p>Our lecture series and seminars bring distinguished thinkers into direct conversation. Many events are free and open to all, with recordings available online.</p>
             <a href={`${base}/events`}>View Upcoming Events →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 03</span>
-            <h4>Enter a Competition</h4>
+            <h3>Enter a Competition</h3>
             <p>Our annual writing competitions are open to students and emerging writers. Generous prizes, rigorous feedback, and real publication opportunities.</p>
             <a href={`${base}/community#competitions`}>Competition Details →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 04</span>
-            <h4>Join a Programme</h4>
+            <h3>Join a Programme</h3>
             <p>From writing workshops and research bootcamps to one-on-one mentorship and career counselling, our student programmes accelerate serious intellectual formation.</p>
             <a href={`${base}/community#student`}>Student Programmes →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 05</span>
-            <h4>Contribute Your Writing</h4>
+            <h3>Contribute Your Writing</h3>
             <p>We accept submissions from researchers, academics, and informed practitioners. Our editorial standards are high but we actively look for new voices.</p>
             <a href={`${base}/research/submit`}>Submission Guidelines →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 06</span>
-            <h4>Support the Institute</h4>
+            <h3>Support the Institute</h3>
             <p>Nahj operates independently, without state or corporate patronage. If our work matters to you, consider supporting it financially or by sharing what we produce.</p>
             <a href={`${base}/contact`}>How to Support Us →</a>
           </div>
@@ -745,13 +269,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
 
         <div class="cta-center">
-          <span class="slabel">Get in Touch</span>
-          <div class="gold-rule center"></div>
+          <span class="section-label">Get in Touch</span>
+          <div class="divider-gold center"></div>
           <h2>We Would Like to Hear from You</h2>
           <p>Whether you have a research proposal, a question about our programmes, a partnership idea, or simply something worth discussing, our door is open.</p>
           <div>
-            <a href={`${base}/contact`} class="btn-primary">Contact the Institute</a>
-            <a href={`${base}/research`} class="btn-outline">Read Our Research</a>
+            <a href={`${base}/contact`} class="btn-primary" style="margin-right: 0.75rem;">Contact the Institute</a>
+            <a href={`${base}/research`} class="btn-outline-dark">Read Our Research</a>
           </div>
         </div>
       </div>
@@ -759,6 +283,332 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   </main>
 
-  <Footer />
-</body>
-</html>
+  <style>
+  /* ── MISSION ────────────────────────────────────── */
+  .section-mission { padding: 5rem 2rem; background: var(--cream); }
+
+  .mission-layout {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .mission-label-col { padding-top: 0.25rem; position: sticky; top: 4.5rem; }
+
+  .mission-label-col h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.12;
+    margin-top: 0.5rem;
+  }
+
+  .mission-body p {
+    font-size: 18px;
+    color: var(--charcoal);
+    line-height: 1.78;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .mission-body p:last-child { margin-bottom: 0; }
+  .mission-body strong { font-weight: 600; color: var(--navy); }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 3px solid var(--gold);
+    padding: 0.75rem 0 0.75rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .pullquote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--navy);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .pullquote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 13px;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── STORY (dark section) ───────────────────────── */
+  .section-story {
+    background: var(--navy);
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-story::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(27,94,111,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .story-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .story-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.18;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+  }
+
+  .story-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .story-cols p {
+    font-size: 20px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.78;
+    font-weight: 300;
+    margin-bottom: 1.4rem;
+  }
+  .story-cols p:last-child { margin-bottom: 0; }
+  .story-cols strong { color: rgba(255,255,255,0.92); font-weight: 500; }
+
+  /* VALUES: clean grid, NO decorative numbers */
+  .section-values { padding: 5rem 2rem; background: var(--cream-dark); }
+
+  .section-values h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 600;
+    color: var(--navy);
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .value-card {
+    background: var(--white);
+    padding: 2rem 1.75rem;
+    border-top: 3px solid transparent;
+    transition: border-color 0.25s;
+  }
+  .value-card:hover { border-color: var(--gold); }
+
+  .value-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .value-card p {
+    font-size: 20px;
+    color: var(--muted);
+    line-height: 1.78;
+  }
+
+  /* ── WRITING / INTELLECTUAL CULTURE ─────────────── */
+  .section-writing { padding: 5rem 2rem; background: var(--cream); border-top: 1px solid var(--cream-dark); }
+  .writing-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .writing-label h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.12;
+    margin-top: 0.5rem;
+    position: sticky;
+    top: 4.5rem;
+  }
+  .writing-body p {
+    font-size: 18px;
+    color: var(--charcoal);
+    line-height: 1.78;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+  .writing-body p:last-child { margin-bottom: 0; }
+
+  /* ── FOCUS AREAS ────────────────────────────────── */
+  .section-focus { padding: 5rem 2rem; background: var(--cream-dark); }
+  .focus-header { margin-bottom: 3rem; }
+  .focus-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 0.5rem;
+  }
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+  }
+  .focus-item {
+    padding: 1.75rem;
+    border: 1px solid var(--cream);
+    background: var(--white);
+    transition: background 0.2s;
+  }
+  .focus-item:hover { background: var(--cream); }
+  .focus-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .focus-item p {
+    font-size: 19px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── TEAM TEASER ────────────────────────────────── */
+  .section-team-teaser {
+    background: var(--cream);
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .team-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .team-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+  }
+  .team-text p { font-size: 20px; color: var(--muted); max-width: 580px; line-height: 1.80; font-weight: 300; }
+
+  .btn-team {
+    display: inline-block;
+    border: 1px solid var(--navy);
+    color: var(--navy);
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.88rem 2rem;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-team:hover { background: var(--navy); color: var(--gold); }
+
+  /* ── VISITOR GUIDE ──────────────────────────────── */
+  .section-guide {
+    background: var(--navy);
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-guide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 70% at 80% 40%, rgba(200,162,82,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .guide-inner { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
+  .guide-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 600;
+    color: var(--white);
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    line-height: 1.18;
+  }
+  .guide-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .guide-step { padding: 2rem 1.75rem; border: 1px solid rgba(255,255,255,0.07); }
+  .guide-step:hover { background: rgba(255,255,255,0.03); }
+  .step-num { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.75rem; }
+  .guide-step h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
+  .guide-step p { font-size: 19px; color: rgba(255,255,255,0.60); line-height: 1.78; margin-bottom: 1rem; }
+  .guide-step a { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: color 0.2s; }
+  .guide-step a:hover { color: var(--gold-light); }
+
+  /* ── CTA ────────────────────────────────────────── */
+  .section-cta { background: var(--cream); padding: 5rem 2rem; border-top: 1px solid var(--cream-dark); }
+
+  /* Institutional profile strip */
+  .inst-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--cream-dark);
+    background: var(--white);
+    max-width: 1120px;
+    margin: 0 auto 4rem;
+  }
+  .inst-item {
+    padding: 1.5rem 1.75rem;
+    border-right: 1px solid var(--cream-dark);
+  }
+  .inst-item:last-child { border-right: none; }
+  .inst-item strong { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .inst-item p { font-size: 19px; color: var(--charcoal); line-height: 1.65; font-weight: 300; }
+
+  .cta-center { text-align: center; max-width: 640px; margin: 0 auto; }
+  .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
+  .cta-center p { font-size: 20px; color: var(--muted); margin-bottom: 2.25rem; font-weight: 300; line-height: 1.80; }
+
+  /* ── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 900px) {
+    .mission-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .mission-label-col { position: static; }
+    .writing-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .story-cols { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .values-grid { grid-template-columns: 1fr; }
+    .inst-strip { grid-template-columns: 1fr 1fr; }
+    .inst-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+    .team-inner { flex-direction: column; gap: 1.5rem; }
+  }
+  </style>
+
+</BaseLayout>

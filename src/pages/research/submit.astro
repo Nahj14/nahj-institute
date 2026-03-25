@@ -1,50 +1,15 @@
 ---
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Submit Writing — Nahj Institute</title>
-  <meta name="description" content="Submit essays, commentary, book reviews, poetry, and policy briefs to Nahj Institute. We publish serious writing at the intersection of Islamic thought, politics, society, and culture." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<BaseLayout
+  title="Submit Writing | Nahj Institute"
+  description="Submit essays, commentary, book reviews, poetry, and policy briefs to Nahj Institute. We publish serious writing at the intersection of Islamic thought, politics, society, and culture."
+>
 
-  <!--
-    Using is:global to guarantee styles apply regardless of Astro's scoping.
-    This is the reliable fix for the "full-width overflow" bug where scoped
-    styles fail to constrain page content.
-  -->
-  <style is:global>
-    /* ══════════════════════════════════ TOKENS */
-    :root {
-      --navy:       #0C1B2E;
-      --teal:       #1B5E6F;
-      --gold:       #C8A252;
-      --gold-light: #E2BC75;
-      --cream:      #F7F2E8;
-      --cream-dark: #EDE6D5;
-      --charcoal:   #2B2B2B;
-      --muted:      #6B6B6B;
-      --white:      #FFFFFF;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--cream);
-      color: var(--charcoal);
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.78;
-      -webkit-font-smoothing: antialiased;
-    }
-
+  <style>
     /* ══════════════════════════════════ HERO */
     .sub-hero {
       background: var(--navy);
@@ -70,12 +35,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     .sub-breadcrumb {
       font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(255,255,255,0.35); margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.5); margin-bottom: 1.5rem;
       display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
     }
-    .sub-breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .sub-breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
     .sub-breadcrumb a:hover { color: var(--gold); }
-    .sub-breadcrumb span { color: rgba(255,255,255,0.14); }
+    .sub-breadcrumb span { color: rgba(255,255,255,0.5); }
     .sub-hero-tag {
       font-size: 12px; font-weight: 600; letter-spacing: 0.24em;
       text-transform: uppercase; color: var(--gold);
@@ -93,10 +58,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       max-width: 620px; font-weight: 300; line-height: 1.8;
     }
 
-    /* ══════════════════════════════════ PAGE BODY — THE KEY FIX
-       Explicit padding + max-width, guaranteed by is:global.
-       This prevents the full-width text overflow shown in the screenshot.
-    */
+    /* ══════════════════════════════════ PAGE BODY */
     .sub-body {
       max-width: 880px;
       margin: 0 auto;
@@ -259,7 +221,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: 30px; font-weight: 600; color: var(--white);
       margin-bottom: 0.75rem; line-height: 1.12;
     }
-    .sub-cta p { font-size: 17px; color: rgba(255,255,255,0.48); margin-bottom: 2rem; font-weight: 300; line-height: 1.75; }
+    .sub-cta p { font-size: 17px; color: rgba(255,255,255,0.55); margin-bottom: 2rem; font-weight: 300; line-height: 1.75; }
     .sub-btn {
       display: inline-block;
       background: var(--gold); color: var(--navy);
@@ -296,10 +258,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       .sub-body   { padding: 2.5rem 1.25rem 4rem; }
     }
   </style>
-</head>
-
-<body>
-  <Header />
 
   <section class="sub-hero">
     <div class="sub-hero-inner">
@@ -316,6 +274,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </section>
 
+  <main id="main-content">
   <div class="sub-body">
 
     <!-- WHAT WE PUBLISH -->
@@ -388,7 +347,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
     <!-- EDITORIAL STANDARDS -->
-    <div class="sub-section">
+    <div class="sub-section" id="editorial-standards">
       <h2 class="sub-section-title">What We Look For</h2>
       <p class="sub-section-intro">
         We do not publish writing that is primarily polemical, or that serves as institutional advocacy without analytical substance. These standards apply to all submissions regardless of type or language.
@@ -530,7 +489,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
   </div>
+  </main>
 
-  <Footer />
-</body>
-</html>
+</BaseLayout>
