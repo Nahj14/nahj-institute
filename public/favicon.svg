@@ -1,9 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <path d="M50.4 78.5a75.1 75.1 0 0 0-28.5 6.9l24.2-65.7c.7-2 1.9-3.2 3.4-3.2h29c1.5 0 2.7 1.2 3.4 3.2l24.2 65.7s-11.6-7-28.5-7L67 45.5c-.4-1.7-1.6-2.8-2.9-2.8-1.3 0-2.5 1.1-2.9 2.7L50.4 78.5Zm-1.1 28.2Zm-4.2-20.2c-2 6.6-.6 15.8 4.2 20.2a17.5 17.5 0 0 1 .2-.7 5.5 5.5 0 0 1 5.7-4.5c2.8.1 4.3 1.5 4.7 4.7.2 1.1.2 2.3.2 3.5v.4c0 2.7.7 5.2 2.2 7.4a13 13 0 0 0 5.7 4.9v-.3l-.2-.3c-1.8-5.6-.5-9.5 4.4-12.8l1.5-1a73 73 0 0 0 3.2-2.2 16 16 0 0 0 6.8-11.4c.3-2 .1-4-.6-6l-.8.6-1.6 1a37 37 0 0 1-22.4 2.7c-5-.7-9.7-2-13.2-6.2Z" />
-    <style>
-        path { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #FFF; }
-        }
-    </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <!-- Gold gradient: lighter at top (illumination), deeper at base (grounded) -->
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8CA78"/>
+      <stop offset="50%" stop-color="#C8A252"/>
+      <stop offset="100%" stop-color="#A07830"/>
+    </linearGradient>
+    <!-- Subtle glow for the noon dot -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Inner shadow for depth on background -->
+    <filter id="inner-depth">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+      <feOffset dx="0" dy="1"/>
+      <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feFlood flood-color="#1a3050" flood-opacity="0.4"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+      <feMerge>
+        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background: deep navy with slight rounded square -->
+  <rect width="128" height="128" rx="22" fill="#0A1626" filter="url(#inner-depth)"/>
+
+  <!-- Subtle geometric border — echoing the ◈ motifs from the site -->
+  <rect x="5" y="5" width="118" height="118" rx="18" fill="none"
+        stroke="rgba(200,162,82,0.10)" stroke-width="0.75"/>
+
+  <!-- ═══ THE N/ن CHIMERA ═══ -->
+
+  <!-- LEFT PILLAR — classical tradition
+       Rises from base, curves inward at top into the noon bowl -->
+  <path d="M 28 110 L 28 50 Q 28 30 46 25"
+        fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- RIGHT PILLAR — contemporary thought
+       Mirrors the left, curves inward to meet the noon bowl -->
+  <path d="M 100 110 L 100 50 Q 100 30 82 25"
+        fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- THE نون BOWL — the bridge between traditions
+       A graceful Arabic calligraphic arc connecting the pillar tops -->
+  <path d="M 46 25 Q 64 16 82 25"
+        fill="none" stroke="url(#gold)" stroke-width="5.5" stroke-linecap="round"/>
+
+  <!-- THE PATH (النهج) — the diagonal of N
+       Rendered as a gentle curve, not a rigid line — because the path
+       of knowledge is never perfectly straight -->
+  <path d="M 30 48 C 50 68, 76 92, 98 110"
+        fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- THE نون DOT — rendered as a diamond ◇
+       Echoes the geometric symbols (✦ ◈ ◇) used across the site
+       Represents the guiding point of knowledge above the path -->
+  <g filter="url(#glow)">
+    <rect x="58.5" y="3.5" width="11" height="11" rx="1.5"
+          transform="rotate(45 64 9)" fill="#E8CA78"/>
+  </g>
 </svg>
