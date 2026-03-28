@@ -27,7 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <main id="main-content">
 
     <!-- MISSION -->
-    <section class="section-mission">
+    <section class="section-mission" id="mission">
       <div class="mission-layout">
         <div class="mission-label-col">
           <span class="section-label">Our Mission</span>
@@ -149,7 +149,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </section>
 
     <!-- FOCUS AREAS -->
-    <section class="section-focus">
+    <section class="section-focus" id="focus-areas">
       <div class="focus-header container">
         <span class="section-label">Areas of Inquiry</span>
         <div class="divider-gold"></div>
@@ -157,27 +157,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
       <div class="focus-grid container">
         <div class="focus-item">
-          <h4>Islamic Theology and Philosophy</h4>
+          <h3>Islamic Theology and Philosophy</h3>
           <p>Kalam, ethics, eschatology, and the enduring questions of divine justice, human agency, and the nature of revelation, engaged with classical rigour and contemporary awareness.</p>
         </div>
         <div class="focus-item">
-          <h4>Politics and Governance</h4>
+          <h3>Politics and Governance</h3>
           <p>Islamic political theory, the question of legitimacy in Muslim-majority states, democracy, constitutionalism, and the relationship between religion and public life.</p>
         </div>
         <div class="focus-item">
-          <h4>Geopolitics and International Affairs</h4>
+          <h3>Geopolitics and International Affairs</h3>
           <p>The Muslim world in the global order, from the Gulf to South Asia, from the Sahel to Southeast Asia. Strategic analysis grounded in historical depth and ethical seriousness.</p>
         </div>
         <div class="focus-item">
-          <h4>Religious Harmony and Interfaith Ethics</h4>
+          <h3>Religious Harmony and Interfaith Ethics</h3>
           <p>The theory and practice of coexistence: comparative theology, the ethics of dialogue, sectarian conflict, and the project of living well with difference.</p>
         </div>
         <div class="focus-item">
-          <h4>Society and Contemporary Culture</h4>
+          <h3>Society and Contemporary Culture</h3>
           <p>Family, identity, gender, technology, and the pressures bearing down on Muslim communities in the modern world, examined with rigour rather than reactivity.</p>
         </div>
         <div class="focus-item">
-          <h4>Science, Ethics, and the Human Condition</h4>
+          <h3>Science, Ethics, and the Human Condition</h3>
           <p>Bioethics, artificial intelligence, environmental thought, and the enduring question of what it means to be human, read through the lens of Islamic intellectual tradition.</p>
         </div>
       </div>
@@ -208,37 +208,37 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="guide-steps">
           <div class="guide-step">
             <span class="step-num">Step 01</span>
-            <h4>Read Our Research</h4>
+            <h3>Read Our Research</h3>
             <p>Start with our featured essays and policy papers, written to be substantive and worth your time whether you are a specialist or an engaged general reader.</p>
             <a href={`${base}/research`}>Browse the Archive →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 02</span>
-            <h4>Attend an Event</h4>
+            <h3>Attend an Event</h3>
             <p>Our lecture series and seminars bring distinguished thinkers into direct conversation. Many events are free and open to all, with recordings available online.</p>
             <a href={`${base}/events`}>View Upcoming Events →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 03</span>
-            <h4>Enter a Competition</h4>
+            <h3>Enter a Competition</h3>
             <p>Our annual writing competitions are open to students and emerging writers. Generous prizes, rigorous feedback, and real publication opportunities.</p>
             <a href={`${base}/community#competitions`}>Competition Details →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 04</span>
-            <h4>Join a Programme</h4>
+            <h3>Join a Programme</h3>
             <p>From writing workshops and research bootcamps to one-on-one mentorship and career counselling, our student programmes accelerate serious intellectual formation.</p>
             <a href={`${base}/community#student`}>Student Programmes →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 05</span>
-            <h4>Contribute Your Writing</h4>
+            <h3>Contribute Your Writing</h3>
             <p>We accept submissions from researchers, academics, and informed practitioners. Our editorial standards are high but we actively look for new voices.</p>
             <a href={`${base}/research/submit`}>Submission Guidelines →</a>
           </div>
           <div class="guide-step">
             <span class="step-num">Step 06</span>
-            <h4>Support the Institute</h4>
+            <h3>Support the Institute</h3>
             <p>Nahj operates independently, without state or corporate patronage. If our work matters to you, consider supporting it financially or by sharing what we produce.</p>
             <a href={`${base}/contact`}>How to Support Us →</a>
           </div>
@@ -283,9 +283,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   </main>
 
-</BaseLayout>
-
-<style>
+  <style>
   /* ── MISSION ────────────────────────────────────── */
   .section-mission { padding: 5rem 2rem; background: var(--cream); }
 
@@ -482,7 +480,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: background 0.2s;
   }
   .focus-item:hover { background: var(--cream); }
-  .focus-item h4 {
+  .focus-item h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 20px;
     font-weight: 600;
@@ -568,7 +566,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .guide-step { padding: 2rem 1.75rem; border: 1px solid rgba(255,255,255,0.07); }
   .guide-step:hover { background: rgba(255,255,255,0.03); }
   .step-num { font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.75rem; }
-  .guide-step h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
+  .guide-step h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
   .guide-step p { font-size: 19px; color: rgba(255,255,255,0.60); line-height: 1.78; margin-bottom: 1rem; }
   .guide-step a { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: color 0.2s; }
   .guide-step a:hover { color: var(--gold-light); }
@@ -611,4 +609,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .inst-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
     .team-inner { flex-direction: column; gap: 1.5rem; }
   }
-</style>
+  </style>
+
+</BaseLayout>

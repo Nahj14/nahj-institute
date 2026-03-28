@@ -6,13 +6,13 @@ const footerLinks = {
     { label: 'All Publications',     href: `${base}/research` },
     { label: 'Nahj Journal',         href: 'https://journal.nahjinstitute.com', external: true },
     { label: 'Submit Writing',       href: `${base}/research/submit` },
-    { label: 'Editorial Guidelines', href: `${base}/research/submit` },
+    { label: 'Editorial Guidelines', href: `${base}/research/submit#editorial-standards` },
   ],
   'Institute': [
     { label: 'About Nahj',           href: `${base}/about` },
     { label: 'Our Team',             href: `${base}/team` },
-    { label: 'Focus Areas',          href: `${base}/about` },
-    { label: 'Our Mission',          href: `${base}/about` },
+    { label: 'Focus Areas',          href: `${base}/about#focus-areas` },
+    { label: 'Our Mission',          href: `${base}/about#mission` },
   ],
   'Engage': [
     { label: 'Events and Lectures',  href: `${base}/events` },
@@ -165,7 +165,7 @@ const year = new Date().getFullYear();
     width: 34px;
     height: 34px;
     border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.60);
     transition: border-color 0.2s, color 0.2s, background 0.2s;
     text-decoration: none;
   }
@@ -252,7 +252,7 @@ const year = new Date().getFullYear();
 
   .footer-copy {
     font-size: 14px;            /* was 0.85rem = 13.6px */
-    color: rgba(255,255,255,0.40);
+    color: rgba(255,255,255,0.60);
     letter-spacing: 0.04em;
   }
 
@@ -260,7 +260,7 @@ const year = new Date().getFullYear();
 
   .footer-legal a {
     font-size: 14px;
-    color: rgba(255,255,255,0.40);
+    color: rgba(255,255,255,0.60);
     text-decoration: none;
     transition: color 0.2s;
   }

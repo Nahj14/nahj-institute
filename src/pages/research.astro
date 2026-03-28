@@ -56,7 +56,7 @@ function formatDate(date: Date) {
   <div class="filter-bar">
     <div class="filter-inner">
       {categories.map((cat, i) => (
-        <button class={`filter-btn ${i === 0 ? 'active' : ''}`} data-category={cat}>{cat}</button>
+        <button class={`filter-btn ${i === 0 ? 'active' : ''}`} data-category={cat} aria-pressed={i === 0 ? 'true' : 'false'}>{cat}</button>
       ))}
     </div>
   </div>
@@ -127,8 +127,9 @@ function formatDate(date: Date) {
     const cards = document.querySelectorAll('[data-article-category]');
     buttons.forEach(btn => {
       btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
+        buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         const selected = (btn as HTMLElement).dataset.category;
         cards.forEach(card => {
           const el = card as HTMLElement;

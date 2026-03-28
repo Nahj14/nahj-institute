@@ -415,4 +415,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
   </style>
 
+  <script>
+    const typeCards = document.querySelectorAll('.type-card');
+    const subjectSelect = document.getElementById('subject') as HTMLSelectElement | null;
+
+    const cardToValue: Record<string, string> = {
+      'General Enquiry':    'general',
+      'Submit Writing':     'essay',
+      'Events & Speaking':  'event',
+      'Student Programmes': 'mentorship',
+      'Editorial Board':    'editorial',
+    };
+
+    typeCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        typeCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+
+        if (subjectSelect) {
+          const titleEl = card.querySelector('.type-title') as HTMLElement | null;
+          const val = cardToValue[titleEl?.textContent?.trim() || ''];
+          if (val) subjectSelect.value = val;
+        }
+
+        document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
 </BaseLayout>

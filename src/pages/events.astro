@@ -26,13 +26,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- ══════════════════════════════════════════ TYPES BAR -->
     <div class="types-bar">
-      <div class="types-bar-inner">
-        <span class="type-item active">All Events</span>
-        <span class="type-item">Lectures</span>
-        <span class="type-item">Seminars</span>
-        <span class="type-item">Workshops</span>
-        <span class="type-item">Panels</span>
-        <span class="type-item">Online</span>
+      <div class="types-bar-inner" role="tablist" aria-label="Filter events by type">
+        <button type="button" class="type-item active" role="tab" aria-selected="true">All Events</button>
+        <button type="button" class="type-item" role="tab" aria-selected="false">Lectures</button>
+        <button type="button" class="type-item" role="tab" aria-selected="false">Seminars</button>
+        <button type="button" class="type-item" role="tab" aria-selected="false">Workshops</button>
+        <button type="button" class="type-item" role="tab" aria-selected="false">Panels</button>
+        <button type="button" class="type-item" role="tab" aria-selected="false">Online</button>
       </div>
     </div>
 
@@ -202,7 +202,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .type-item {
       padding: 1.5rem 2rem 1.5rem 0;
       margin-right: 2.5rem;
+      border: none;
       border-bottom: 2px solid transparent;
+      background: none;
+      font-family: inherit;
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.14em;
@@ -640,8 +643,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const typeItems = document.querySelectorAll('.type-item');
     typeItems.forEach(item => {
       item.addEventListener('click', () => {
-        typeItems.forEach(i => i.classList.remove('active'));
+        typeItems.forEach(i => { i.classList.remove('active'); i.setAttribute('aria-selected', 'false'); });
         item.classList.add('active');
+        item.setAttribute('aria-selected', 'true');
       });
     });
   </script>
