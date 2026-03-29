@@ -1,5 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+function formatShortDate(date: Date) {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
 ---
 
 <BaseLayout
@@ -120,36 +128,115 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <a href="/research" class="link-all">All Publications →</a>
         </div>
 
-        <div class="insights-grid">
-          <a href="/articles/ontological-sovereignty-the-imam-as-hujjat-allah-and-the-divine-organ-in-early-shii-doctrine" class="insight-card">
-            <div class="insight-card-body">
-              <span class="insight-tag">Theology & Politics</span>
-              <h3 class="insight-title">The Imamate and the Modern State: Authority, Legitimacy, and the Crisis of Governance</h3>
-              <p class="insight-excerpt">A revisiting of the wilayah literature alongside recent scholarship in comparative political theory, asking what classical Shia political theology still has to offer the present.</p>
-              <div class="insight-meta">Dr. Ali Haider Naqvi · Nahj Journal Vol. 1</div>
-            </div>
-          </a>
-
-          <a href="/research" class="insight-card">
-            <div class="insight-card-body">
-              <span class="insight-tag">Geopolitics</span>
-              <h3 class="insight-title">Fault Lines and Fractures: The New Geography of Muslim-Majority States</h3>
-              <p class="insight-excerpt">A survey of shifting political configurations from the Levant to Central Asia, with attention to the domestic drivers of instability that external accounts often overlook.</p>
-              <div class="insight-meta">Fatima Zahra Mehdi · Essay</div>
-            </div>
-          </a>
-
-          <a href="/research" class="insight-card">
-            <div class="insight-card-body">
-              <span class="insight-tag">Religious Harmony</span>
-              <h3 class="insight-title">Dialogue as Method: Toward a Theology of Encounter in Pluralist Societies</h3>
-              <p class="insight-excerpt">Drawing on Islamic ethics and comparative theology, this paper argues that meaningful interreligious dialogue requires a prior account of disagreement that most current frameworks do not provide.</p>
-              <div class="insight-meta">Sara Kazemi · Nahj Journal Vol. 1</div>
-            </div>
-          </a>
+        <div class="insights-grid" id="insights-grid">
+          {allArticles.map((article, i) => {
+            const slug = article.id.replace(/\.mdx?$/, '').toLowerCase();
+            return (
+              <a
+                href={`/articles/${slug}`}
+                class="insight-card"
+                data-article-index={i}
+                style={i >= 3 ? 'display:none;opacity:0;' : ''}
+              >
+                <div class="insight-card-body">
+                  <span class="insight-tag">{article.data.category}</span>
+                  <h3 class="insight-title">{article.data.title}</h3>
+                  <p class="insight-excerpt">{article.data.excerpt}</p>
+                  <div class="insight-meta">
+                    {article.data.author} · {formatShortDate(new Date(article.data.date))}
+                  </div>
+                </div>
+              </a>
+            );
+          })}
         </div>
+
+        {allArticles.length > 3 && (
+          <div class="insights-nav" id="insights-nav" aria-label="Publication navigation">
+            {allArticles.map((_, i) => (
+              <button
+                class={`insights-dot${i === 0 ? ' active' : ''}`}
+                data-dot={i}
+                aria-label={`Go to article set ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
+
+    <script>
+      (function () {
+        const grid = document.getElementById('insights-grid');
+        if (!grid) return;
+        const cards = Array.from(grid.querySelectorAll<HTMLElement>('.insight-card'));
+        const n = cards.length;
+        if (n <= 3) return;
+
+        const PER_VIEW = 3;
+        let offset = 0;
+        let timer: ReturnType<typeof setInterval>;
+
+        function showOffset(next: number, animate: boolean) {
+          offset = ((next % n) + n) % n;
+          cards.forEach((card, i) => {
+            const pos = ((i - offset + n) % n);
+            const visible = pos < PER_VIEW;
+            if (animate) {
+              card.style.transition = 'opacity 0.45s ease';
+              if (!visible) {
+                card.style.opacity = '0';
+                setTimeout(() => { card.style.display = 'none'; }, 460);
+              } else {
+                card.style.display = '';
+                requestAnimationFrame(() =>
+                  requestAnimationFrame(() => { card.style.opacity = '1'; })
+                );
+              }
+            } else {
+              card.style.transition = 'none';
+              card.style.display = visible ? '' : 'none';
+              card.style.opacity = visible ? '1' : '0';
+            }
+          });
+
+          // Update dots to reflect lead card
+          const nav = document.getElementById('insights-nav');
+          if (nav) {
+            nav.querySelectorAll<HTMLElement>('.insights-dot').forEach((dot, i) => {
+              dot.classList.toggle('active', i === offset);
+            });
+          }
+        }
+
+        function advance() {
+          showOffset(offset + 1, true);
+        }
+
+        function startTimer() {
+          clearInterval(timer);
+          timer = setInterval(advance, 6000);
+        }
+
+        // Dot clicks
+        const nav = document.getElementById('insights-nav');
+        if (nav) {
+          nav.querySelectorAll<HTMLButtonElement>('.insights-dot').forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+              showOffset(i, true);
+              startTimer();
+            });
+          });
+        }
+
+        // Pause on hover
+        grid.addEventListener('mouseenter', () => clearInterval(timer));
+        grid.addEventListener('mouseleave', startTimer);
+
+        showOffset(0, false);
+        startTimer();
+      })();
+    </script>
 
     <!-- ════════════════════════════════════════ EVENTS STRIP -->
     <section class="section-events">
@@ -589,6 +676,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       color: var(--muted);
       padding-top: 1rem;
       border-top: 1px solid var(--cream-dark);
+    }
+
+    /* ─── INSIGHTS NAV DOTS ───────────────────────────────── */
+    .insights-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .insights-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: var(--cream-dark);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .insights-dot.active {
+      background: var(--gold);
+      transform: scale(1.35);
+    }
+
+    .insights-dot:hover:not(.active) {
+      background: var(--teal);
     }
 
     /* ─── EVENTS STRIP ────────────────────────────────────── */
