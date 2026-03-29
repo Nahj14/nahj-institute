@@ -12,7 +12,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="hero-inner">
       <div class="hero-logo-mark">
         <span class="en">Nahj Institute</span>
-        <span class="ar"> · معهد النهج</span>
       </div>
 
       <h1>
@@ -43,11 +42,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- ═══════════════════════════════════════ HIGHLIGHT BAR -->
   <div class="highlight-bar">
     <span class="bar-label">Latest</span>
-    <div class="bar-items">
-      <a href="/research/submit" class="bar-item">Nahj Journal: Submissions Now Open for Volume I</a>
-      <a href="/community#competitions" class="bar-item">Writing Competition Open</a>
-      <a href="/events" class="bar-item">Upcoming Lecture: Geopolitics of the Muslim World</a>
-      <a href="/community#student" class="bar-item">Student Mentorship Applications Open</a>
+    <div class="bar-track">
+      <div class="bar-items">
+        <a href="/research/submit" class="bar-item">Nahj Journal: Submissions Now Open for Volume I</a>
+        <a href="/community#competitions" class="bar-item">Writing Competition Open</a>
+        <a href="/events" class="bar-item">Upcoming Lecture: Geopolitics of the Muslim World</a>
+        <a href="/community#student" class="bar-item">Student Mentorship Applications Open</a>
+        <a href="/research/submit" class="bar-item" aria-hidden="true">Nahj Journal: Submissions Now Open for Volume I</a>
+        <a href="/community#competitions" class="bar-item" aria-hidden="true">Writing Competition Open</a>
+        <a href="/events" class="bar-item" aria-hidden="true">Upcoming Lecture: Geopolitics of the Muslim World</a>
+        <a href="/community#student" class="bar-item" aria-hidden="true">Student Mentorship Applications Open</a>
+      </div>
     </div>
   </div>
 
@@ -59,7 +64,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="section-header-center">
           <span class="section-label">What We Do</span>
           <div class="divider-gold center"></div>
-          <h2>What We Do</h2>
           <p class="section-sub">Nahj operates across research, public events, academic publishing, student programmes, and community engagement.</p>
         </div>
 
@@ -353,48 +357,63 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     /* ─── HIGHLIGHT BAR ───────────────────────────────────── */
     .highlight-bar {
       background: var(--teal);
-      padding: 0.8rem 2rem;
+      padding: 0.65rem 0;
       display: flex;
       align-items: center;
-      gap: 2rem;
       overflow: hidden;
     }
 
     .bar-label {
       font-family: 'Crimson Pro', serif;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
       white-space: nowrap;
       flex-shrink: 0;
-      padding-right: 1.5rem;
+      padding: 0 1.5rem;
       border-right: 1px solid rgba(255,255,255,0.18);
+      z-index: 1;
+    }
+
+    .bar-track {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
     }
 
     .bar-items {
       display: flex;
-      gap: 2.5rem;
-      overflow-x: auto;
+      gap: 0;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+
+    .bar-items:hover { animation-play-state: paused; }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .bar-item {
-      font-size: 18px;
+      font-size: 13px;
       color: rgba(255,255,255,0.78);
       white-space: nowrap;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       text-decoration: none;
       transition: color 0.2s;
+      padding: 0 2.5rem;
     }
 
     .bar-item:hover { color: var(--white); }
 
     .bar-item::before {
       content: '◆';
-      font-size: 7px;
+      font-size: 6px;
       color: var(--gold);
       flex-shrink: 0;
     }
