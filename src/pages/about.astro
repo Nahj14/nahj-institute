@@ -256,6 +256,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- CTA -->
     <section class="section-cta">
       <div class="container">
+        <div class="inst-header">
+          <span class="section-label" style="color:var(--gold)">Our Character</span>
+          <div class="divider-gold"></div>
+          <h2>Five Pillars</h2>
+        </div>
         <div class="inst-strip">
           <div class="inst-item">
             <strong>01 — Independent</strong>
@@ -602,6 +607,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   /* ── CTA ────────────────────────────────────────── */
   .section-cta { background: var(--navy); padding: 5rem 2rem; }
+
+  /* Institutional header */
+  .inst-header {
+    margin-bottom: 2.5rem;
+  }
+  .inst-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 600;
+    color: var(--white);
+    margin-top: 0.5rem;
+  }
 
   /* Institutional profile strip */
   .inst-strip {
