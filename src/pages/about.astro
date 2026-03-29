@@ -286,7 +286,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <p>Whether you have a research proposal, a question about our programmes, a partnership idea, or simply something worth discussing, our door is open.</p>
           <div>
             <a href={`${base}/contact`} class="btn-primary" style="margin-right: 0.75rem;">Contact the Institute</a>
-            <a href={`${base}/research`} class="btn-outline-dark">Read Our Research</a>
+            <a href={`${base}/research`} class="btn-outline-light">Read Our Research</a>
           </div>
         </div>
       </div>
@@ -601,28 +601,41 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .guide-step a:hover { color: var(--gold-light); }
 
   /* ── CTA ────────────────────────────────────────── */
-  .section-cta { background: var(--cream); padding: 5rem 2rem; border-top: 1px solid var(--cream-dark); }
+  .section-cta { background: var(--navy); padding: 5rem 2rem; }
 
   /* Institutional profile strip */
   .inst-strip {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    border: 1px solid var(--cream-dark);
-    background: var(--white);
     max-width: 1120px;
     margin: 0 auto 4rem;
+    border: 1px solid rgba(255,255,255,0.07);
   }
   .inst-item {
-    padding: 1.5rem 1.75rem;
-    border-right: 1px solid var(--cream-dark);
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+    transition: background 0.2s;
   }
   .inst-item:last-child { border-right: none; }
-  .inst-item strong { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-  .inst-item p { font-size: 19px; color: var(--charcoal); line-height: 1.65; font-weight: 300; }
+  .inst-item:hover { background: rgba(255,255,255,0.06); }
+  .inst-item strong {
+    display: block;
+    font-family: 'Crimson Pro', serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(200,162,82,0.2);
+  }
+  .inst-item p { font-size: 16px; color: rgba(255,255,255,0.62); line-height: 1.7; font-weight: 300; }
 
   .cta-center { text-align: center; max-width: 640px; margin: 0 auto; }
-  .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
-  .cta-center p { font-size: 20px; color: var(--muted); margin-bottom: 2.25rem; font-weight: 300; line-height: 1.80; }
+  .cta-center h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; color: var(--white); margin-bottom: 1rem; }
+  .cta-center p { font-size: 20px; color: rgba(255,255,255,0.62); margin-bottom: 2.25rem; font-weight: 300; line-height: 1.80; }
 
   /* ── RESPONSIVE ─────────────────────────────────── */
   @media (max-width: 900px) {
@@ -635,12 +648,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   @media (max-width: 900px) {
     .guide-steps { grid-template-columns: 1fr 1fr; }
     .inst-strip { grid-template-columns: 1fr 1fr; }
-    .inst-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+    .inst-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
   }
   @media (max-width: 640px) {
     .values-grid { grid-template-columns: 1fr; }
     .inst-strip { grid-template-columns: 1fr; }
-    .inst-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+    .inst-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
     .team-inner { flex-direction: column; gap: 1.5rem; }
     .guide-steps { grid-template-columns: 1fr; }
   }
