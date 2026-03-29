@@ -3,13 +3,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { label: 'Home',         href: `${base}/` },
-  { label: 'About',        href: `${base}/about` },
-  { label: 'Research',     href: `${base}/research` },
-  { label: 'Nahj Journal', href: 'https://journal.nahjinstitute.com', external: true },
-  { label: 'Events',       href: `${base}/events` },
-  { label: 'Community',    href: `${base}/community` },
-  { label: 'Contact',      href: `${base}/contact` },
+  { label: 'Home',      href: `${base}/` },
+  { label: 'About',     href: `${base}/about` },
+  { label: 'Research',  href: `${base}/research` },
+  { label: 'Events',    href: `${base}/events` },
+  { label: 'Community', href: `${base}/community` },
+  { label: 'Contact',   href: `${base}/contact` },
 ];
 ---
 
