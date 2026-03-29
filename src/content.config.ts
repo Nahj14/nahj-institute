@@ -11,6 +11,7 @@ const articles = defineCollection({
       'Theology & Politics',
       'Geopolitics',
       'Society',
+      'Political Economy',
       'Science & Ethics',
       'Religious Harmony',
       'Philosophy',
