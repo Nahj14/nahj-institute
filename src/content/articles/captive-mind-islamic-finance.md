@@ -3,7 +3,7 @@ title: "The Captive Mind in the Marketplace: Unmasking the Dual Hegemonies of Is
 author: "Dr Sofia Moretti"
 authorBio: "Dr Sofia Moretti is Senior Research Fellow in Global Political Economy at the University of Macerata, Italy. Her research examines the structural intersections of neoliberalism, Islamic financial governance, and postcolonial epistemology, with particular attention to how institutional norm-setting produces conditions of intellectual captivity in emerging markets. She is a contributing editor to *ReOrient: The Journal of Critical Muslim Studies* and is completing a monograph on decolonial approaches to the political economy of Islamic finance."
 date: 2026-03-05
-category: "Political Economy"
+category: "Society"
 type: "Essay"
 excerpt: "The multi-billion-dollar Islamic finance industry presents itself as a faith-based alternative to the predatory structures of conventional economics. It is not. It is a captive mind operating under dual hegemonies — Western neoliberalism and Saudi norm-setting — dressed in the aesthetics of piety."
 featured: true
