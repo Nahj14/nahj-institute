@@ -3,7 +3,7 @@ title: "Pluriversal Islam: Recovering the Philosophical Heritage of Shi'i and Nu
 author: "Dr Iskandar Rahman"
 authorBio: "Dr Iskandar Rahman is Lecturer in Global Intellectual History at Universiti Malaya, where he specialises in comparative epistemology and the philosophical traditions of the Muslim world. His research examines the structural marginalisation of Shi'i and Nusantara Islamic thought within both Western and internal Islamic canons, drawing on decolonial frameworks to reconstruct autonomous intellectual lineages. He is affiliated with the Jawi Manuscript Heritage Project and serves as an editorial advisor for *Global Intellectual History*."
 date: 2026-03-26
-category: "Cultural History"
+category: "History & Culture"
 type: "Essay"
 excerpt: "The boundaries of Islamic philosophy have been policed by a dual gatekeeping mechanism: a Western framework that truncates the tradition at the death of Averroes, and an internal Sunni-centric orthodoxy that disciplines alternative lineages into silence. Both must be named and refused."
 featured: true
