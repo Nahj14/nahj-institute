@@ -3,7 +3,7 @@ title: "The Architecture of the Muslim Mind: Epistemic Colonialism, Classical Re
 author: "Dr Muntazar"
 authorBio: "Dr Muntazar is a researcher at the University of Oxford, where his work spans the neurosciences, the philosophy of mind, and the epistemological foundations of classical Islamic thought. He writes at the intersection of Islamic intellectual history and contemporary scientific inquiry, with a particular concern for what the classical tradition offers to questions that Western modernity has been unable to resolve on its own terms."
 date: 2026-02-12
-category: "Philosophy"
+category: "Philosophy & Theology"
 type: "Essay"
 excerpt: "Western modernity did not merely occupy Muslim lands. It reorganised Muslim minds. The question now is not whether to recover the Islamic intellectual tradition but how, and what it actually contains that the current moment needs."
 featured: true

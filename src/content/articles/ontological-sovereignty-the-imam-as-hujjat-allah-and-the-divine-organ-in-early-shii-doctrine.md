@@ -2,7 +2,7 @@
 title: "Ontological Sovereignty: The Imam as Hujjat Allah and the Divine Organ in Early Shi'i Doctrine"
 author: "NAHJ Editorial Team"
 date: 2025-03-15
-category: "Theology & Politics"
+category: "Philosophy & Theology"
 type: "Essay"
 excerpt: "In the rigorous doctrinal architecture of early Shi'ism, the Imam is far more than a political successor or a communal adjudicator; he is a metahistorical necessity whose authority reaches into the very foundations of creation."
 featured: false
