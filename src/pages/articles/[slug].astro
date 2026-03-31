@@ -257,7 +257,10 @@ function shortDate(date: Date) {
     .prose :global(p)  { margin-bottom: 1.75rem; }
     .prose :global(ul), .prose :global(ol) { padding-left: 1.75rem; margin-bottom: 1.5rem; }
     .prose :global(li) { margin-bottom: 0.5rem; line-height: 1.78; }
-    .prose :global(hr) { display: none; }
+    .prose :global(hr) {
+      border: none; height: 1px; margin: 3rem auto;
+      max-width: 5rem; background: var(--cream-dark);
+    }
     .prose :global(strong) { font-weight: 700; color: var(--navy); }
     .prose :global(em)     { font-style: italic; }
 
@@ -271,16 +274,31 @@ function shortDate(date: Date) {
 
     .prose :global(blockquote) {
       border-left: 3px solid var(--gold);
-      padding: 1rem 1.5rem; margin: 2rem 0;
-      background: var(--cream-dark);
-      cursor: pointer; transition: background 0.25s, transform 0.2s;
+      padding: 1.25rem 1.75rem; margin: 2.5rem 0;
+      background: var(--white);
+      box-shadow: 0 1px 4px rgba(12,27,46,0.06);
+      cursor: pointer; transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
     }
     .prose :global(blockquote p) {
-      margin: 0; font-style: italic; color: var(--muted);
+      margin: 0; font-style: italic; color: var(--navy);
       font-size: 1.05em; line-height: 1.72;
+      font-weight: 400;
     }
+    .prose :global(blockquote p:last-child) { margin-top: 0; }
     .prose :global(blockquote.highlighted) {
-      background: rgba(200,162,82,0.1); transform: translateX(5px);
+      background: rgba(200,162,82,0.08); transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(12,27,46,0.08);
+    }
+
+    /* ══ BIBLIOGRAPHY — smaller, tighter typesetting */
+    .prose :global(.bibliography-section) {
+      font-size: 14px; line-height: 1.65; color: var(--muted);
+    }
+    .prose :global(.bibliography-section h2) {
+      font-size: 20px; margin-bottom: 0.75rem;
+    }
+    .prose :global(.bibliography-section p) {
+      margin-bottom: 0.65rem; padding-left: 2em; text-indent: -2em;
     }
 
     .prose :global(.takeaways) {
@@ -295,12 +313,7 @@ function shortDate(date: Date) {
     .prose :global(.takeaways ul) { padding-left: 1.25rem; margin: 0; }
     .prose :global(.takeaways li) { color: rgba(255,255,255,0.78); font-size: 17px; margin-bottom: 0.4rem; }
 
-    .prose :global(.section-ornament) {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0.75rem; margin: 2.5rem 0; opacity: 0.35;
-    }
-    .prose :global(.section-ornament span) { display: block; height: 1px; flex: 1; background: var(--muted); }
-    .prose :global(.section-ornament em)   { font-style: normal; font-size: 8px; color: var(--gold); letter-spacing: 0.6em; }
+    /* Section ornaments removed — HRs render as clean whitespace breaks */
 
     .prose :global(.table-wrap) { overflow-x: auto; margin: 2rem 0; }
     .prose :global(table) {
@@ -792,12 +805,23 @@ function shortDate(date: Date) {
       w.appendChild(t);
     });
 
-    /* ── HR → ORNAMENT */
-    document.querySelectorAll('.prose hr').forEach(hr => {
-      const o = document.createElement('div');
-      o.className = 'section-ornament';
-      o.innerHTML = '<span></span><em>◆ ◆ ◆</em><span></span>';
-      hr.parentNode?.replaceChild(o, hr);
+    /* ── HR → subtle spacing (ornaments removed) */
+
+    /* ── BIBLIOGRAPHY SECTION — auto-wrap content after Bibliography heading */
+    document.querySelectorAll('.prose h2').forEach(h2 => {
+      if (h2.textContent?.trim().toLowerCase() === 'bibliography') {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'bibliography-section';
+        h2.parentNode?.insertBefore(wrapper, h2);
+        wrapper.appendChild(h2);
+        let next = wrapper.nextSibling;
+        while (next) {
+          const move = next;
+          next = next.nextSibling;
+          if ((move as HTMLElement).tagName === 'H2') break;
+          wrapper.appendChild(move);
+        }
+      }
     });
 
     /* ── BLOCKQUOTE HIGHLIGHT */

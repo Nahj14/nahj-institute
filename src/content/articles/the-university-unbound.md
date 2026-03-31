@@ -12,7 +12,9 @@ draft: false
 
 ## I. The Specimen and the Interlocutor
 
-There is a revealing asymmetry at the heart of the modern research university's relationship with the Islamic intellectual tradition. The university studies Islam. It does not, as a rule, think with it.
+> The university studies Islam. It does not, as a rule, think with it.
+
+There is a revealing asymmetry at the heart of the modern research university's relationship with the Islamic intellectual tradition.
 
 The distinction is not trivial. To study a tradition is to treat it as an object of inquiry: to place it under the lens, to analyse its structures, to situate it within comparative frameworks, and to produce knowledge about it that meets the standards of the institution conducting the study. To think with a tradition is something different. It means accepting the tradition as an intellectual interlocutor, a body of thought that might have something to say about the questions the institution itself is asking, including questions about the nature of knowledge, the purpose of education, and the relationship between understanding and the formation of character.
 
@@ -92,7 +94,7 @@ The pesantren tradition offers one answer. The hawza system of Shi'i seminary ed
 
 The task for the present generation of Muslim scholars and institution-builders is not to choose between these models and the modern university. It is to learn from both. The modern university's commitment to textual precision, methodological rigour, and open inquiry is genuinely valuable, and any institution that abandons it in the name of tradition will produce not wisdom but obscurantism. The traditional institution's commitment to the integration of knowledge and character, to the formative relationship between teacher and student, and to a conception of knowledge that is oriented toward purposes larger than individual career advancement is equally valuable, and any institution that abandons it in the name of modernity will produce not scholars but technicians.
 
-The university unbound is not the university destroyed. It is the university liberated from the assumption that its current architectural form is the only possible one, and opened to the possibility that a tradition which has been thinking about knowledge, its nature, its purpose, and its relationship to the human person for fourteen centuries might have something to contribute to the question of how institutions of learning should be designed.
+> The university unbound is not the university destroyed. It is the university liberated from the assumption that its current architectural form is the only possible one, and opened to the possibility that a tradition which has been thinking about knowledge, its nature, its purpose, and its relationship to the human person for fourteen centuries might have something to contribute to the question of how institutions of learning should be designed.
 
 That contribution will not be made by studying the tradition from outside. It will be made by thinking with it from within.
 
