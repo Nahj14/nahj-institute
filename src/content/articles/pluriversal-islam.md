@@ -122,13 +122,13 @@ Recovering the pesantren model is not a call to abandon modern institutional for
 
 The narrow canon has done a specific kind of damage. It has persuaded a generation of Muslim scholars that the philosophical resources available to them consist of what Western orientalist scholarship has determined is worth keeping: Averroes and al-Ghazali, the usul al-fiqh tradition, and selected elements of Sufi theology sufficiently detached from their philosophical context to be presented as spirituality rather than epistemology.
 
-The house of Islamic intellectual history has many more rooms than this. The Shi'i philosophical tradition from the School of Isfahan to the contemporary Iranian philosophical scene is a room of extraordinary richness that the narrow canon has kept locked. The Nusantara tradition, encoded in millions of Jawi manuscripts across the archives of Southeast Asia, is a room that colonialism has not merely locked but systematically convinced its inheritors is not worth opening.
+> The house of Islamic intellectual history has many more rooms than this. The Shi'i philosophical tradition from the School of Isfahan to the contemporary Iranian philosophical scene is a room of extraordinary richness that the narrow canon has kept locked. The Nusantara tradition, encoded in millions of Jawi manuscripts across the archives of Southeast Asia, is a room that colonialism has not merely locked but systematically convinced its inheritors is not worth opening.
 
 The work this essay describes is the work of opening those rooms, not to archive what is inside them but to live and think within them. Syed Hussein Alatas's autonomous social science tradition offers the intellectual framework for this work: the cultivation of the capacity to raise original problems from within indigenous intellectual reality, without waiting for Western validation and without being constrained by the hegemonic orientations of either Eurocentrism or internal orthodoxy (Alatas, S.H. 1974, 700; Alatas, S.F. 2024).
 
 A pluriversal Islam is not an Islam that has abandoned the claim to truth. It is an Islam that has recognised the full scope of the tradition through which truth is sought, a tradition that extends from the great centres of Abbasid learning through the School of Isfahan and the Nusantara synthesis to the present, and that has more to say about the questions of the present than either its internal gatekeepers or its external assessors have been willing to acknowledge.
 
-The door that must be wider is not only the door of the Western academy. It is the door of the tradition itself.
+> The door that must be wider is not only the door of the Western academy. It is the door of the tradition itself.
 
 ---
 
